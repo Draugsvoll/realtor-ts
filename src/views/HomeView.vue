@@ -1,19 +1,18 @@
 <script setup >
   import TheWelcome from "../components/TheWelcome.vue";
-  import SearchComp from "../components/SearchComp.vue";
+  import Search from "../components/Search.vue";
 </script>
 
 <template>
-  <div class="view-container">
+  <main>
     <h1>HomeView</h1>
-    <SearchComp />
-    <TheWelcome />
-  </div>
+    <Search />
+  </main>
 </template>
 
 
-<style lang="scss">
-  .view-container {
+<style lang="scss" scoped>
+  main {
     border:2px solid blue;
   }
 </style>
