@@ -5,13 +5,11 @@
   --background-dark: #181818;
 }
 
-
 :root {
   background:var(--background-dark);
   color:var(--font-color);
   
 }
-
 
 * {
   margin:0;

@@ -1,6 +1,6 @@
 <script setup >
   import TheWelcome from "../components/TheWelcome.vue";
-  import Search from "../components/Search.vue";
+  import SearchBar from "../components/SearchBar.vue";
 </script>
 
 <template>
