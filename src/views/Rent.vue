@@ -24,7 +24,6 @@ export default {
 		let properties;
 		async function fetchForRentData  (query: string, state: string) {
 			let resp = await getForRental(query, state);
-			console.log('resp: ', resp)
 			this.properties = resp
 			this.dataIsReady  = true
 		}

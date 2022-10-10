@@ -23,10 +23,9 @@ export default {
   },
 	setup () {
 		let dataIsReady  = ref(false)
-		let properties: PropertyType[]
+		let properties: PropertyType[] = []
 		async function fetchForSaleData (query: string, state: string) {
 			let resp:PropertyType[] = await getForSale(query, state);
-			console.log('resp: ', resp)
 			this.properties = resp
 			this.dataIsReady  = true
 		}
