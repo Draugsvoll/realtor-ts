@@ -2,14 +2,14 @@
 <template>
 	<div>
 		<h1>Search Results</h1>
-        <p>{{sortTerm}}</p>
-		<Property v-for="property in orderedProperties" :property="property" :sortTerm="sortTerm" />
-		<!-- <button @click="sort()">sort</button> -->
+        <p>{{test}}</p>
+		<button @click="sort()">sort</button>
+		<Property v-for="property in orderedProperties" :property="property" />
 	</div>
 </template>
 
 <script  lang="ts">
-	import type { PropertyType, SortTerm } from '@/types/types';
+	import type { PropertyType } from '@/types/types';
 	import { computed, defineComponent, ref, type PropType } from 'vue';
 	import Property from './Property.vue';
 	
@@ -19,18 +19,20 @@
             required: true,
             type: Array as PropType<PropertyType[]>
         },
-        sortTerm: {
-            required: true,
-            type: String as PropType<SortTerm>
-        },
     },
     setup(props) {
-        const orderedProperties = computed(() => {
-            return [...props.properties].sort((a: PropertyType, b: PropertyType) => {
-                return a[props.sortTerm] > b[props.sortTerm] ? +1 : -1;
-            });
-        });
-        return { orderedProperties };
+        let test = ref('listing_id')
+
+        let orderedProperties = ref(props.properties)
+
+        function sort() {
+            this.test = 'price'
+            this.orderedProperties = [...props.properties].sort((a: PropertyType, b: PropertyType) => {
+                return a[this.test] > b[this.test] ? +1 : -1;
+            })
+        }
+
+        return { orderedProperties, sort, test };
     },
     components: { Property }
 })

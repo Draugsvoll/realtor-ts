@@ -28,7 +28,6 @@ import {useRouter, useRoute} from 'vue-router'
 	
 	const router = useRouter()
     const query = ref('new york')
-	const properties = ref([])
 	const states = ref(['NY', 'MI', 'CA'])
 	const selectedState = ref(states._rawValue[0])
 

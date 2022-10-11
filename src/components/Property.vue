@@ -21,10 +21,7 @@
 
 <script lang="ts">
 	import type { PropertyType } from '@/types/types';
-	import { computed, defineComponent, type PropType } from 'vue';
-
-	// const props = defineProps(['property',])
-	// const property: PropertyType = props.property
+	import { defineComponent, type PropType } from 'vue';
 
 	export default defineComponent({
 		props: {
@@ -33,14 +30,7 @@
 				type: Object as PropType<PropertyType>
 			},
 	},
-	setup(props) {
-		// console.log('props: ', props)
-		// const orderedProperties = computed ( () => {
-		// 	return [...props.property].sort((a: PropertyType, b: PropertyType) => {
-		// 		return a.price > b.price ? +1 : -1
-		// 	})
-		// })
-		// return { orderedProperties }
+	setup() {
 	},
 	})
 </script>
