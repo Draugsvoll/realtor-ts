@@ -2,13 +2,15 @@
 <template>
 	<div>
 		<h1>Search Results</h1>
-		<Property v-for="property in orderedProperties" :property="property" />
+        <p>{{sortTerm}}</p>
+		<Property v-for="property in orderedProperties" :property="property" :sortTerm="sortTerm" />
+		<!-- <button @click="sort()">sort</button> -->
 	</div>
 </template>
 
 <script  lang="ts">
-	import type { PropertyType } from '@/types/types';
-	import { computed, defineComponent, type PropType } from 'vue';
+	import type { PropertyType, SortTerm } from '@/types/types';
+	import { computed, defineComponent, ref, type PropType } from 'vue';
 	import Property from './Property.vue';
 	
 	export default defineComponent({
@@ -17,12 +19,15 @@
             required: true,
             type: Array as PropType<PropertyType[]>
         },
+        sortTerm: {
+            required: true,
+            type: String as PropType<SortTerm>
+        },
     },
     setup(props) {
-        console.log("props: ", props.properties);
         const orderedProperties = computed(() => {
             return [...props.properties].sort((a: PropertyType, b: PropertyType) => {
-                return a["price"] > b["price"] ? +1 : -1;
+                return a[props.sortTerm] > b[props.sortTerm] ? +1 : -1;
             });
         });
         return { orderedProperties };

@@ -2,7 +2,8 @@
 	<main>
 		<h1>/Buy</h1>	
 		<SearchBar/>
-		<SearchResults v-if="dataIsReady" :properties="properties" />
+		<button @click="handleClick()">sort</button>
+		<SearchResults v-if="dataIsReady" :properties="properties" :sortTerm="sortTerm" />
 	</main>
 </template>
 
@@ -12,7 +13,7 @@ import {ref } from "vue";
 import SearchResults from "../components/SearchResults.vue";
 import SearchBar from "../components/SearchBar.vue";
 import Property from "../components/Property.vue";
-import type {PropertyType} from '../types/types'
+import type {PropertyType, SortTerm} from '../types/types'
 
 	
 export default {
@@ -24,6 +25,13 @@ export default {
 	setup () {
 		let dataIsReady  = ref(false)
 		let properties: PropertyType[] = []
+		var sortTerm = ref<SortTerm>('listing_id')
+		
+
+		function handleClick () {
+            this.sortTerm = 'price'
+        }
+
 		async function fetchForSaleData (query: string, state: string) {
 			let resp:PropertyType[] = await getForSale(query, state);
 			this.properties = resp
@@ -32,7 +40,9 @@ export default {
 		return {
 			fetchForSaleData,
 			properties,
-			dataIsReady 
+			dataIsReady ,
+			handleClick,
+			sortTerm,
 		}
 	},
 	mounted () {
