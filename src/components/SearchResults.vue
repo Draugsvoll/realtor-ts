@@ -1,10 +1,14 @@
 
 <template>
 	<div>
+        <button @click="sortPriceHigh()">Price high</button>
+        <button @click="sortPriceLow()">Price Low</button>
+        <button @click="sortAlphabetical()">Alphabetical</button>
+        <button @click="sort()">sort</button>
+        <!-- <transition-group tag="ul" name="list"> -->
+            <Property v-for="property, index in orderedProperties" :property="property" :key="index" />
+        <!-- </transition-group> -->
 		<h1>Search Results</h1>
-        <p>{{test}}</p>
-		<button @click="sort()">sort</button>
-		<Property v-for="property in orderedProperties" :property="property" />
 	</div>
 </template>
 
@@ -21,23 +25,36 @@
         },
     },
     setup(props) {
-        let test = ref('listing_id')
-
         let orderedProperties = ref(props.properties)
+        
+        function sortPriceHigh() {
+            this.test = 'price'
+            this.orderedProperties = [...props.properties].sort((a: PropertyType, b: PropertyType) => {
+                return a[this.test] < b[this.test] ? +1 : -1;
+            })
+        }
 
-        function sort() {
+        function sortPriceLow() {
             this.test = 'price'
             this.orderedProperties = [...props.properties].sort((a: PropertyType, b: PropertyType) => {
                 return a[this.test] > b[this.test] ? +1 : -1;
             })
         }
 
-        return { orderedProperties, sort, test };
+        function sortAlphabetical() {
+            let list = this.orderedProperties.sort((a:any, b:any) => 
+                a['address']['neighborhood_name'].localeCompare(b['address']['neighborhood_name']))
+            return list
+        }
+
+        return { orderedProperties, sortPriceHigh, sortPriceLow, sortAlphabetical };
     },
     components: { Property }
 })
 </script>
 
 <style scoped>
-	
+	.list-move {
+        transition: all 1s;
+    }
 </style>

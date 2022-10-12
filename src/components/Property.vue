@@ -4,9 +4,11 @@
 		<!-- Buy -->
 		<div v-if="property.prop_status === 'for_sale'">
 			<p>${{property.price.toLocaleString()}}</p>
-			<!-- <p>{{property.address.line}}</p>
-			<p>{{property.address.city}}</p>
-			<img width="100" :src="property.thumbnail" alt=""> -->
+			<p>{{property.address.neighborhood_name}}</p>
+			<p>{{property.property_id}}</p>
+			<p>{{property.address.line}}</p>
+			<!-- <p>{{property.address.city}}</p> -->
+			<!-- <img width="100" :src="property.thumbnail" alt=""> -->
 		</div>
 
 		<!-- Renting -->
@@ -30,7 +32,7 @@
 				type: Object as PropType<PropertyType>
 			},
 	},
-	setup() {
+	setup(props) {
 	},
 	})
 </script>
@@ -38,6 +40,7 @@
 
 <style scoped>
 .container {
-	margin:1rem auto;
+	margin:1.5rem auto;
+	background: rgb(50, 48, 55);
 }
 </style>
