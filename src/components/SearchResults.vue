@@ -5,9 +5,14 @@
         <button @click="sortPriceLow()">Price Low</button>
         <button @click="sortAlphabetical()">Alphabetical</button>
         <button @click="sort()">sort</button>
-        <!-- <transition-group tag="ul" name="list"> -->
-            <Property v-for="property, index in orderedProperties" :property="property" :key="index" />
-        <!-- </transition-group> -->
+        <transition-group tag="ul" name="list">
+            <li class="test" v-for="property in orderedProperties" :property="property" :key="property" >
+                <p>${{property.price.toLocaleString()}}</p>
+                <p>{{property.address.neighborhood_name}}</p>
+                <p>{{property.property_id}}</p>
+                <p>{{property.address.line}}</p>
+            </li>
+        </transition-group>
 		<h1>Search Results</h1>
 	</div>
 </template>
@@ -42,9 +47,9 @@
         }
 
         function sortAlphabetical() {
-            let list = this.orderedProperties.sort((a:any, b:any) => 
+            let filteredList = this.orderedProperties.filter(property => property['address']['neighborhood_name'] !== undefined)
+            this.orderedProperties = filteredList.sort((a: PropertyType, b: PropertyType) =>
                 a['address']['neighborhood_name'].localeCompare(b['address']['neighborhood_name']))
-            return list
         }
 
         return { orderedProperties, sortPriceHigh, sortPriceLow, sortAlphabetical };
@@ -56,5 +61,9 @@
 <style scoped>
 	.list-move {
         transition: all 1s;
+    }
+    .test {
+        margin:1.5rem auto;
+        background: rgb(50, 48, 55);
     }
 </style>
