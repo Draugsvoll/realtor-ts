@@ -5,15 +5,12 @@
         <button @click="sortPriceLow()">Price Low</button>
         <button @click="sortAlphabetical()">Alphabetical</button>
         <button @click="sort()">sort</button>
+        <h1>Search Results</h1>
         <transition-group tag="ul" name="list">
-            <li class="test" v-for="property in orderedProperties" :property="property" :key="property" >
-                <p>${{property.price.toLocaleString()}}</p>
-                <p>{{property.address.neighborhood_name}}</p>
-                <p>{{property.property_id}}</p>
-                <p>{{property.address.line}}</p>
+            <li v-for="property in orderedProperties" :property="property" :key="property" >
+                <Property :property="property"></Property>
             </li>
         </transition-group>
-		<h1>Search Results</h1>
 	</div>
 </template>
 
@@ -58,12 +55,18 @@
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 	.list-move {
         transition: all 1s;
     }
-    .test {
-        margin:1.5rem auto;
-        background: rgb(50, 48, 55);
+    
+    ul {
+        display:inline-flex;
+        flex-wrap: wrap;
+        justify-content:center;
+        li {
+            display:inline-flex;
+        }
     }
+    
 </style>
