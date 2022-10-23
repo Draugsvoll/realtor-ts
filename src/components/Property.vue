@@ -1,5 +1,5 @@
 <template>
-	<router-link to="/view_property?id=999" class="container">
+	<router-link :to="url" class="container">
 
 		<!-- Buy -->
 		<div class="property-container" v-if="property.prop_status === 'for_sale'">
@@ -31,14 +31,21 @@
 
 <script lang="ts">
 	import type { PropertyType } from '@/types/types';
-	import { defineComponent, type PropType } from 'vue';
+	import { defineComponent, ref, type PropType } from 'vue';
 
 	export default defineComponent({
 		props: {
 			property: {
 				required: true,
 				type: Object as PropType<PropertyType>
+				},
 			},
+		setup (props) {
+			const routeUrl = '/view_property?id='
+			const id = props.property.property_id
+			const url = routeUrl + id
+
+			return {url}
 		},
 	})
 </script>

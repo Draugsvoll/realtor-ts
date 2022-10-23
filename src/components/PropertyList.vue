@@ -3,7 +3,7 @@
 	<div>
         <button @click="sortPriceHigh()">Price high</button>
         <button @click="sortPriceLow()">Price Low</button>
-        <button @click="sortAlphabetical()">Alphabetical</button>
+        <button @click="sortAlphabetical()">A-Z</button>
         <button @click="sort()">sort</button>
         <h1>Search Results</h1>
         <transition-group tag="ul" name="list">
@@ -16,7 +16,7 @@
 
 <script  lang="ts">
 	import type { PropertyType } from '@/types/types';
-	import { computed, defineComponent, ref, type PropType } from 'vue';
+	import { defineComponent, ref, type PropType } from 'vue';
 	import Property from './Property.vue';
 	
 	export default defineComponent({

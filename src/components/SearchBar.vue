@@ -1,10 +1,10 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-	<div class="comp-container">
+	<div class="container">
 		<h1>SearchComp</h1>
 		<div class="btn-row">
-			<button>Buy</button>
-			<button>Sell</button>
+			<button @click="toggleAction('buy')">Buy</button>
+			<button @click="toggleAction('rent')">Rent</button>
 		</div>
 		<div class="searchBar">
 			<input v-model="query" type="text">
@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import {useRouter, useRoute} from 'vue-router'
+import {useRouter} from 'vue-router'
 	
 	const router = useRouter()
     const query = ref('new york')
@@ -55,26 +55,37 @@ import {useRouter, useRoute} from 'vue-router'
 	const baths = ref([1, 2, 3, 4])
 	const selectedBath = ref(baths._rawValue[0])
 
+	let action = ref('buy')
+
+	function toggleAction(newAction: string) {
+		this.action = newAction
+		console.log('changed actino: ', newAction)
+	}
+
 	function search(query: string, selectedState: string) {
-		router.push(`/forsale?query=${query}&state=${selectedState}`)
+		let actionValue = action.value
+		let route: string ='search' 
+		router.push(`/${route}?action=${actionValue}&query=${query}&state=${selectedState}`)
 	}
 	
 </script>
 
-<style lang="scss">
-.comp-container {
+<style lang="scss" scoped>
+.container {
   border: 2px solid red;
-}
-.filters-container {
-	display: flex;
-	gap:2rem;
-
-	.filter {
-		max-width:250px;
-
-		select {
-			width:40px;
-		}
-	}
+  .searchBar {
+	  .filters-container {
+		  display: flex;
+		  gap:2rem;
+	  
+		  .filter {
+			  max-width:250px;
+	  
+			  select {
+				  width:40px;
+			  }
+		  }
+	  }
+  }
 }
 </style>

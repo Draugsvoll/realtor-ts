@@ -1,12 +1,12 @@
 <script setup >
-  import TheWelcome from "../components/TheWelcome.vue";
+  import TheWelcome from "../components/test/TheWelcome.vue";
   import SearchBar from "../components/SearchBar.vue";
 </script>
 
 <template>
   <main>
     <h1>HomeView</h1>
-    <Search />
+    <SearchBar />
   </main>
 </template>
 

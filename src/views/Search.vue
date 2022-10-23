@@ -1,15 +1,15 @@
 <template>
 	<main>
-		<h1>/Buy</h1>	
+		<h1>/Search</h1>	
 		<SearchBar/>
-		<SearchResults v-if="dataIsReady" :properties="properties" />
+		<PropertyList v-if="dataIsReady" :properties="properties" />
 	</main>
 </template>
 
 <script lang="ts">
 import { getForSale } from "@/api/apis";
 import {ref } from "vue";
-import SearchResults from "../components/SearchResults.vue";
+import PropertyList from "../components/PropertyList.vue";
 import SearchBar from "../components/SearchBar.vue";
 import Property from "../components/Property.vue";
 import type {PropertyType} from '../types/types'
@@ -19,7 +19,7 @@ export default {
 	components: {
 		Property,
 		SearchBar,
-		SearchResults,
+		PropertyList,
   },
 	setup () {
 		let dataIsReady  = ref(false)

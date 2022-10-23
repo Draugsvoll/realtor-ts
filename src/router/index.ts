@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import Buy from "../views/Buy.vue";
-import Rent from "../views/Rent.vue";
+import Search from "../views/Search.vue";
 import ViewProperty from "../views/ViewProperty.vue";
 
 const router = createRouter({
@@ -13,14 +12,9 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: "/buy",
-      name: "buy",
-      component: Buy,
-    },
-    {
-      path: "/rent",
-      name: "rent",
-      component: Rent,
+      path: "/search",
+      name: "search",
+      component: Search,
     },
     {
       path: "/view_property",
