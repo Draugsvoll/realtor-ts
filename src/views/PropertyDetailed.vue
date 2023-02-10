@@ -44,23 +44,23 @@
                 <form action="">
                     <span class="input-output">Input</span>
                     <span>Monthly Insurance:</span><input v-model="hoi" type="decimal" >
-                    <span>Tax Rate (%):</span><input v-model="tax"  type="decimal" >
+                    <span>Tax Rate (%):</span><input v-model="tax_rate"  type="decimal" >
                     <span>Downpayment:</span><input v-model="downpayment" type="decimal">
                     <span>Price $:</span><input v-model="price" type="decimal">
                     <span>Term (years):</span><input v-model="term" type="decimal" >
                     <span>Interest (%):</span><input v-model="rate" type="decimal">
                 </form>
+				<button @click="calculateMortgage">Calculate</button>
             </div>
 
             <!-- output -->
-            <div class="output" >
+            <div class="output" v-if="calculatedMortgage">
                 <span class="output-span">Output</span>
-                <span class="span">Monthly property tax: </span> ${{ output.monthly_property_taxes }}
-                <span class="span">Principal and interest: </span> ${{ output.principal_and_interest }}
-                <span class="span">Monthly Payment: </span> ${{ output.monthly_payment }}
-                <span class="span">Downpayment: </span> ${{ output.down_payment }}
-                <span class="span">Total payment: </span> ${{ output.total_payment }}
-                <button @click="calculate">Calculate</button>
+                <span class="span">Monthly property tax: </span> ${{ calculatedMortgage.monthly_property_taxes }}
+                <span class="span">Principal and interest: </span> ${{ calculatedMortgage.principal_and_interest }}
+                <span class="span">Monthly Payment: </span> ${{ calculatedMortgage.monthly_payment }}
+                <span class="span">Downpayment: </span> ${{ calculatedMortgage.down_payment }}
+                <span class="span">Total payment: </span> ${{ calculatedMortgage.total_payment }}
             </div>
 
         </div>
@@ -68,40 +68,32 @@
 	</main>
   </template>
   <script lang="ts">
-  import { getPropertyDetails } from '@/api/apis';
-	import axios from 'axios';
+  import { calculateMortgageApi, getPropertyDetails, getSimilarProperties } from '@/api/apis';
   import { ref } from 'vue';
   
   export default {
 	setup () {
 	  const property = ref()
+	//   const similarProperties = ref()
 	  const map_url = ref('')
 
 		const hoi  = ref('300')
 		const decimal =' 1.5'
-		const tax  = ref('1.8')
+		const tax_rate  = ref('1.8')
 		const downpayment = ref('30000')
 		const price  = ref('400000')
 		const term  = ref('25')
 		const rate  = ref('1.2')
-		const output = ref({})
-		const similarProperties = ref([])
-		const ready = ref(false)
+		const calculatedMortgage = ref()
 
-		const VITE_RAPID_KEY:string = import.meta.env.VITE_RAPID_KEY
-		const VITE_RAPID_HOST:string = import.meta.env.VITE_RAPID_HOST
-		const headers = {
-			'x-rapidapi-key': VITE_RAPID_KEY,
-			'x-rapidapi-host': VITE_RAPID_HOST
-		}
-
-		async function fetchProperty (id: string) {
+		const fetchProperty = async (id: string) => {
 			let resp = await getPropertyDetails(id)
 			property.value = resp.properties[0]
+			console.log('current property: ', property.value)
 			getMapUrl()
-			console.log('resp: ', property.value)
-			getSimilarProperties()
+			// fetchSimilarProperties()
 		}
+
 		
 		function getMapUrl() {
 			let lat = property.value.address.lat
@@ -111,59 +103,21 @@
 			map_url.value = `https://www.openstreetmap.org/export/embed.html?bbox=${lonInt-2}.87893676757814%2C${latInt-2}.52307880890422%2C${lonInt}.59353637695314%2C${latInt}.32302363048832&layer=mapnik&amp&marker=${lat}%2C${lon}`;
 		}
 
-		function calculate () {
-            const options = {   
-				method: 'GET',
-				url: 'https://realtor.p.rapidapi.com/mortgage/calculate',
-				params: {
-					hoi: hoi.value,
-					tax_rate: tax.value,
-					downpayment: downpayment.value,
-					price: price.value,
-					term: term.value,
-					rate: rate.value
-				},
-				headers: headers
-			}
-            axios.request(options).then(function (response) {
-                console.log(response.data)
-				console.error('HERE ', response.data.mortgage)
-                output.value = response.data.mortgage
-				ready.value = true
-            }).catch(function (error) {
-                console.error(error);
-            });
+		async function calculateMortgage () {
+            console.log('mortage resp: ', await calculateMortgageApi(hoi.value, tax_rate.value, downpayment.value, price.value, term.value, rate.value))
         }
 
-		function getSimilarProperties () {
-            let similarProperties1:any = []
-			const ref = this
-			console.error('property: ', property.value)
-			debugger 
-            const options = {
-                method: 'GET',
-                url: 'https://realtor.p.rapidapi.com/properties/v2/list-similar-rental-homes',
-                params: {postal_code: '10028', property_id: '2952212337'},
-                headers: headers
-                };
-                axios.request(options).then(function (response) {
-                    console.log('1234 similiar property: ',response);
-                    response.data.properties.forEach( property => {
-                        similarProperties1.push(property)
-                    })
-                    ref.similarProperties = similarProperties1
-                }).catch(function (error) {
-                    console.error('1234 ', error);
-                });
+		async function fetchSimilarProperties () {
+            console.log('similar properies: ', await getSimilarProperties(property.value.property_id, property.value.prop_status))
+            // similarProperties.value = await getSimilarProperties(property.value.property_id, property.value.prop_status)
         }
   
-	  return { fetchProperty, map_url, property, getMapUrl, calculate, hoi, decimal, tax, downpayment, price, term, rate, output, ready, getSimilarProperties }
+	  return { fetchProperty, map_url, property, getMapUrl, hoi, decimal, tax_rate, downpayment, price, term, rate, calculatedMortgage, calculateMortgage }
 	},
 	mounted () {
 	  console.log('route: ', this.$route.query.id)
 	  const property_id = this.$route.query.id as string || ''
 	  this.fetchProperty(property_id)
-	//   this.calculate()
 	}
   };
   </script>

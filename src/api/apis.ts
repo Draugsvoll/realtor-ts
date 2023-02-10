@@ -1,17 +1,14 @@
-import {BASE_URL, FOR_SALE, FOR_RENT, GET_DETAILS} from './endpoints'
+import {BASE_URL, FOR_SALE, FOR_RENT, GET_DETAILS, CALCULATE_MORTGAGE} from './endpoints'
 import axios from 'axios'
 import type {AxiosResponse} from 'axios'
-import type { PropertyType } from '@/types/types'
-
-const VITE_RAPID_KEY:string = import.meta.env.VITE_RAPID_KEY
-const VITE_RAPID_HOST:string = import.meta.env.VITE_RAPID_HOST
+import type { Property } from '@/types/types'
 
 const headers = {
-	'x-rapidapi-key': VITE_RAPID_KEY,
-	'x-rapidapi-host': VITE_RAPID_HOST
+	'x-rapidapi-key': import.meta.env.VITE_RAPID_KEY,
+	'x-rapidapi-host': import.meta.env.VITE_RAPID_HOST
 }
 
-export function getForSale(query: string, state: string): Promise<PropertyType> {
+export function getForSale(query: string, state: string): Promise<any> {
 	const options = {
 		method: 'GET',
 		url: BASE_URL + FOR_SALE,
@@ -26,18 +23,17 @@ export function getForSale(query: string, state: string): Promise<PropertyType> 
 	};
 	return axios.request(options)
 		.then((response: AxiosResponse) => {
-			let properties = response.data.properties
-			return properties as PropertyType[]
+			return response.data.properties as Property[]
 		})
 		.catch((error) => {
-			console.error(error);
+			alert('api error: ' + error)
 			return error
 		});
 }
 
 
 
-export function getForRental(query: string, state: string): Promise<PropertyType> {
+export function getForRental(query: string, state: string): Promise<any> {
 	const options = {
 		method: 'GET',
 		url: BASE_URL + FOR_RENT,
@@ -52,32 +48,69 @@ export function getForRental(query: string, state: string): Promise<PropertyType
 	};
 	return axios.request(options)
 		.then((response: AxiosResponse) => {
-			let properties = response.data.properties
-			return properties as PropertyType[]
+			return response.data.properties as Property[]
 		})
 		.catch((error) => {
-			console.error(error);
+			alert('api error: ' + error)
 			return error
 		});
 }
 
 
-export function getPropertyDetails (id: string):Promise {
+export function getPropertyDetails (id: string): Promise<any> {
 	const options = {
 		method: 'GET',
 		url: BASE_URL + GET_DETAILS,
 		params: {property_id: id},
 		headers: headers
 	};
-	console.log('url: ', options.url)
 
 	return axios.request(options)
 		.then(function (response) {
-			return response.data
+			return response.data as Property
 		})
 		.catch(function (error) {
-			console.error(error);
+			alert('api error: ' + error)
 			return error
 		});
 }
 
+
+export function getSimilarProperties (property_id: string, status: string): Promise<any> {
+	const options = {
+		method: 'GET',
+		url: 'https://realtor.p.rapidapi.com/properties/v3/list-similar-homes',
+		params: {property_id: 'M4891776412', limit: '15', status: 'for_sale'},
+		headers: headers
+	  };
+	  
+	  return axios.request(options).then(function (response) {
+		  console.log(response.data);
+	  }).catch(function (error) {
+		  console.error(error);
+		  alert('api error ' + error)
+	  });
+}
+
+export function calculateMortgageApi (hoi: string, tax_rate: string, downpayment: string, price: string, term: string, rate: string): Promise<any> {
+	const options = {   
+		method: 'GET',
+		url: BASE_URL + CALCULATE_MORTGAGE,
+		params: {
+			hoi: hoi,
+			tax_rate: tax_rate,
+			downpayment: downpayment,
+			price: price,
+			term: term,
+			rate: rate
+		},
+		headers: headers
+	}
+	console.error('url: ', options)
+	return axios.request(options).then(function (response) {
+		return response.data.mortgage
+	}).catch(function (error) {
+		alert('api error (mortgage calculator): ' + error)
+		return undefined
+	});
+}

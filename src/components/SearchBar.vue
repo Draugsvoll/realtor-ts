@@ -50,15 +50,15 @@ import {useRouter} from 'vue-router'
     const query = ref('new york')
 
 	const states = ref(['NY', 'MI', 'CA'])
-	const selectedState = ref(states._rawValue[0])
+	const selectedState = ref(states.value[0])
 	
 	const baths = ref([1, 2, 3, 4])
-	const selectedBath = ref(baths._rawValue[0])
+	const selectedBath = ref(baths.value[0])
 
-	let action = ref('buy')
+	const action = ref('buy')
 
 	function toggleAction(newAction: string) {
-		this.action = newAction
+		action.value = newAction
 		console.log('changed actino: ', newAction)
 	}
 
