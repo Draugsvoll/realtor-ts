@@ -1,15 +1,16 @@
-<script setup >
-  import TheWelcome from "../components/test/TheWelcome.vue";
-  import SearchBar from "../components/SearchBar.vue";
-</script>
 
 <template>
   <main>
-    <h1>HomeView</h1>
+    <h1>/Home</h1>
     <SearchBar />
   </main>
 </template>
 
+<script lang="ts">
+  import SearchBar from "../components/SearchBar.vue";
+
+  export default {}
+</script>
 
 <style lang="scss" scoped>
   main {

@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { getForSale } from "@/api/apis";
+import { getForRental, getForSale } from "@/api/apis";
 import {ref } from "vue";
 import PropertyList from "../components/PropertyList.vue";
 import SearchBar from "../components/SearchBar.vue";
@@ -27,19 +27,33 @@ export default {
 
 		async function fetchForSaleData (query: string, state: string) {
 			let resp:PropertyType[] = await getForSale(query, state);
+			console.table(resp)
+			this.properties = resp
+			this.dataIsReady  = true
+		}
+
+		async function fetchForRentData (query: string, state: string) {
+			let resp:PropertyType[] = await getForRental(query, state);
 			this.properties = resp
 			this.dataIsReady  = true
 		}
 		return {
 			fetchForSaleData,
 			properties,
-			dataIsReady ,
+			dataIsReady,
+			fetchForRentData,
 		}
 	},
 	mounted () {
 		const query = this.$route.query.query as string || ''
 		const state = this.$route.query.state as string || ''
-		this.fetchForSaleData(query, state)
+		const action = this.$route.query.action as string || ''
+		if 	(action === 'buy') {
+			this.fetchForSaleData(query, state)
+		} 	
+		else if (action === 'rent') {
+			this.fetchForRentData(query, state)
+		} 
 	}
 };
 

@@ -12,7 +12,7 @@
 				<div class="stats">
 					<p>{{property.baths}} baths</p>
 					<p>{{property.beds}} beds</p>
-					<p>{{property.building_size?.size}} sqft</p>
+					<p v-if="property.building_size">{{property.building_size.size}} sqft</p>
 				</div>
 				<p>{{property.address.city}}</p>
 				<p>{{property.property_id}}</p>
