@@ -14,7 +14,7 @@
 </template>
 
 <script  lang="ts">
-	import type { Property } from '@/types/types';
+	import type { Property } from '@/types/property/Property.type';
 	import { defineComponent, ref, type PropType } from 'vue';
 	import PropertyComp from './Property.vue';
 	

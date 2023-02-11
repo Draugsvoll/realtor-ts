@@ -1,7 +1,7 @@
 import {BASE_URL, FOR_SALE, FOR_RENT, GET_DETAILS, CALCULATE_MORTGAGE} from './endpoints'
 import axios from 'axios'
 import type {AxiosResponse} from 'axios'
-import type { Property } from '@/types/types'
+import type { Property } from '@/types/property/Property.type'
 
 const headers = {
 	'x-rapidapi-key': import.meta.env.VITE_RAPID_KEY,

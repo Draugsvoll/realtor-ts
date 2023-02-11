@@ -12,7 +12,7 @@ import {ref } from "vue";
 import PropertyList from "../components/PropertyList.vue";
 import SearchBar from "../components/SearchBar.vue";
 import PropertyComp from "../components/Property.vue";
-import type {Property} from '../types/types'
+import type {Property} from '../types/property/Property.type'
 
 	
 export default {
