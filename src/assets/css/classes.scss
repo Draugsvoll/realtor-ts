@@ -1,0 +1,33 @@
+.fullscreen-box {
+	width:100%; 
+	min-height:100vh;
+	padding:2rem;
+}
+
+.flex-center-center-content {
+	display:flex;
+	justify-content: center;
+	align-items:center;
+}
+
+.bg-fullscreen {
+	/* Full height */
+	height: 100%;
+	/* Center and scale the image nicely */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+}
+
+.overlay {
+	position: absolute;
+	width:100%;
+	height:100%;
+	background-color: rgba(0,0,0,0.6);
+}
+
+.red {
+	border:4px solid red;
+	color:red;
+}

@@ -1,3 +1,0 @@
-must define initial reactive objects while waiting for api
-
-use a list of states selector in searchbar
