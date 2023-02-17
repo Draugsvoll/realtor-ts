@@ -1,13 +1,21 @@
-/* variables  */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap');
+
 :root {
   --font-color: rgb(234, 245, 234);
   --background-dark: #181818;
-  --background-dark2:rgb(30, 32, 34)8;
+  --background-dark2:rgb(30, 32, 34);
 
+  --line-height-small: 1.2;
+  --line-height-medium: 1.4;
+  --line-height-large: 1.2;
+  
   background:var(--background-dark);
   color:var(--font-color);
-
   font-family: Arial, Helvetica, sans-serif;
+
+  @media screen and (min-width: 1700px) {
+    font-size:18px;
+  }
 }
 
 * {

@@ -2,7 +2,7 @@
 	<main>
 		<h1>/Search</h1>	
 		<SearchBar/>
-		<PropertyList v-if="dataIsReady" :properties="properties" />
+		<PropertyList v-if="properties" :properties="properties" />
 	</main>
 </template>
 
@@ -14,7 +14,7 @@ import SearchBar from "../components/SearchBar.vue";
 import PropertyComp from "../components/Property.vue";
 import type {Property} from '../types/property/Property.type'
 import { useRoute, useRouter } from "vue-router";
-import type { FetchPropertiesForSaleParams } from "@/types/property/FetchProperty.type";
+import type { SearchParams } from "@/types/property/FetchProperty.type";
 
 	
 export default {
@@ -26,42 +26,38 @@ export default {
 	setup () {
 		const route = useRoute()
 		const router = useRouter()
-		const dataIsReady  = ref(false)
-		const properties = ref()
+		const properties = ref(<Property[]|undefined>undefined)
 
-		async function fetchForSaleData (parameters: FetchPropertiesForSaleParams) {
+		async function fetchForSaleData (parameters: SearchParams) {
 			let params = parameters
 			let resp:Property[] = await getForSale(params);
 			console.log('for sale array: ', resp)
 			properties.value = resp
-			dataIsReady.value  = true
+		}
+		async function fetchForRentalData (parameters: SearchParams) {
+			let params = parameters
+			let resp:Property[] = await getForRental(params);
+			console.log('for rent array: ', resp)
+			properties.value = resp
 		}
 
-		async function fetchForRentData (query: string, state: string) {
-			let resp:Property[] = await getForRental(query, state);
-			properties.value = resp
-			dataIsReady.value  = true
-		}
 		return {
 			fetchForSaleData,
+			fetchForRentalData,
 			properties,
-			dataIsReady,
-			fetchForRentData,
 			route,
 			router,
 		}
 	},
 	mounted () {
-		// const query = this.$route.query.query as string || ''
-		// const state = this.$route.query.state as string || ''
-		// const action = this.$route.query.action as string || ''
-		// if 	(action === 'buy') this.fetchForSaleData()
-		// else if (action === 'rent') this.fetchForRentData(query, state)
 		let params;
 		if (typeof this.route.query.object === 'string') {
 			params = JSON.parse(decodeURIComponent(this.route.query.object));
-		} 
-		this.fetchForSaleData(params)
+			if (params.buyOrRent === 'buy') this.fetchForSaleData(params)
+			else if (params.buyOrRent === 'rent') this.fetchForRentalData(params)
+		} else {
+			alert('Error fetching user input from queryParams')
+		}
 	}
 };
 

@@ -3,11 +3,11 @@
 	<div class="container">
 		<h1>SearchComp</h1>
 		<div class="btn-row">
-			<button @click="toggleAction('buy')" :class="{ 'highlighted': action === 'buy' }">Buy</button>
-			<button @click="toggleAction('rent')" :class="{ 'highlighted': action === 'rent' }">Rent</button>
+			<button @click="toggleBuyOrRent('buy')" :class="{ 'highlighted': buyOrRent === 'buy' }">Buy</button>
+			<button @click="toggleBuyOrRent('rent')" :class="{ 'highlighted': buyOrRent === 'rent' }">Rent</button>
 		</div>
 		<div class="searchBar">
-			<input v-model="query" type="text">
+			<input v-model="query" type="text" placeholder="City, Adress..." autofocus @keyup.enter="search()">
 			<select v-model="userInput.selected_state" class="select-state">
 				<option 
 					v-for="state in states" 
@@ -58,31 +58,6 @@
 
 				<button @click="()=> {userInput.selected_price_min = undefined}">reset</button>
 				
-				<!-- <div class="filter">
-					<p>Square feet</p>
-					<div class="input-container">
-						<input type="number">
-						<input type="number">
-					</div>
-				</div>
-				<div class="filter">
-					<div class="input-container">
-						<p>Price</p>
-						<input type="number">
-						<p>Price2</p>
-						<input type="number">
-					</div>
-				</div>
-				<div class="filter">
-					<p>Baths min</p>
-					<select v-model="selected_baths_min">
-						<option 
-							v-for="bath in baths"
-							:value="bath"
-							>{{bath}}
-						</option>
-					</select>
-				</div> -->
 			</div>
 		</div>
 	</div>
@@ -91,11 +66,11 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import {useRouter} from 'vue-router'
-import type {FetchPropertiesForSaleParams} from '@/types/property/FetchProperty.type'
-import { getForSale } from '@/api/apis';
+import type {SearchParams} from '@/types/property/FetchProperty.type'
+import type {BuyOrRent} from '@/types/property/Property.type'
 	
 	const router = useRouter()
-    const query = ref('new york')
+    const query = ref(<string>'')
 
 	const states = [
 		{ name: 'Alabama', code: 'AL' },
@@ -151,24 +126,24 @@ import { getForSale } from '@/api/apis';
 	]
 
 	// user input options
-	const baths_min_options = ref(generateNumberArray(5))
-	const beds_min_options = ref(generateNumberArray(5))
-	const age_max_options = ref(generateNumberArray(50))
+	const baths_min_options = ref(<number[]>generateNumberArray(5))
+	const beds_min_options = ref(<number[]>generateNumberArray(5))
+	const age_max_options = ref(<number[]>generateNumberArray(50))
 
 	// inputs from user
 	const userInput = reactive({
       selected_baths_min: undefined as number | undefined,
       selected_beds_min: undefined as number | undefined,
       selected_age_max: undefined as number | undefined,
-      selected_state: states[0],
+      selected_state: states[31],
       selected_sqft_min: undefined as number | undefined,
       selected_sqft_max: undefined as number | undefined,
       selected_price_min: undefined as number | undefined,
       selected_price_max: undefined as number | undefined
     });
 
-	const action = ref(<buyOrRent>'buy')
-	type buyOrRent = 'buy' | 'rent'
+	// looking to buy or rent
+	const buyOrRent = ref(<BuyOrRent>'buy')
 
 	function generateNumberArray(number: number): number[] {
 		let numberArray = []
@@ -178,11 +153,12 @@ import { getForSale } from '@/api/apis';
 		return numberArray
 	}
 
-	function toggleAction(newAction: buyOrRent): void {
-		action.value = newAction
+	function toggleBuyOrRent(BuyOrRent: BuyOrRent): void {
+		buyOrRent.value = BuyOrRent
 	}
 	
-	function addOptionalParams(params: FetchPropertiesForSaleParams) {
+	function addOptionalParams(params: SearchParams) {
+		// fetch user inputs
 		if (userInput.selected_sqft_max) params['sqft_max'] = userInput.selected_sqft_max.toString()
 		if (userInput.selected_sqft_min) params['sqft_min'] = userInput.selected_sqft_min .toString()
 		if (userInput.selected_price_max) params['price_max'] = userInput.selected_price_max.toString()
@@ -190,22 +166,30 @@ import { getForSale } from '@/api/apis';
 		if (userInput.selected_beds_min) params['beds_min'] = userInput.selected_beds_min.toString()
 		if (userInput.selected_baths_min) params['baths_min'] = userInput.selected_baths_min.toString()
 		if (userInput.selected_age_max) params['age_max'] = userInput.selected_age_max.toString()
+
+		// appearantly api bugs out sometimes, if these inputs are empty
+		if (!userInput.selected_sqft_min) params['sqft_min'] = '1'
+		if (!userInput.selected_price_min) params['price_min'] = '1'
+		if (!userInput.selected_beds_min) params['beds_min'] = '1'
+		if (!userInput.selected_baths_min) params['baths_min'] = '1'
+
 		return params
 	}
 
-	function search() {
-		let params: FetchPropertiesForSaleParams = 
+	function search():void {
+		let params: SearchParams = 
 		{
 			city: query.value.toString(),
 			state_code: userInput.selected_state.code.toString(),
 			limit: '25',
 			offset: '0',
 			sort: 'relevance',
+			buyOrRent: buyOrRent.value
 		}
 		params = addOptionalParams(params)
 
 		let paramsEncoded = encodeURIComponent(JSON.stringify(params))
-		router.push({path:`/search?action=${action.value}`, query: {object:paramsEncoded} })
+		router.push({path:`/search?`, query: {object:paramsEncoded} })
 	}
 	
 </script>

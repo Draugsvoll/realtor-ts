@@ -1,4 +1,4 @@
-export type FetchPropertiesForSaleParams = {
+export type SearchParams = {
 	query?: string
 	city: string
 	state_code: string
@@ -12,5 +12,6 @@ export type FetchPropertiesForSaleParams = {
 	limit: string
 	offset: string
 	sort: string
+	buyOrRent: 'buy' | 'rent'
 }
 
