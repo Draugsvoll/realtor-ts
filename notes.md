@@ -2,6 +2,8 @@
 - dont only allow city search in apis ??
 
 # to-do
+- finish header
+- can re-search in SearchResultView
 
 # current
-- type guards in propertyView
+- buy/rent type in propertyView

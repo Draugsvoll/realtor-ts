@@ -9,7 +9,7 @@ export interface PropertyDetailedBuy {
 	list_date:            string;
 	last_update:          string;
 	broker:               Broker;
-	year_built:           number;
+	year_built?:           number;
 	listing_status:       string;
 	beds:                 number;
 	description:          string;

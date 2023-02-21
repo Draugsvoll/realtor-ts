@@ -2,9 +2,9 @@
 	<router-link :to="url" class="container">
 
 		<!-- BUY PROPERTY -->
-		<div class="property-container" v-if="isPropertyBuy(property)">
+		<div class="property-container radius-small" v-if="isPropertyBuy(property)">
 			<div class="img-container">
-				<img :src="property.thumbnail" alt="">
+				<img class="radius-small" :src="property.thumbnail" alt="">
 			</div>
 			<div class="info">
 				<p class="price">${{property.price.toLocaleString()}}</p>
@@ -79,10 +79,9 @@ a {
 }
 .property-container {
 	cursor: pointer;
-	width: 350px;
-	height:400px;
+	width: 23rem;
+	height:30rem;
 	list-style-type: none;
-	border-radius:10px;
 	overflow:hidden;
 	margin:1.5rem 1rem;
 	background: rgb(54, 55, 56);
@@ -97,13 +96,12 @@ a {
 	}
 
 	.img-container {
-		height:250px;
+		height:16rem;
 		display:flex;
 		justify-content: center;
 		img {
 			max-width:100%;
 			max-height:100%;
-			border-radius:5px;
 		}
 	}
 }

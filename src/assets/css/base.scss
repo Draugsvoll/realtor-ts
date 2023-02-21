@@ -2,17 +2,17 @@
 
 :root {
   --font-color: rgb(234, 245, 234);
+  --font-color-dark:#3e3e3e;
   --background-dark: #181818;
   --background-dark2:rgb(30, 32, 34);
 
-  --line-height-small: 1.2;
-  --line-height-medium: 1.4;
-  --line-height-large: 1.2;
-  
+  --color-primary:red;
+
   background:var(--background-dark);
   color:var(--font-color);
+  
   font-family: Arial, Helvetica, sans-serif;
-
+  
   @media screen and (min-width: 1700px) {
     font-size:18px;
   }
