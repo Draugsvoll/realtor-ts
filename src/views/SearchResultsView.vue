@@ -1,6 +1,5 @@
 <template>
 	<main>
-		<h1>/Search</h1>	
 		<SearchBar/>
 		<PropertyList v-if="properties" :properties="properties" />
 	</main>
@@ -65,6 +64,7 @@ export default {
 
 <style scoped>
 	main {
+		padding-top:5rem;
 	}
 
 </style>

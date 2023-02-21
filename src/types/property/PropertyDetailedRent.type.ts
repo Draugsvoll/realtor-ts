@@ -14,6 +14,7 @@ export interface PropertyDetailedRent {
 	branding:             Branding;
 	baths_full:           number;
 	prop_status:          string;
+	year_built?:           number;
 	address:              Address;
 	features:             Feature[];
 	client_display_flags: ClientDisplayFlags;

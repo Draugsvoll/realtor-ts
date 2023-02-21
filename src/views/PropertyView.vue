@@ -3,7 +3,12 @@
 		<div class="property-container" v-if="property">
 			<div class="card">
 				<div class="img-container">
-					<img :src="property.photos[0].href" alt="">
+					<img v-if="property" class="radius-small" :src="currentPhoto" alt="">
+				</div>
+				<div v-if="property" class="photos-container">
+					<div v-for="photo in property.photos" class="photo">
+						<img @click="setImage(photo.href)" class="radius-small" :src="photo.href" alt="">
+					</div>
 				</div>
 				<div class="info">
 					<p class="price">${{ property.price?.toLocaleString()}}</p>
@@ -20,11 +25,10 @@
 				</div>
 			</div>
 			<div class="map-container">
-				<iframe height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" :src="map_url"
+				<iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" :src="map_url"
 					style="border: 1px solid black">
 				</iframe>
-				<br /><small><a href="https://www.openstreetmap.org/?mlat=40.631&amp;mlon=-75.344#map=7/40.631/-75.344">Vis
-						større kart</a></small>
+				<br /><small><a href="https://www.openstreetmap.org/?mlat=40.631&amp;mlon=-75.344#map=7/40.631/-75.344">Display full map</a></small>
 			</div>
 		</div>
 
@@ -54,12 +58,6 @@
 			</div>
 		</div>
 
-		<div v-if="property" class="photos-container">
-			<div v-for="photo in property.photos" class="photo">
-				<div class="overlay"></div>
-				<img :src="photo.href" alt="">
-			</div>
-		</div>
 
 </main>
 </template>
@@ -73,6 +71,7 @@ export default {
 	setup() {
 		const property = ref(<PropertyDetailed|undefined>undefined)
 		const map_url = ref(<string>'')
+		const currentPhoto = ref(<string|undefined> undefined)
 		//   const similarProperties = ref()
 
 		const calculatedMortgage = ref(<MortgageStats|undefined>undefined)
@@ -89,6 +88,7 @@ export default {
 		const fetchProperty = async (id: string) => {
 			let resp = await getPropertyDetails(id)
 			property.value = resp.properties[0]
+			currentPhoto.value = property?.value?.photos[0].href
 			console.log('current property: ', property.value)
 			setMapUrl()
 			// fetchSimilarProperties()
@@ -111,12 +111,16 @@ export default {
 			calculatedMortgage.value = await calculateMortgageApi(toRaw(mortgageInputs))
 		}
 
+		function setImage(url: string) {
+			currentPhoto.value = url
+		}
+
 		// async function fetchSimilarProperties() {
 			// console.log('similar properies: ', await getSimilarProperties(property.value.property_id, property.value.prop_status))
 			// similarProperties.value = await getSimilarProperties(property.value.property_id, property.value.prop_status)
 		// }
 
-		return { fetchProperty, map_url, property, setMapUrl, mortgageInputs, calculateMortgage,calculatedMortgage }
+		return { fetchProperty, map_url, property, setMapUrl, mortgageInputs, calculateMortgage,calculatedMortgage, setImage, currentPhoto }
 	},
 	mounted() {
 		const property_id = this.$route.query.id as string || ''
@@ -132,59 +136,64 @@ export default {
 main {
 	.property-container {
 		text-transform: capitalize;
-		border: 1px solid grey;
-		display: flex;
-		flex-wrap: wrap;
-
-		div {}
-
+		padding-top:5rem;
+		display:flex;
+		margin:auto;
+		max-width:80rem;
+		width:fit-content;
+		div {
+			width:50%;
+		}
 		.card {
+			margin:auto;
 			.img-container {
+				margin:0.5rem auto 0.5rem auto;
+				display:flex;
+				justify-content: center;
 				img {
-					height: 100%;
+					margin:auto;
 				}
+			}
+			.info {
+				border:1px solid red;
+				width:100%;
+			}
+			.photos-container {
+				display: flex;
+				gap: 0.5rem;
+				justify-content: center;
+				overflow:hidden;
+				width:100%;		
+				.photo {
+					img {
+					flex-grow:1;
+					max-width:9rem;
+					max-height:6rem;
+					object-fit: cover;
+					cursor:pointer;
+					}
+				}
+		
 			}
 		}
 
 		.map-container {
+			max-width:50rem;
+			width:30rem;
+			margin:0 auto 0 auto;
 			iframe {
-				min-width: 400px;
-				width: 100%;
+				width:100%;
+				height:100%;
 			}
 		}
 	}
 
-	.photos-container {
-		padding: 3rem;
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem;
-		justify-content: center;
-
-		.photo {
-			position: relative;
-
-			.overlay {
-				background: rgba(0, 0, 0, 0.15);
-				cursor: pointer;
-			}
-
-			img {
-				width:clamp(200px, 15vw, 310px);
-				height:clamp(150px, 15vw, 310px);
-				object-fit: cover;
-				display: block;
-				border-radius: 3px;
-			}
-		}
-
-	}
 
 	.mortgage-container {
 		border: 1px solid grey;
-		padding: 25px;
+		padding: 1.8rem;
 		display: flex;
-		width: 400px;
+		width: 30rem;
 		margin: 0px auto;
 		justify-content: center;
 
@@ -192,14 +201,14 @@ main {
 			font-weight: bold;
 			text-align: center !important;
 			margin: auto;
-			margin-bottom: 25px;
+			margin-bottom: 18rem;
 		}
 
 		.output-span {
 			font-weight: bold;
 			text-align: right !important;
 			margin: 0 auto;
-			margin-bottom: 25px;
+			margin-bottom: 18rem;
 		}
 
 		.numbers {
@@ -218,7 +227,7 @@ main {
 		}
 
 		.span {
-			width: 200px;
+			width: 15rem;
 			margin-top: 1rem;
 			text-align: right;
 		}
@@ -226,7 +235,7 @@ main {
 		button {
 			width: 6.5rem;
 			margin-left: auto;
-			margin-top: 45px;
+			margin-top: 3rem;
 		}
 
 		form {
