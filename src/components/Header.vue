@@ -27,7 +27,7 @@ header {
 	z-index: 3;
 	background:rgba(0,0,0,0.4);
 	display:flex;
-	justify-content:space-between;
+	justify-content:space-around;
 	padding:0.1rem;
 	backdrop-filter: blur(2px);
 	div {

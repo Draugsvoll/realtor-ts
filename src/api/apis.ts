@@ -2,9 +2,9 @@ import {BASE_URL, FOR_SALE, FOR_RENT, GET_DETAILS, CALCULATE_MORTGAGE} from './e
 import axios from 'axios'
 import type {AxiosResponse} from 'axios'
 import type { Property } from '@/types/property/Property.type'
-import type { SearchParams } from '@/types/property/FetchProperty.type'
+import type { queryParams } from '@/types/property/FetchProperty.type'
 import type { MortgageParams } from '@/types/mortgage/Mortgage.type'
-import type { PropertyDetailed } from '@/types/property/PropertyDetailed.type'
+import type { PropertyDetailed } from '@/types/property/detailed/PropertyDetailed.type'
 import type { MortgageStats } from '@/types/mortgage/Mortgage.type'
 
 const headers = {
@@ -12,7 +12,7 @@ const headers = {
 	'x-rapidapi-host': import.meta.env.VITE_RAPID_HOST
 }
 
-export function getForSale(parameters: SearchParams): Promise<any> {
+export function getForSale(parameters: queryParams): Promise<any> {
 	const options = {
 		method: 'GET',
 		url: BASE_URL + FOR_SALE,
@@ -31,7 +31,7 @@ export function getForSale(parameters: SearchParams): Promise<any> {
 		});
 }
 
-export function getForRental(parameters: SearchParams): Promise<any> {
+export function getForRental(parameters: queryParams): Promise<any> {
 	const options = {
 		method: 'GET',
 		url: BASE_URL + FOR_RENT,

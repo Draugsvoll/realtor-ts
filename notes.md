@@ -7,3 +7,4 @@
 
 # current
 - buy/rent type in propertyView
+- SearchBar refreshes searchList

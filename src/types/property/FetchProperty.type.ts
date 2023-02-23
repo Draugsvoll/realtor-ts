@@ -1,4 +1,4 @@
-export type SearchParams = {
+export type queryParams = {
 	query?: string
 	city: string
 	state_code: string

@@ -85,7 +85,7 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import {useRouter} from 'vue-router'
-import type {SearchParams} from '@/types/property/FetchProperty.type'
+import type {queryParams} from '@/types/property/FetchProperty.type'
 import type {BuyOrRent} from '@/types/property/Property.type'
 
 const router = useRouter()
@@ -176,7 +176,7 @@ const query = ref(<string>'')
 		buyOrRent.value = BuyOrRent
 	}
 	
-	function addOptionalParams(params: SearchParams) {
+	function addOptionalParams(params: queryParams) {
 		// fetch user inputs
 		if (userInput.selected_sqft_max) params['sqft_max'] = userInput.selected_sqft_max.toString()
 		if (userInput.selected_sqft_min) params['sqft_min'] = userInput.selected_sqft_min .toString()
@@ -195,7 +195,7 @@ const query = ref(<string>'')
 	}
 
 	function search() {
-		let params: SearchParams = 
+		let params: queryParams = 
 		{
 			city: query.value.toString(),
 			state_code: userInput.selected_state.code.toString(),
@@ -230,6 +230,7 @@ const query = ref(<string>'')
 			padding-left:2rem;
 			padding-right:2rem;
 			background:var(--background-color);
+			border-bottom: 2px solid transparent;
 			&.highlighted {
 				border-bottom:2px solid var(--color-primary);
 			}
@@ -276,7 +277,7 @@ const query = ref(<string>'')
 	}
 	.filters-container {
 		input, select {
-			background-color: rgba(255,255,255,0.5);
+			background-color: rgba(255,255,255,0.95);
 		  }
 		background:var(--background-color);
 		display:flex;
