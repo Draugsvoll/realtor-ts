@@ -3,19 +3,19 @@
 
     <section class="section-about flex-center-center">
       <h1>About us</h1>
-      <p class="index">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius repudiandae eveniet nisi ad voluptatum ullam inventore odit. Quaerat voluptatem aperiam eveniet ad vero quo labore possimus nostrum rem fugiat. Pariatur quaerat harum consectetur soluta animi, quas laudantium deserunt ipsum labore nihil saepe quisquam magnam possimus accusantium cupiditate at sit repellat eum officiis molestias aliquam dolore itaque! Similique sit adipisci quam facilis voluptas fugiat rem accusantium! Aliquam sit quis velit impedit molestiae aspernatur reprehenderit odio voluptatem minima sequi iure nulla provident, error commodi repudiandae dolor deleniti, quas repellat architecto tempora. Illum dignissimos perferendis fuga autem ad earum id. Adipisci, dicta ad.</p>
+      <p class="index line-height-large">Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae magnam, quo placeat totam qui exercitationem eaque reprehenderit, quae eos sunt animi, natus suscipit! Sunt vero quia magnam nemo harum, non accusantium dolor? Tempora quibusdam, nesciunt sunt quo natus eligendi incidunt? Praesentium eos optio vel corrupti eum, adipisci provident fugit ullam ducimus sint, cumque suscipit voluptas voluptatem non atque? Vel magnam eum quas autem voluptate ipsa eos, repellat, qui neque amet illum, illo doloribus tempore ab doloremque recusandae asperiores fugit nulla beatae! Ut enim nulla eaque nesciunt rerum ullam qui quasi nam rem commodi obcaecati asperiores optio numquam nihil reiciendis ipsum recusandae ad, sequi deleniti esse provident odio illum necessitatibus autem. Voluptas blanditiis alias ullam inventore cumque saepe fugit, repudiandae quo quaerat eveniet beatae error delectus nisi voluptatum sapiente, possimus atque provident nobis ipsa cupiditate, temporibus eaque consequatur! Soluta laboriosam necessitatibus inventore expedita vitae consequatur corporis, assumenda repellat numquam quod aliquid.</p>
       <!-- <div class="about-text-container flex-center-center">
           <div class="column">
             <div class="about-text">
               <h3>Our mission</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias distinctio, non hic ab nisi nemo nobis mollitia veritatis. Sapiente natus aperiam commodi expedita ex explicabo eius sunt maxime a perspiciatis. </p>
+              <p class="line-height-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias distinctio, non hic ab nisi nemo nobis mollitia veritatis. Sapiente natus aperiam commodi expedita ex explicabo eius sunt maxime a perspiciatis. </p>
             </div>
            
           </div>
           <div class="column">
             <div class="about-text">
               <h3 >Our mission</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias distinctio, non hic ab nisi nemo nobis mollitia veritatis. Sapiente natus aperiam commodi expedita ex explicabo eius sunt maxime a perspiciatis. </p>
+              <p class="line-height-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias distinctio, non hic ab nisi nemo nobis mollitia veritatis. Sapiente natus aperiam commodi expedita ex explicabo eius sunt maxime a perspiciatis. </p>
             </div>
           
           </div>
@@ -25,7 +25,7 @@
     <section class="card radius-medium">
       <div >
         <h1>Meet our team</h1>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt atque recusandae explicabo animi eius ipsum, delectus illo nam praesentium placeat maxime suscipit reprehenderit voluptates aliquid aliquam quo excepturi deleniti adipisci? Nostrum eaque similique, laborum incidunt eligendi repellat consequuntur reprehenderit perferendis esse voluptatibus placeat veritatis eveniet in at sit delectus minima!</p>
+        <p class="line-height-medium">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt atque recusandae explicabo animi eius ipsum, delectus illo nam praesentium placeat maxime suscipit reprehenderit voluptates aliquid aliquam quo excepturi deleniti adipisci? Nostrum eaque similique, laborum incidunt eligendi repellat consequuntur reprehenderit perferendis esse voluptatibus placeat veritatis eveniet in at sit delectus minima!</p>
       </div>
       <div>
         <img class="radius-medium" src="../assets/images/img4.jpg" alt="" srcset="">
@@ -38,7 +38,7 @@
         </div>
         <div class="form-container">
           <h1>Visit us</h1>
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt atque recusandae explicabo animi eius ipsum, delectus illo nam praesentium placeat maxime suscipit reprehenderit voluptates aliquid aliquam quo excepturi deleniti adipisci? Nostrum eaque similique, laborum incidunt eligendi repellat consequuntur reprehenderit perferendis esse voluptatibus placeat veritatis eveniet in at sit delectus minima!</p>
+          <p class="line-height-medium">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt atque recusandae explicabo animi eius ipsum, delectus illo nam praesentium placeat maxime suscipit reprehenderit voluptates aliquid aliquam quo excepturi deleniti adipisci? Nostrum eaque similique, laborum incidunt eligendi repellat consequuntur reprehenderit perferendis esse voluptatibus placeat veritatis eveniet in at sit delectus minima!</p>
         </div>
     </section>
 

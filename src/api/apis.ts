@@ -22,7 +22,6 @@ export function getForSale(parameters: queryParams): Promise<any> {
 	
 	return axios.request(options)
 		.then((response: AxiosResponse) => {
-			console.log(response)
 			return response.data.properties as Property[]
 		})
 		.catch((error) => {

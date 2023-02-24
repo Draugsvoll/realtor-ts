@@ -6,7 +6,7 @@
 			<button @click="toggleBuyOrRent('rent')" :class="{ 'highlighted': buyOrRent === 'rent' }">Rent</button>
 		</div>
 		<div class="searchBar">
-			<input class="main-search-inputbar radius-small" v-model="query" type="text" name="locations" placeholder="City, Adress..." autofocus @keyup.enter="search()" ref="input">
+			<input class="main-search-inputbar radius-small" v-model="query" type="text" name="locations" placeholder="city, adress..." autofocus @keyup.enter="search()" ref="input">
 			<button class="btn-search radius-small" @click="search()">Search</button>
 			<span class="state-label">State: </span>
 			<select v-model="userInput.selected_state" class="select-state" >
@@ -83,74 +83,77 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
-import {useRouter} from 'vue-router'
+import {onMounted, reactive, ref } from 'vue'
+import {useStore} from '@/store/store'
+import {useRoute, useRouter} from 'vue-router'
 import type {queryParams} from '@/types/property/FetchProperty.type'
 import type {BuyOrRent} from '@/types/property/Property.type'
 
 const router = useRouter()
+const route = useRoute()
 const query = ref(<string>'')
-	
-	const states = [
-		{ name: 'Alabama', code: 'AL' },
-		{ name: 'Alaska', code: 'AK' },
-		{ name: 'Arizona', code: 'AZ' },
-		{ name: 'Arkansas', code: 'AR' },
-		{ name: 'California', code: 'CA' },
-		{ name: 'Colorado', code: 'CO' },
-		{ name: 'Connecticut', code: 'CT' },
-		{ name: 'Delaware', code: 'DE' },
-		{ name: 'Florida', code: 'FL' },
-		{ name: 'Georgia', code: 'GA' },
-		{ name: 'Hawaii', code: 'HI' },
-		{ name: 'Idaho', code: 'ID' },
-		{ name: 'Illinois', code: 'IL' },
-		{ name: 'Indiana', code: 'IN' },
-		{ name: 'Iowa', code: 'IA' },
-		{ name: 'Kansas', code: 'KS' },
-		{ name: 'Kentucky', code: 'KY' },
-		{ name: 'Louisiana', code: 'LA' },
-		{ name: 'Maine', code: 'ME' },
-		{ name: 'Maryland', code: 'MD' },
-		{ name: 'Massachusetts', code: 'MA' },
-		{ name: 'Michigan', code: 'MI' },
-		{ name: 'Minnesota', code: 'MN' },
-		{ name: 'Mississippi', code: 'MS' },
-		{ name: 'Missouri', code: 'MO' },
-		{ name: 'Montana', code: 'MT' },
-		{ name: 'Nebraska', code: 'NE' },
-		{ name: 'Nevada', code: 'NV' },
-		{ name: 'New Hampshire', code: 'NH' },
-		{ name: 'New Jersey', code: 'NJ' },
-		{ name: 'New Mexico', code: 'NM' },
-		{ name: 'New York', code: 'NY' },
-		{ name: 'North Carolina', code: 'NC' },
-		{ name: 'North Dakota', code: 'ND' },
-		{ name: 'Ohio', code: 'OH' },
-		{ name: 'Oklahoma', code: 'OK' },
-		{ name: 'Oregon', code: 'OR' },
-		{ name: 'Pennsylvania', code: 'PA' },
-		{ name: 'Rhode Island', code: 'RI' },
-		{ name: 'South Carolina', code: 'SC' },
-		{ name: 'South Dakota', code: 'SD' },
-		{ name: 'Tennessee', code: 'TN' },
-		{ name: 'Texas', code: 'TX' },
-		{ name: 'Utah', code: 'UT' },
-		{ name: 'Vermont', code: 'VT' },
-		{ name: 'Virginia', code: 'VA' },
-		{ name: 'Washington', code: 'WA' },
-		{ name: 'West Virginia', code: 'WV' },
-		{ name: 'Wisconsin', code: 'WI' },
-		{ name: 'Wyoming', code: 'WY' }
-	]
+const store = useStore()
 
-	// user wants to buy or rent
-	const buyOrRent = ref(<BuyOrRent>'buy')
-		
-	// user input options
-	const baths_min_options = ref(<number[]>generateNumberArray(5))
-	const beds_min_options = ref(<number[]>generateNumberArray(5))
-	const age_max_options = ref(<number[]>generateNumberArray(50))
+// user wants to buy or rent
+const buyOrRent = ref(<BuyOrRent>'buy')
+
+// user input options
+const baths_min_options = ref(<number[]>generateNumberArray(5))
+const beds_min_options = ref(<number[]>generateNumberArray(5))
+const age_max_options = ref(<number[]>generateNumberArray(50))
+	
+const states = [
+	{ name: 'Alabama', code: 'AL' },
+	{ name: 'Alaska', code: 'AK' },
+	{ name: 'Arizona', code: 'AZ' },
+	{ name: 'Arkansas', code: 'AR' },
+	{ name: 'California', code: 'CA' },
+	{ name: 'Colorado', code: 'CO' },
+	{ name: 'Connecticut', code: 'CT' },
+	{ name: 'Delaware', code: 'DE' },
+	{ name: 'Florida', code: 'FL' },
+	{ name: 'Georgia', code: 'GA' },
+	{ name: 'Hawaii', code: 'HI' },
+	{ name: 'Idaho', code: 'ID' },
+	{ name: 'Illinois', code: 'IL' },
+	{ name: 'Indiana', code: 'IN' },
+	{ name: 'Iowa', code: 'IA' },
+	{ name: 'Kansas', code: 'KS' },
+	{ name: 'Kentucky', code: 'KY' },
+	{ name: 'Louisiana', code: 'LA' },
+	{ name: 'Maine', code: 'ME' },
+	{ name: 'Maryland', code: 'MD' },
+	{ name: 'Massachusetts', code: 'MA' },
+	{ name: 'Michigan', code: 'MI' },
+	{ name: 'Minnesota', code: 'MN' },
+	{ name: 'Mississippi', code: 'MS' },
+	{ name: 'Missouri', code: 'MO' },
+	{ name: 'Montana', code: 'MT' },
+	{ name: 'Nebraska', code: 'NE' },
+	{ name: 'Nevada', code: 'NV' },
+	{ name: 'New Hampshire', code: 'NH' },
+	{ name: 'New Jersey', code: 'NJ' },
+	{ name: 'New Mexico', code: 'NM' },
+	{ name: 'New York', code: 'NY' },
+	{ name: 'North Carolina', code: 'NC' },
+	{ name: 'North Dakota', code: 'ND' },
+	{ name: 'Ohio', code: 'OH' },
+	{ name: 'Oklahoma', code: 'OK' },
+	{ name: 'Oregon', code: 'OR' },
+	{ name: 'Pennsylvania', code: 'PA' },
+	{ name: 'Rhode Island', code: 'RI' },
+	{ name: 'South Carolina', code: 'SC' },
+	{ name: 'South Dakota', code: 'SD' },
+	{ name: 'Tennessee', code: 'TN' },
+	{ name: 'Texas', code: 'TX' },
+	{ name: 'Utah', code: 'UT' },
+	{ name: 'Vermont', code: 'VT' },
+	{ name: 'Virginia', code: 'VA' },
+	{ name: 'Washington', code: 'WA' },
+	{ name: 'West Virginia', code: 'WV' },
+	{ name: 'Wisconsin', code: 'WI' },
+	{ name: 'Wyoming', code: 'WY' }
+]
 
 	// inputs from user
 	const userInput = reactive({
@@ -176,7 +179,7 @@ const query = ref(<string>'')
 		buyOrRent.value = BuyOrRent
 	}
 	
-	function addOptionalParams(params: queryParams) {
+	function insertOptionalParams(params: queryParams) {
 		// fetch user inputs
 		if (userInput.selected_sqft_max) params['sqft_max'] = userInput.selected_sqft_max.toString()
 		if (userInput.selected_sqft_min) params['sqft_min'] = userInput.selected_sqft_min .toString()
@@ -204,11 +207,27 @@ const query = ref(<string>'')
 			sort: 'relevance',
 			buyOrRent: buyOrRent.value
 		}
-		params = addOptionalParams(params)
-
-		let paramsEncoded = encodeURIComponent(JSON.stringify(params))
-		router.push({path:`/search?`, query: {object:paramsEncoded} })
+		params = insertOptionalParams(params)
+		if (encodeURIComponent(JSON.stringify(params)) === store.getParamsEncoded) {
+			params.limit = '26' // force a search even if params didnt change, by adjusting this.
+		}
+		const queryParamsEncoded = encodeURIComponent(JSON.stringify(params))
+		store.setParamsEncoded(queryParamsEncoded) // update state which will trigger a new search on search-page
+		
+		router.push({path:`/search?`, query: {object:queryParamsEncoded} }) // update url (goes to serach-page if not already there & URL is shareable)
 	}
+
+	onMounted(() => {
+		if (route.path !== '/') {
+			try {
+				let decodedParams = decodeURIComponent(store.getParamsEncoded)
+				let params = JSON.parse(decodedParams)
+				query.value = params.city
+			}
+			catch {}
+		}
+		
+	})
 
 </script>
 
@@ -239,15 +258,18 @@ const query = ref(<string>'')
 	.searchBar {
 		padding-top:1.3rem;
 		padding-left:1.3rem;
-		margin:auto;
+		width:100%;
+		background:	var(--background-color);
+
 		.main-search-inputbar {
 			font-family: sans-serif;
 			height:var(--main-input-height);
 			width:20rem;
 			font-size:0.9rem;
 			outline:none;
-			border:none;
-			background: rgba(255,255,255,0.95);
+			input {
+				background: rgba(255,255,255,0.95);
+			}
 		}
 		.select-state {
 			height:var(--main-input-height);
@@ -283,9 +305,8 @@ const query = ref(<string>'')
 		display:flex;
 		flex-direction: column;
 		gap:0.5rem;
-		padding-top:3rem;
-		padding-left:1.3rem;
-		margin-top:3rem;
+		padding:3rem 1.2rem;
+		margin-top:0rem;
 		div {
 			display:flex;
 		}

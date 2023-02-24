@@ -7,6 +7,7 @@
 			<button @click="sortAlphabetical()">A-Z</button>
 		</div>
         <h1>Search Results</h1>
+
         <transition-group tag="ul" name="list">
             <li v-for="property in orderedProperties" :key="property.property_id" >
                 <PropertyComp :property="property"></PropertyComp>
@@ -17,30 +18,33 @@
 
 <script setup lang="ts">
 import type { Property } from '@/types/property/Property.type';
-import {onMounted, ref } from 'vue';
+import {onMounted, ref, watch } from 'vue';
 import PropertyComp from '@/components/property/Property.vue';
 import SearchBar from '@/components/SearchBar.vue'
-import { useRoute } from 'vue-router';
 import { getForRental, getForSale } from '@/api/apis';
 import type { queryParams } from '@/types/property/FetchProperty.type';
+import { useStore } from '@/store/store';
 	
+	const store = useStore()
 	const properties = ref(<Property[]|undefined>undefined)
 	const orderedProperties = ref(<Property[]|undefined>undefined)
-	const route = useRoute()
 	
 	function sortPriceHigh() {
+		if (!orderedProperties.value) return
 		const sortBy = 'price'
 		orderedProperties.value = [...orderedProperties.value].sort((a: Property, b: Property) => {
 			return a[sortBy] < b[sortBy] ? +1 : -1;
 		})
 	}
 	function sortPriceLow() {
+		if (!orderedProperties.value) return
 		const sortBy = 'price'
 		orderedProperties.value = [...orderedProperties.value].sort((a: Property, b: Property) => {
 			return a[sortBy] > b[sortBy] ? +1 : -1;
 		})
 	}
 	function sortAlphabetical() {
+		if (!orderedProperties.value) return
 		const filteredList = orderedProperties.value.filter(property => property['address']['neighborhood_name'] !== undefined)
 		orderedProperties.value = filteredList.sort((a: Property, b: Property) =>
 			a['address']['neighborhood_name'] && b['address']['neighborhood_name'] // check if these exist
@@ -48,6 +52,11 @@ import type { queryParams } from '@/types/property/FetchProperty.type';
 				: 0
 		)
 	}
+
+	// trigger new search when user click 'search' btn which updates store
+	watch(() => store.getParamsEncoded, (newVal) => {
+		search()
+	})
 
 	async function fetchForSaleData (parameters: queryParams) {
 		let params = parameters
@@ -62,16 +71,24 @@ import type { queryParams } from '@/types/property/FetchProperty.type';
 		let resp:Property[] = await getForRental(params);
 		console.log('for rent array: ', resp)
 		properties.value = resp
+		orderedProperties.value = resp
 	}
-	onMounted(() => {
-		let params;
-		if (typeof route.query.object === 'string') {
-			params = JSON.parse(decodeURIComponent(route.query.object));
-			if (params.buyOrRent === 'buy') fetchForSaleData(params)
-			else if (params.buyOrRent === 'rent') fetchForRentalData(params)
-		} else {
-			alert('Error fetching user input from queryParams')
+
+	function search () {
+		try {
+			properties.value = undefined
+			orderedProperties.value = undefined
+			const paramsEncoded = store.getParamsEncoded
+			const paramsDecoded = decodeURIComponent(paramsEncoded)
+			const paramsObject = JSON.parse(paramsDecoded)
+			if (paramsObject.buyOrRent === 'buy') fetchForSaleData(paramsObject)
+			else if (paramsObject.buyOrRent === 'rent') fetchForRentalData(paramsObject)
 		}
+		catch {}
+	}
+
+	onMounted(() => {
+		search()
 	})
 </script>
 

@@ -29,11 +29,11 @@
 			</div>
 		</div>
 		
-		<!-- <div class="map-container test">
+		<div class="map-container test">
 			<iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" :src="map_url">
 			</iframe>
 			<br /><small><a href="https://www.openstreetmap.org/?mlat=40.631&amp;mlon=-75.344#map=7/40.631/-75.344">Display full map</a></small>
-		</div> -->
+		</div>
 
 		<div v-if="property?.prop_status === 'for_sale'" class="mortgage-container">
 			<!-- form -->

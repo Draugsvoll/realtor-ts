@@ -3,8 +3,8 @@
 
 # to-do
 - finish header
-- can re-search in SearchResultView
+- favorites page/functionality
 
 # current
 - buy/rent type in propertyView
-- SearchBar refreshes searchList
+- load animation search

@@ -1,5 +1,5 @@
 <template>
-	<router-link :to="url" class="container">
+	<router-link :to="viewPropertyDetailed" class="container">
 
 		<!-- BUY PROPERTY -->
 		<div class="property-container radius-small" v-if="isPropertyBuy(property)">
@@ -64,9 +64,9 @@
 		setup (props) {
 			const routeUrl = '/view_property?id='
 			const id = props.property.property_id
-			const url = routeUrl + id
+			const viewPropertyDetailed = routeUrl + id
 			
-			return {url}
+			return {viewPropertyDetailed}
 		},
 	})
 </script>
