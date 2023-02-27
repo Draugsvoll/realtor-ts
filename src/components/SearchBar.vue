@@ -6,7 +6,7 @@
 			<button @click="toggleBuyOrRent('rent')" :class="{ 'highlighted': buyOrRent === 'rent' }">Rent</button>
 		</div>
 		<div class="searchBar">
-			<input class="main-search-inputbar radius-small" v-model="query" type="text" name="locations" placeholder="city, adress..." autofocus @keyup.enter="search()" ref="input">
+			<input class="main-search-inputbar radius-small" v-model="query" type="text" name="locations" placeholder="City, adress..." autofocus @keyup.enter="search()" ref="input">
 			<button class="btn-search radius-small" @click="search()">Search</button>
 			<span class="state-label">State: </span>
 			<select v-model="userInput.selected_state" class="select-state" >
@@ -86,7 +86,7 @@
 import {onMounted, reactive, ref } from 'vue'
 import {useStore} from '@/store/store'
 import {useRoute, useRouter} from 'vue-router'
-import type {queryParams} from '@/types/property/FetchProperty.type'
+import type {QueryParams} from '@/types/property/FetchProperty.type'
 import type {BuyOrRent} from '@/types/property/Property.type'
 
 const router = useRouter()
@@ -101,8 +101,9 @@ const buyOrRent = ref(<BuyOrRent>'buy')
 const baths_min_options = ref(<number[]>generateNumberArray(5))
 const beds_min_options = ref(<number[]>generateNumberArray(5))
 const age_max_options = ref(<number[]>generateNumberArray(50))
-	
-const states = [
+
+type state = {name: string, code: string}
+const states: state[] = [
 	{ name: 'Alabama', code: 'AL' },
 	{ name: 'Alaska', code: 'AK' },
 	{ name: 'Arizona', code: 'AZ' },
@@ -179,7 +180,7 @@ const states = [
 		buyOrRent.value = BuyOrRent
 	}
 	
-	function insertOptionalParams(params: queryParams) {
+	function insertOptionalParams(params: QueryParams) {
 		// fetch user inputs
 		if (userInput.selected_sqft_max) params['sqft_max'] = userInput.selected_sqft_max.toString()
 		if (userInput.selected_sqft_min) params['sqft_min'] = userInput.selected_sqft_min .toString()
@@ -198,7 +199,7 @@ const states = [
 	}
 
 	function search() {
-		let params: queryParams = 
+		let params: QueryParams = 
 		{
 			city: query.value.toString(),
 			state_code: userInput.selected_state.code.toString(),
@@ -209,22 +210,49 @@ const states = [
 		}
 		params = insertOptionalParams(params)
 		if (encodeURIComponent(JSON.stringify(params)) === store.getParamsEncoded) {
-			params.limit = '26' // force a search even if params didnt change, by adjusting this.
+			// params.limit = '26' // force a search even if params didnt change, by adjusting this.
+			store.reset
 		}
-		const queryParamsEncoded = encodeURIComponent(JSON.stringify(params))
-		store.setParamsEncoded(queryParamsEncoded) // update state which will trigger a new search on search-page
+		const QueryParamsEncoded = encodeURIComponent(JSON.stringify(params))
+		store.setParamsEncoded(QueryParamsEncoded) // update state which will trigger a new search on search-page
 		
-		router.push({path:`/search?`, query: {object:queryParamsEncoded} }) // update url (goes to serach-page if not already there & URL is shareable)
+		router.push({path:`/search?`, query: {object:QueryParamsEncoded} }) // update url (goes to serach-page if not already there & URL is shareable)
+	}
+
+	function persistParams() {
+		const decodedParams = decodeURIComponent(store.getParamsEncoded)
+		const params = JSON.parse(decodedParams)
+
+		// reset dummy parameters that was inserted due to avoid API bugging sometimes
+		if (params.sqft_min === '1') params.sqft_min = undefined
+		if (params.price_min === '1') params.price_min = undefined
+		if (params.baths_min === '1') params.baths_min = undefined
+		if (params.beds_min === '1') params.beds_min = undefined
+
+		// insert values from userInput
+		if (params.baths_min) userInput.selected_baths_min = params.baths_min
+		if (params.beds_min) userInput.selected_beds_min = params.beds_min
+		if (params.age_max) userInput.selected_age_max = params.age_max
+		if (params.sqft_min) userInput.selected_sqft_min = params.sqft_min
+		if (params.sqft_max) userInput.selected_sqft_max = params.sqft_max
+		if (params.price_min) userInput.selected_price_min = params.price_min
+		if (params.price_max) userInput.selected_price_max = params.price_max
+		if (params.buyOrRent) buyOrRent.value = params.buyOrRent
+		if (params.city) query.value = params.city
+		if (params.state_code) {
+			const stateIndex = states.findIndex(state => state.code === params.state_code)
+			userInput.selected_state = states[stateIndex]
+		}
 	}
 
 	onMounted(() => {
 		if (route.path !== '/') {
 			try {
-				let decodedParams = decodeURIComponent(store.getParamsEncoded)
-				let params = JSON.parse(decodedParams)
-				query.value = params.city
+				persistParams()
 			}
-			catch {}
+			catch {
+				// skip trying to persist filters if something went wrong (URL got edited)
+			}
 		}
 		
 	})
@@ -233,7 +261,7 @@ const states = [
 
 <style lang="scss" scoped>
 .container {
-	--main-input-height:2rem;
+	--main-input-height:2.3rem;
 	--background-color: rgba(0,0,0,0.55);
 	position:relative;
 	display:flex;
@@ -284,14 +312,15 @@ const states = [
 			width:7rem;
 			
 		}
-		.btn-search {
-			height:var(--main-input-height);
+		button {
 			padding-left:0.5rem;
 			padding-right:0.5rem;
 			margin-right:0.8rem;
 			background:var(--color-primary);
 			outline:none;
 			border:none;
+			height:var(--main-input-height);
+			cursor: pointer;
 		}
 		.state-label {
 			font-size: 0.8rem;;

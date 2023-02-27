@@ -31,7 +31,6 @@ select {
 }
 select option {
 	background-color: white; /* change the background color of the option */
-	height:2rem;
   }
 select option:checked {
 	background-color: rgb(194, 191, 191); /* change the background color of the selected option */

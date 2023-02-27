@@ -4,8 +4,8 @@
 		<div>
 			<ul>
 				<li><router-link to="/about">About</router-link></li>
-				<li>Search</li>
-				<li>Contact Us</li>
+				<li @click="goToSearch()">Search</li>
+				<li>Contact</li>
 			</ul>
 		</div>
 		<div>item 3</div>
@@ -13,7 +13,16 @@
 </template>
 
 <script setup lang="ts">
+import {useRouter} from 'vue-router'
+import {useStore} from '@/store/store'
 
+	const store = useStore()
+	const router = useRouter()
+
+	function goToSearch () {
+		store.reset()
+		router.push('/search')
+	}
 </script>
 
 <style scoped lang="scss">
@@ -27,19 +36,24 @@ header {
 	z-index: 3;
 	background:rgba(0,0,0,0.4);
 	display:flex;
-	justify-content:space-around;
+	justify-content:space-between;
 	padding:0.1rem;
 	backdrop-filter: blur(2px);
 	div {
 		padding:1rem;
+		width:100%;
+		text-align: center;
 		ul {
+			display:flex;
+			justify-content: space-evenly;
 			li{
-				display: inline-block;
-				padding-left:1rem;
-				padding-right:2rem;
+				display: flex;
+				flex-grow:1;
+				align-items: center;
+				justify-content: center;
 				cursor:pointer;
 			}
 		}
 	}
-	}
+}
 </style>

@@ -2,17 +2,18 @@ import {BASE_URL, FOR_SALE, FOR_RENT, GET_DETAILS, CALCULATE_MORTGAGE} from './e
 import axios from 'axios'
 import type {AxiosResponse} from 'axios'
 import type { Property } from '@/types/property/Property.type'
-import type { queryParams } from '@/types/property/FetchProperty.type'
+import type { QueryParams } from '@/types/property/FetchProperty.type'
 import type { MortgageParams } from '@/types/mortgage/Mortgage.type'
 import type { PropertyDetailed } from '@/types/property/detailed/PropertyDetailed.type'
 import type { MortgageStats } from '@/types/mortgage/Mortgage.type'
+import type { PropertyRent } from '@/types/property/PropertyRent.type'
 
 const headers = {
 	'x-rapidapi-key': import.meta.env.VITE_RAPID_KEY,
 	'x-rapidapi-host': import.meta.env.VITE_RAPID_HOST
 }
 
-export function getForSale(parameters: queryParams): Promise<any> {
+export function getForSale(parameters: QueryParams): Promise<any> {
 	const options = {
 		method: 'GET',
 		url: BASE_URL + FOR_SALE,
@@ -25,12 +26,12 @@ export function getForSale(parameters: queryParams): Promise<any> {
 			return response.data.properties as Property[]
 		})
 		.catch((error) => {
-			alert('api error (get for_sale properties): ' + error)
+			alert('api error (fetching for_sale properties): ' + error)
 			return undefined
 		});
 }
 
-export function getForRental(parameters: queryParams): Promise<any> {
+export function getForRental(parameters: QueryParams): Promise<any> {
 	const options = {
 		method: 'GET',
 		url: BASE_URL + FOR_RENT,
@@ -39,10 +40,14 @@ export function getForRental(parameters: queryParams): Promise<any> {
 	};
 	return axios.request(options)
 		.then((response: AxiosResponse) => {
-			return response.data.properties as Property[]
+			let resp = response.data.properties
+			// resp.forEach((property: PropertyRent) => {
+			// 	property.isRental = true
+			// })
+			return resp as PropertyRent[]
 		})
 		.catch((error) => {
-			alert('api error (get for_rental properties): ' + error)
+			alert('api error (fetching for_rental properties): ' + error)
 			return undefined
 		});
 }
@@ -60,7 +65,7 @@ export function getPropertyDetails (id: string): Promise<any> {
 			return response.data as PropertyDetailed
 		})
 		.catch(function (error) {
-			alert('api error (get property details): ' + error)
+			alert('api error (fetching property details): ' + error)
 			return undefined
 		});
 }
@@ -78,7 +83,7 @@ export function getSimilarProperties (property_id: string, status: string): Prom
 		  console.log(response.data);
 	  }).catch(function (error) {
 		  console.error(error);
-		  alert('api error (get similar properties): ' + error)
+		  alert('api error (fetching similar properties): ' + error)
 		  return undefined
 	  });
 }
@@ -90,8 +95,6 @@ export function calculateMortgageApi (parameters: MortgageParams): Promise<any> 
 		params: parameters,
 		headers: headers
 	}
-	console.error('works: ', options)
-	console.error('bug: ', parameters)
 	return axios.request(options).then(function (response) {
 		return response.data.mortgage as MortgageStats
 	}).catch(function (error) {

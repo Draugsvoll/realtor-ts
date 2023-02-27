@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import AboutView from "../views/AboutView.vue";
 import SearchResultsView from "../views/SearchPropertiesView.vue";
-import ViewProperty from "../views/PropertyView.vue";
+import ViewPropertyDetailed from "../views/PropertyDetailedView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,7 +20,7 @@ const router = createRouter({
     {
       path: "/view_property",
       name: "view_property",
-      component: ViewProperty,
+      component: ViewPropertyDetailed,
     },
     {
       path: "/about",

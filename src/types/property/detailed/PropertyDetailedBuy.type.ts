@@ -9,7 +9,8 @@ export interface PropertyDetailedBuy {
 	list_date:            string;
 	last_update:          string;
 	broker:               Broker;
-	year_built?:           number;
+	currentPhoto?:        string;
+	year_built?:          number;
 	listing_status:       string;
 	beds:                 number;
 	description:          string;
@@ -33,7 +34,7 @@ export interface PropertyDetailedBuy {
 	office:               Office;
 	agents:               Agent[];
 	lead_forms:           LeadForms;
-	building_size:        BuildingSize;
+	building_size?:       BuildingSize;
 	price:                number;
 	rdc_web_url:          string;
 	rdc_app_url:          string;
@@ -135,7 +136,7 @@ export interface Phone1 {
 }
 
 export interface BuildingSize {
-	size:  number;
+	size?: any;
 	units: string;
 }
 

@@ -224,10 +224,9 @@ main {
       width:100%;
       box-sizing: border-box;
       outline:0;
-    }
-    
-    .feedback-input:focus {
-    border:2px solid var(--form-color-focus);
+      &:focus{
+        border:2px solid var(--form-color-focus);
+      }
     }
     
     textarea {
@@ -248,11 +247,10 @@ main {
       padding-bottom:0.8rem;
       transition: all 0.2s;
       font-weight:700;
-    }
-    [type="submit"]:hover {
-       background:var(--form-color-focus);
+      &:hover {
+        background:var(--form-color-focus);
+      }
     }
   }
   /* FORM END */
-
 </style>

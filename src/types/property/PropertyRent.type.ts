@@ -8,7 +8,7 @@ export interface PropertyRent {
 	last_update:          string;
 	listing_status:       string;
 	beds:                 number;
-	baths:                number;
+	baths?:               number;
 	price:                number;
 	branding:             Branding;
 	prop_status:          string;
@@ -63,6 +63,7 @@ export interface Branding {
 }
 
 export interface BuildingSize {
+    size?: number;
 	units: string;
 }
 
@@ -87,9 +88,10 @@ export interface ClientDisplayFlags {
 }
 
 export interface Community {
-	baths_max:      number;
+	baths?:         number;
+	baths_max?:     number;
 	baths_min:      number;
-	beds_max:       number;
+	beds_max?:      number;
 	beds_min:       number;
 	contact_number: string;
 	id:             number;

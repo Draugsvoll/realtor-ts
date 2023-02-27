@@ -1,40 +1,31 @@
 <template>
 	<router-link :to="viewPropertyDetailed" class="container">
 
-		<!-- BUY PROPERTY -->
-		<div class="property-container radius-small" v-if="isPropertyBuy(property)">
+		<div class="property-container radius-small">
 			<div class="img-container">
-				<img class="radius-small" :src="property.thumbnail" alt="">
-			</div>
-			<div class="info">
-				<p class="price">${{property.price.toLocaleString()}}</p>
+				<img class="radius-small" :src="isPropertyRent(property) ? property.photos[0].href : property.thumbnail" alt="">
+			  </div>
+			  <div class="info">
+				<p class="price"> {{ isPropertyBuy(property) ? '$' +
+					property.price.toLocaleString()
+					: property.price || property.community?.price_max.toLocaleString() }}
+				</p>
 				<p>{{property.address.neighborhood_name}}, {{property.address.line}}</p>
 				<div class="stats">
-					<p>{{property.baths}} baths</p>
-					<p>{{property.beds}} beds</p>
-					<p v-if="property.building_size">{{property.building_size.size}} sqft</p>
+					<p>{{ isPropertyBuy(property) ?
+						property.baths 
+						: property.community?.baths_max || property.baths || property.community.baths }}
+						bathroom
+					</p>
+					<p >{{ isPropertyBuy(property) ?
+						property.beds 
+						: property.community?.beds_max || property.beds || property.community?.beds_min}} bedroom
+					</p>
+				  <p v-if="property.building_size?.size">{{property.building_size.size}} sqfeet</p>
 				</div>
 				<p>{{property.address.city}}</p>
 				<p>{{property.property_id}}</p>
-			</div>
-		</div>
-
-		<!-- RENTAL -->
-		<div class="property-container" v-if="isPropertyRent(property)">
-			<div class="img-container">
-				<img :src="property.photos[0].href" alt="">
-			</div>
-			<div class="info">
-				<p class="price">${{property?.community?.price_min || property.price}} /month</p>
-				<p>{{property.address.neighborhood_name}}, {{property.address.line}}</p>
-				<div class="stats">
-					<p>{{property?.community?.baths_min || property.baths}} baths</p>
-					<p>{{property.beds || property.community.beds_max}} beds</p>
-					<!-- <p v-if="property.building_size">{{property.building_size.size}} sqft</p> -->
-				</div>
-				<p>{{property.address.city}}</p>
-				<p>{{property.property_id}}</p>
-			</div>
+			  </div>
 		</div>
 
 	</router-link>
@@ -53,20 +44,18 @@
 				type: Object as PropType<Property>
 				},
 		},
-		methods: {
-			isPropertyBuy(property: Property): property is PropertyBuy {
-				return property.prop_status === "for_sale";
-			},
-			isPropertyRent(property: Property): property is PropertyRent {
-				return property.prop_status === "for_rent";
-			},
-		},
 		setup (props) {
 			const routeUrl = '/view_property?id='
 			const id = props.property.property_id
 			const viewPropertyDetailed = routeUrl + id
+			function isPropertyBuy(property: Property): property is PropertyBuy {
+				return property.prop_status === "for_sale";
+			}
+			function isPropertyRent(property: Property): property is PropertyRent {
+				return property.prop_status === "for_rent";
+			}
 			
-			return {viewPropertyDetailed}
+			return {viewPropertyDetailed, isPropertyBuy, isPropertyRent}
 		},
 	})
 </script>
