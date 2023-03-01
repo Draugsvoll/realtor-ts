@@ -20,7 +20,6 @@ export function getForSale(parameters: QueryParams): Promise<any> {
 		params: parameters,
 		headers: headers
 	};
-	
 	return axios.request(options)
 		.then((response: AxiosResponse) => {
 			return response.data.properties as Property[]
@@ -41,9 +40,6 @@ export function getForRental(parameters: QueryParams): Promise<any> {
 	return axios.request(options)
 		.then((response: AxiosResponse) => {
 			let resp = response.data.properties
-			// resp.forEach((property: PropertyRent) => {
-			// 	property.isRental = true
-			// })
 			return resp as PropertyRent[]
 		})
 		.catch((error) => {
@@ -59,7 +55,6 @@ export function getPropertyDetails (id: string): Promise<any> {
 		params: {property_id: id},
 		headers: headers
 	};
-
 	return axios.request(options)
 		.then(function (response) {
 			return response.data as PropertyDetailed
@@ -78,7 +73,6 @@ export function getSimilarProperties (property_id: string, status: string): Prom
 		params: {property_id: 'M4891776412', limit: '15', status: 'for_sale'},
 		headers: headers
 	  };
-	  
 	  return axios.request(options).then(function (response) {
 		  console.log(response.data);
 	  }).catch(function (error) {

@@ -65,7 +65,7 @@
       </div>
     </section>
 
-      <section class="section-contact bg-fullscreen">
+      <section id="contact" class="section-contact bg-fullscreen">
         <div class="overlay"></div>
         <div class="information-container flex-center-center">
           <div class="information ">
@@ -87,9 +87,42 @@
     </main>
   </template>
   
-  <script setup lang="ts">
-  import SearchBar from "../components/SearchBar.vue";
+<script lang="ts">
+import { defineComponent, onMounted, watch } from "vue";
+import { useRoute } from "vue-router";
+import SearchBar from "../components/SearchBar.vue";
+
+export default defineComponent ({
+  components: {
+    SearchBar
+  },
+  setup(){
+    const route = useRoute()
+
+    watch(()=> route.query.view, (newValue) =>{
+      if (newValue === 'contact') {
+        const contact = document.querySelector("#contact");
+        if (contact) {
+          contact.scrollIntoView({ behavior: "smooth" });
+        }
+
+      }
+    }),
   
+    onMounted(() => {
+      if (route.query.view === 'contact') {
+        const contact = document.querySelector("#contact");
+        if (contact) {
+          contact.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    })
+
+    return {route}
+  }
+  
+})
+
 </script>
 
 <style lang="scss" scoped>
@@ -183,6 +216,7 @@ main {
       background-image: url('@/assets/images/img2.jpg');
       display:grid;
       padding:2rem;
+      min-height:100vh;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       .overlay {
         background: rgba(0,0,0,0.45);

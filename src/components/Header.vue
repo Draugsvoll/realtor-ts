@@ -1,11 +1,11 @@
 <template>
 	<header>
-		<div><router-link to="/">Realtor</router-link></div>
+		<div><router-link  to="/">Realtor</router-link></div>
 		<div>
 			<ul>
 				<li><router-link to="/about">About</router-link></li>
 				<li @click="goToSearch()">Search</li>
-				<li>Contact</li>
+				<li @click="scroll()"><router-link to="/?view=contact">Contact</router-link></li>
 			</ul>
 		</div>
 		<div>item 3</div>
@@ -13,11 +13,19 @@
 </template>
 
 <script setup lang="ts">
-import {useRouter} from 'vue-router'
+import {useRouter, useRoute} from 'vue-router'
 import {useStore} from '@/store/store'
 
 	const store = useStore()
 	const router = useRouter()
+	const route = useRoute()
+
+	// Make sure scroll-to-element always work
+	function scroll () {
+		if (route.query.view) {
+			router.push('/')
+		}
+	}
 
 	function goToSearch () {
 		store.reset()

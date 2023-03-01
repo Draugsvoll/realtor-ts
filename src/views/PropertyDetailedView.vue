@@ -2,13 +2,11 @@
 	<main>
 		
 		<PropertyDetailedComp v-if="property" :property="property" />
-		
 		<div class="map-container">
 			<iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" :src="map_url">
 			</iframe>
 			<br /><small><a href="https://www.openstreetmap.org/?mlat=40.631&amp;mlon=-75.344#map=7/40.631/-75.344">Display full map</a></small>
 		</div>
-
 		<div v-if="property?.prop_status === 'for_sale'" class="mortgage-container">
 			<!-- form -->
 			<div class="input-data">
@@ -46,12 +44,11 @@ import PropertyDetailedComp from '@/components/property/PropertyDetailed.vue';
 import {useRoute} from 'vue-router'
 
 	const property = ref(<PropertyDetailed|undefined>undefined)
-	const map_url = ref(<string>'')
 	const currentPhoto = ref(<string|undefined> undefined)
 	const route = useRoute()
-	//   const similarProperties = ref()
-
+	const map_url = ref(<string>'')
 	const calculatedMortgage = ref(<MortgageStats|undefined>undefined)
+	//   const similarProperties = ref()
 
 	const mortgageInputs: MortgageParams = reactive({
 		hoi: '100', // monhly home insurances
@@ -65,13 +62,14 @@ import {useRoute} from 'vue-router'
 	const fetchProperty = async (id: string) => {
 		let resp = await getPropertyDetails(id)
 		property.value = resp.properties[0]
-		currentPhoto.value = property?.value?.photos[0].href
-		console.log('current property: ', property.value)
+		console.error('1234 propery', resp.properties[0] )
+		try {currentPhoto.value = property.value?.photos[0].href}
+		catch {alert('Property lacking photos')}
 		setMapUrl()
 		// fetchSimilarProperties()
 	}
 
-	function setMapUrl(): void {
+	function setMapUrl() {
 		if (property.value) {
 			let lat = property.value.address.lat
 			let lon = property.value.address.lon
@@ -80,7 +78,7 @@ import {useRoute} from 'vue-router'
 			map_url.value = `https://www.openstreetmap.org/export/embed.html?bbox=${lonInt - 2}.87893676757814%2C${latInt - 2}.52307880890422%2C${lonInt}.59353637695314%2C${latInt}.32302363048832&layer=mapnik&amp&marker=${lat}%2C${lon}`;
 		}
 		else {
-			console.error('error fetching map data')
+			alert('error fetching map data')
 		}
 	}
 

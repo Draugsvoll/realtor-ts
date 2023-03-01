@@ -3,7 +3,7 @@
 
     <section class="section-about flex-center-center">
       <h1>About us</h1>
-      <p class="index line-height-large">Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae magnam, quo placeat totam qui exercitationem eaque reprehenderit, quae eos sunt animi, natus suscipit! Sunt vero quia magnam nemo harum, non accusantium dolor? Tempora quibusdam, nesciunt sunt quo natus eligendi incidunt? Praesentium eos optio vel corrupti eum, adipisci provident fugit ullam ducimus sint, cumque suscipit voluptas voluptatem non atque? Vel magnam eum quas autem voluptate ipsa eos, repellat, qui neque amet illum, illo doloribus tempore ab doloremque recusandae asperiores fugit nulla beatae! Ut enim nulla eaque nesciunt rerum ullam qui quasi nam rem commodi obcaecati asperiores optio numquam nihil reiciendis ipsum recusandae ad, sequi deleniti esse provident odio illum necessitatibus autem. Voluptas blanditiis alias ullam inventore cumque saepe fugit, repudiandae quo quaerat eveniet beatae error delectus nisi voluptatum sapiente, possimus atque provident nobis ipsa cupiditate, temporibus eaque consequatur! Soluta laboriosam necessitatibus inventore expedita vitae consequatur corporis, assumenda repellat numquam quod aliquid.</p>
+      <p class="index line-height-large">Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae magnam, quo placeat totam qui exercitationem eaque reprehenderit, quae eos sunt animi, natus suscipit! Sunt vero quia magnam nemo harum, non accusantium dolor? Tempora quibusdam, nesciunt sunt quo natus eligendi incidunt? Praesentium eos optio vel corrupti eum, adipisci provident fugit ullam ducimus sint, cumque suscipit voluptas voluptatem non atque? voluptate ipsa eos, repellat, qui neque amet illum, illo doloribus tempore ab doloremque recusandae asperiores fugit nulla beatae! Ut enim nulla eaque nesciunt rerum ullam qui quasi nam rem commodi obcaecati asperiores optio numquam nihil reiciendis ipsum recusandae ad, sequi deleniti esse provident odio illum necessitatibus autem. Voluptas blanditiis alias ullam inventore cumque saepe fugit, repudiandae quo quaerat eveniet beatae error delectus nisi voluptatum sapiente, possimus atque provident nobis ipsa cupiditate, temporibus eaque consequatur! Soluta laboriosam necessitatibus inventore expedita vitae consequatur corporis, assumenda repellat numquam quod aliquid.</p>
       <!-- <div class="about-text-container flex-center-center">
           <div class="column">
             <div class="about-text">
@@ -22,19 +22,19 @@
       </div> -->
     </section>
 
-    <section class="card radius-medium">
+    <section class="card card1">
       <div >
         <h1>Meet our team</h1>
         <p class="line-height-medium">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt atque recusandae explicabo animi eius ipsum, delectus illo nam praesentium placeat maxime suscipit reprehenderit voluptates aliquid aliquam quo excepturi deleniti adipisci? Nostrum eaque similique, laborum incidunt eligendi repellat consequuntur reprehenderit perferendis esse voluptatibus placeat veritatis eveniet in at sit delectus minima!</p>
       </div>
       <div>
-        <img class="radius-medium" src="../assets/images/img4.jpg" alt="" srcset="">
+        <img class="radius-large" src="../assets/images/img4.jpg" alt="" srcset="">
       </div>
   </section>
 
     <section class="card">
         <div>
-          <img class="radius-medium" src="../assets/images/img3.jpg" alt="" srcset="">
+          <img class="radius-large" src="../assets/images/img3.jpg" alt="" srcset="">
         </div>
         <div class="form-container">
           <h1>Visit us</h1>
@@ -52,7 +52,6 @@
 <style lang="scss" scoped>
 main {
   .card {
-    border:solid;
     width:fit-content;
     margin:auto;
     margin-bottom:5rem;
@@ -60,20 +59,21 @@ main {
     display: flex;
     align-items: stretch;
     justify-content: center;
-    gap:5rem;
+    gap:2rem;
     flex-wrap: wrap-reverse;
     div {
       display: flex;
       flex-direction: column;
       justify-content: center;
       width: 50%;
-      max-width: 40rem;
+      max-width: 35rem;
       min-width: 26rem;
       h1, p{
         padding:1rem;
       }
       img {
-        width: 100%;
+        max-width: 100%;
+        height: 80%;
         object-fit: cover;
       }
     }
@@ -86,7 +86,7 @@ main {
     flex-direction: column;
     .index {
       padding:3rem;
-      max-width:75rem
+      max-width:65rem
     }
     h1{
       padding-top:6vh;
@@ -94,8 +94,7 @@ main {
     .about-text-container {
       flex-wrap: wrap;
       flex-grow:1;
-     
-        .column{
+      .column{
           display:block;
           max-width:max(40vw, 500px);
           min-width:23rem;

@@ -203,23 +203,21 @@ const states: state[] = [
 		{
 			city: query.value.toString(),
 			state_code: userInput.selected_state.code.toString(),
-			limit: '25',
+			limit: '50',
 			offset: '0',
 			sort: 'relevance',
 			buyOrRent: buyOrRent.value
 		}
 		params = insertOptionalParams(params)
 		if (encodeURIComponent(JSON.stringify(params)) === store.getParamsEncoded) {
-			// params.limit = '26' // force a search even if params didnt change, by adjusting this.
-			store.reset
+			params.limit = '51' // Trigger a search even if QueryParams didnt change
 		}
 		const QueryParamsEncoded = encodeURIComponent(JSON.stringify(params))
-		store.setParamsEncoded(QueryParamsEncoded) // update state which will trigger a new search on search-page
-		
-		router.push({path:`/search?`, query: {object:QueryParamsEncoded} }) // update url (goes to serach-page if not already there & URL is shareable)
+		store.setParamsEncoded(QueryParamsEncoded)
+		router.push({path:`/search?`, query: {object:QueryParamsEncoded} }) // update url (goes to search-page if not already there & URL is shareable link)
 	}
 
-	function persistParams() {
+	function persistUserInput() {
 		const decodedParams = decodeURIComponent(store.getParamsEncoded)
 		const params = JSON.parse(decodedParams)
 
@@ -247,16 +245,10 @@ const states: state[] = [
 
 	onMounted(() => {
 		if (route.path !== '/') {
-			try {
-				persistParams()
-			}
-			catch {
-				// skip trying to persist filters if something went wrong (URL got edited)
-			}
+			try { persistUserInput() }
+			catch {}	// skip trying to persist filters if something went wrong
 		}
-		
 	})
-
 </script>
 
 <style lang="scss" scoped>

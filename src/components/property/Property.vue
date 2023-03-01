@@ -24,7 +24,7 @@
 				  <p v-if="property.building_size?.size">{{property.building_size.size}} sqfeet</p>
 				</div>
 				<p>{{property.address.city}}</p>
-				<p>{{property.property_id}}</p>
+				<p>{{property.prop_type.replace(/_/g, ' ')}}</p>
 			  </div>
 		</div>
 

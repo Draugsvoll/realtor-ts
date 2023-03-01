@@ -97,7 +97,6 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 		return property.prop_status === "for_rent";
 	}
 
-	// trigger new search when user click 'search' btn which updates store
 	watch(() => store.getParamsEncoded, (newVal) => {
 		if (newVal === '') {
 			properties.value = undefined
@@ -107,19 +106,27 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 		search()
 	})
 
+	function filterEmptyPhotos(properties: Property[]) {
+		return properties.filter((property) => {
+			return property.photo_count > 1
+		})
+	}
+
 	async function fetchForSaleData (parameters: QueryParams) {
 		let params = parameters
 		let resp:Property[] = await getForSale(params);
-		console.log('for sale array: ', resp)
-		properties.value = resp
-		orderedProperties.value = resp
+		const respFiltered = filterEmptyPhotos(resp)
+		console.log('for sale array: ', respFiltered)
+		properties.value = respFiltered
+		orderedProperties.value = respFiltered
 	}
 	async function fetchForRentalData (parameters: QueryParams) {
 		let params = parameters
 		let resp:Property[] = await getForRental(params);
-		console.log('for rent array: ', resp)
-		properties.value = resp
-		orderedProperties.value = resp
+		const respFiltered = filterEmptyPhotos(resp)
+		console.log('for rent array: ', respFiltered)
+		properties.value = respFiltered
+		orderedProperties.value = respFiltered
 	}
 	function handleErrMsg (paramsObject: QueryParams) {
 		if (paramsObject.price_max) {

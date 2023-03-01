@@ -37,6 +37,7 @@ export interface PropertyDetailedRent {
 	photo_count:          number;
 	photos:               Photo[];
 	schools:              School[];
+	garage?:              string;
 }
 
 export interface Address {

@@ -46,6 +46,7 @@ export interface PropertyDetailedBuy {
 	data_source_name:     string;
 	detail_tracking:      string;
 	photos:               PhotoElement[];
+	garage?:              string;
 }
 
 export interface PropertyDetailedBuyAddress {
