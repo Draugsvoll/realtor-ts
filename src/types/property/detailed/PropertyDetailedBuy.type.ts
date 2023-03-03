@@ -78,8 +78,8 @@ export interface Agent {
 	name:             string;
 	profile_name:     string;
 	advertiser_id:    string;
-	href:             null;
-	photo:            null;
+	href?:            string;
+	photo?:           Photo;
 	nrds_id:          null;
 	nrds_verified_id: null;
 	office_name:      string;
@@ -89,6 +89,10 @@ export interface Agent {
 	mls_memberships:  MlsMemberships;
 	id:               string;
 	primary:          boolean;
+}
+
+export interface Photo {
+	href?: string;
 }
 
 export interface MlsMemberships {

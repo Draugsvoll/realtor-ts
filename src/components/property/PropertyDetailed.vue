@@ -51,7 +51,16 @@
 			</iframe>
 			<br /><small><a href="https://www.openstreetmap.org/?mlat=40.631&amp;mlon=-75.344#map=7/40.631/-75.344">Display full map</a></small>
 		</div>
-	  </div>
+		<br>
+	</div>
+	<div v-if="isPropertyBuy(property)" class="agent-container">
+		<p > {{property.agents[0]?.name}} </p>
+		<p > {{property.agents[0]?.email}} </p>
+		<span>About me</span>
+		<img :src="property.agents[0]?.photo?.href" alt="">
+		<a v-if="property.agents[0]?.href" :href="property.agents[0]?.href" target="_blank">Visit profile</a>
+		<p> <span>Slogan: </span> {{property.agents[0]?.slogan}} </p>
+	</div>
 	  
 </template>
 
@@ -154,6 +163,30 @@ export default defineComponent({
 			height:100%;
 			min-height:15rem;
 		}
+	}
+}
+.agent-container{
+	border:solid;
+	width:20rem;
+	padding: 2rem 0rem;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+	> * {
+		text-align: center;
+	}
+	span {
+		display:block;
+	}
+	a {
+		display:block;
+
+	}
+	img {
+		border-radius:100%;
+		max-width:8rem;
+		display:block;
+		margin:auto;
 	}
 }
 </style>
