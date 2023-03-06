@@ -1,7 +1,7 @@
 <template>
 	<router-link :to="viewPropertyDetailed" class="container">
 
-		<div class="property-container radius-small">
+		<div class="property-container radius-medium">
 			<div class="img-container">
 				<img class="radius-small" :src="isPropertyRent(property) ? property.photos[0].href : property.thumbnail" alt="">
 			  </div>
@@ -69,12 +69,13 @@ a {
 .property-container {
 	cursor: pointer;
 	width: 23rem;
-	height:30rem;
+	height:23rem;
 	list-style-type: none;
 	overflow:hidden;
 	margin:1.5rem 1rem;
-	background: rgb(54, 55, 56);
+	background: var(--font-color-dark);
 	.info {
+		padding:0.5rem;
 		.price {
 			font-size:1.5rem;
 		}

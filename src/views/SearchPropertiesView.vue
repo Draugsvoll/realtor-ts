@@ -7,7 +7,6 @@
 			<button @click="sortAlphabetical()">A-Z</button>
 			<button @click="sortAlphabeticalReverse()">Z-A</button>
 		</div>
-        <h1>Search Results</h1>
 		<p class="errMsg">{{errMsg}}</p>
         <transition-group tag="ul" name="list">
             <li v-for="property in orderedProperties" :key="property.property_id" >
@@ -178,7 +177,16 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 		.list-move {
 			transition: all 1s;
 		}
-		
+		.sort-btn-container {
+			margin:auto;
+			width:fit-content;
+			button {
+				outline:none;
+				border:none;
+				background:var(--color-primary);
+				padding:1rem;
+			}
+		}
 		ul {
 			display:inline-flex;
 			flex-wrap: wrap;

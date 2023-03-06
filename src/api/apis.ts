@@ -90,6 +90,8 @@ export function calculateMortgageApi (parameters: MortgageParams): Promise<any> 
 		headers: headers
 	}
 	return axios.request(options).then(function (response) {
+		console.error('1234 mortgage', response.data.mortgage)
+		
 		return response.data.mortgage as MortgageStats
 	}).catch(function (error) {
 		alert('api error (mortgage calculator): ' + error)

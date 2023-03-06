@@ -36,7 +36,7 @@ import {useStore} from '@/store/store'
 <style scoped lang="scss">
 a {
 	text-decoration: none;
-	color:inherit;
+	color:var(--font-color);
 }
 header {
 	position: fixed;

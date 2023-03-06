@@ -5,19 +5,20 @@
 		<div class="map-container">
 			<iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" :src="map_url">
 			</iframe>
-			<br /><small><a href="https://www.openstreetmap.org/?mlat=40.631&amp;mlon=-75.344#map=7/40.631/-75.344">Display full map</a></small>
+			<!-- <br /><small><a href="https://www.openstreetmap.org/?mlat=40.631&amp;mlon=-75.344#map=7/40.631/-75.344">Display full map</a></small> -->
 		</div>
 		<div v-if="property?.prop_status === 'for_sale'" class="mortgage-container">
 			<!-- form -->
 			<div class="input-data">
 				<form >
 					<span>Input</span>
-					<span>Monthly Insurance:</span><input v-model="mortgageInputs.hoi" type="decimal">
-					<span>Tax Rate (%):</span><input v-model="mortgageInputs.tax_rate" type="decimal">
-					<span>downpayment:</span><input v-model="mortgageInputs.downpayment" type="decimal">
-					<span>Price $:</span><input v-model="mortgageInputs.price" type="decimal">
-					<span>term (years):</span><input v-model="mortgageInputs.term" type="decimal">
-					<span>Interest (%):</span><input v-model="mortgageInputs.rate" type="decimal">
+					<!-- <span>downpayment:</span><input v-model="mortgageInputs.downpayment" type="decimal"> -->
+					<span>Price $:</span><input class="price-input" v-model="property.price" type="decimal">
+					
+					<span>Tax Rate (%) {{ Number(mortgageInputs.tax_rate).toFixed(1) }} </span><input class="range"  v-model="mortgageInputs.tax_rate" type="range" min="0" max="10" step="0.1">
+					<span> Monthly Insurance {{mortgageInputs.hoi}} </span><input class="range"  v-model="mortgageInputs.hoi" type="range" min="0" max="1000">
+					<span> term (years) {{ mortgageInputs.term }}:</span><input class="range"  v-model="mortgageInputs.term" type="range" min="1" max="30">
+					<span>downpayment {{ mortgageInputs.downpayment }}</span><input class="range" v-model="mortgageInputs.downpayment" type="range" min="1000" :max="property.price">
 				</form>
 				<button @click="calculateMortgage">Calculate</button>
 			</div>
@@ -54,7 +55,7 @@ import {useRoute} from 'vue-router'
 		hoi: '100', // monhly home insurances
 		tax_rate: '1.8', // property tax rate
 		downpayment: '5000',
-		price: property.value?.price?.toString() || '10000',
+		price: property?.value?.price?.toString() || '10000',
 		term: '25', // loan duration years
 		rate: '1.2', // interest rate
 	})
@@ -62,6 +63,9 @@ import {useRoute} from 'vue-router'
 	const fetchProperty = async (id: string) => {
 		let resp = await getPropertyDetails(id)
 		property.value = resp.properties[0]
+		if (property.value?.price){
+			mortgageInputs.price = property.value?.price?.toString()
+		}
 		console.error('1234 propery', resp.properties[0] )
 		try {currentPhoto.value = property.value?.photos[0].href}
 		catch {alert('Property lacking photos')}
@@ -103,6 +107,8 @@ import {useRoute} from 'vue-router'
 
 <style scoped lang="scss">
 main {
+	padding-top:5rem;
+
 	.map-container {
 		max-width:50rem;
 		width:30rem;
@@ -117,7 +123,7 @@ main {
 		border: 1px solid grey;
 		padding: 1.8rem;
 		display: flex;
-		width: 30rem;
+		width: 40rem;
 		margin: 0px auto;
 		justify-content: center;
 
@@ -127,7 +133,6 @@ main {
 				flex-direction: column;
 				margin: auto;
 				input {
-					width: 6rem;
 					margin-bottom: 1rem;
 					margin-left: 0rem;
 				}
@@ -157,4 +162,10 @@ main {
 
 
 	}
+
+	
+	  .price-input {
+		color:black;
+		width:5rem;
+	  }
 }</style>

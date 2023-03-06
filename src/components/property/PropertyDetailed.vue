@@ -1,20 +1,28 @@
 <template>
 	<div class="property-container" v-if="property">
 		<div class="card">
-		  <div class="img-container">
-			<img class="radius-small" :src="currentPhoto" alt="">
-		  </div>
-		  <div v-if="property" class="photos-container">
-			<div v-for="photo in property.photos" class="photo">
-				<img @click="setImage(photo.href)" class="radius-small" :src="photo.href" alt="">
+			<div class="card-top">
+				<div>
+					<img class="radius-small" :src="currentPhoto" alt="">
+				</div>
+				<div class="info">
+					<h3>{{property.address.neighborhood_name}}, {{property.address.line}}, {{property.address.state}}</h3>
+					<h1 class="price"> {{ isPropertyBuy(property) ? '$' +
+						property.price.toLocaleString()
+						: property.price?.toLocaleString()|| property.community?.price_max.toLocaleString() }}
+					</h1>
+					<p>{{property.description}}</p>
+				</div>
 			</div>
-		</div>
-		  <div class="info">
-			<p class="price"> {{ isPropertyBuy(property) ? '$' +
-				property.price.toLocaleString()
-				: property.price?.toLocaleString()|| property.community?.price_max.toLocaleString() }}
-			</p>
-			<p>{{property.address.neighborhood_name}}, {{property.address.line}}</p>
+			<div v-if="property" class="photos-container">
+				<div v-for="photo in property.photos" class="photo">
+					<img @click="setImage(photo.href)" class="radius-small" :src="photo.href" alt="">
+				</div>
+			</div>
+		  </div>
+	</div>
+
+	<div class="card-small">
 			<div class="stats">
 				<p>{{ isPropertyBuy(property) ?
 					property.baths 
@@ -34,32 +42,31 @@
 				: property.community?.contact_number || null }}
 			</p>
 			<p>{{property.prop_status.replace(/_/g, ' ')}}</p>
-			<p>{{property.description}}</p>
-			<p  v-for="(features, index) in property.features" :key="index">
-				<p v-if="index<5" v-for="(feature, fIndex) in features.text" :key="fIndex">
-					<p v-if="fIndex<10">{{ feature }}</p>
-				</p>
-			</p>
+		
 
 			<p>Updated at {{property.last_update.split("T")[0].split("-").reverse().join("/")}}</p>
 			<p>Garage: {{property.garage}}</p>
 			<p>List date: {{property.list_date.split("T")[0].split("-").reverse().join("/")}}</p>
-		  </div>
-		</div>
-		<div class="map-container">
-			<iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" :src="map_url">
-			</iframe>
-			<br /><small><a href="https://www.openstreetmap.org/?mlat=40.631&amp;mlon=-75.344#map=7/40.631/-75.344">Display full map</a></small>
-		</div>
-		<br>
 	</div>
+
+	<div class="card-small">
+		<p  v-for="(features, index) in property.features" :key="index">
+			<p v-if="index<5" v-for="(feature, fIndex) in features.text" :key="fIndex">
+				<p v-if="fIndex<10">{{ feature }}</p>
+			</p>
+		</p>
+	</div>
+	
 	<div v-if="isPropertyBuy(property)" class="agent-container">
-		<p > {{property.agents[0]?.name}} </p>
+		<p> {{property.agents[0]?.name}} </p>
+		<img :src="property.agents[0]?.photo?.href ?
+		 property.agents[0]?.photo?.href
+		 : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvN_Jtd4I62gZJcUNjGCs2xPLzGwJZyqEFnOPi7TX2yOnDrdOT6t_tWH5rx3cpXPA7wK8&usqp=CAU' "
+		 alt="">
+		<p class="slogan"> {{property.agents[0]?.slogan}} </p>
+		<a v-if="property.agents[0]?.href" :href="property.agents[0]?.href" target="_blank"><button class="btn-profile">View Profile</button></a>
 		<p > {{property.agents[0]?.email}} </p>
-		<span>About me</span>
-		<img :src="property.agents[0]?.photo?.href" alt="">
-		<a v-if="property.agents[0]?.href" :href="property.agents[0]?.href" target="_blank">Visit profile</a>
-		<p> <span>Slogan: </span> {{property.agents[0]?.slogan}} </p>
+		<p >{{property.agents[0]?.office_name}} </p>
 	</div>
 	  
 </template>
@@ -113,80 +120,106 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+
+.card-small {
+	width:65rem;
+	margin:2rem auto;
+	background:var(--font-color-dark);
+}
 .property-container {
 	display:flex;
 	flex-wrap:wrap;
 	margin:auto;
-	padding-top:8rem;
-	max-width:80rem;
-	> div {
-		border: 1px solid yellow;
-		min-width:30rem;
-		width:50%;
-	}
 	.card {
 		margin:auto;
-		.img-container {
-			margin:0.5rem auto 0.5rem auto;
+		max-width:65rem;
+		background:var(--font-color-dark);
+		.card-top {
+			min-width:30rem;
+			max-width:70rem;
 			display:flex;
-			justify-content: center;
-			img {
-				margin:auto;
-				min-width:20rem;
+			flex-wrap: wrap;
+			gap:2rem;
+			height:25rem;
+
+			> div{
+				flex:1;
+				h1,h2,h3 {
+					text-align: left;
+				}
 			}
-		}
-		.info {
-			width:100%;
-		}
-		.photos-container {
-			display: flex;
-			gap: 0.5rem;
-			justify-content: center;
-			overflow:hidden;
-			width:100%;		
-			.photo {
-				img {
-					flex-grow:1;
-					max-width:9rem;
-					max-height:6rem;
-					object-fit: cover;
-					cursor:pointer;
+			.info {
+				border:solid;
+				height:100%;
+			}
+			img {
+				width:32rem;
+				vertical-align: bottom;
+				height:100%;
+			}
+			.map-container{
+				min-width:15rem;
+				flex:1;
+				iframe {
+					width:100%;
+					height:65%;
 				}
 			}
 		}
 	}
-	.map-container{
-		margin-left:auto;
-		margin-right:auto;
-		iframe {
-			width:100%;
-			height:100%;
-			min-height:15rem;
-		}
-	}
+	
 }
 .agent-container{
-	border:solid;
+	margin:1rem auto;
+	border:1px solid grey;
 	width:20rem;
-	padding: 2rem 0rem;
+	padding: 3rem 0.8rem;
 	display: flex;
     flex-direction: column;
     justify-content: center;
 	> * {
+		padding: 0.2rem;
 		text-align: center;
-	}
-	span {
 		display:block;
 	}
 	a {
-		display:block;
-
+		width:fit-content;
+		margin:auto;
 	}
 	img {
-		border-radius:100%;
-		max-width:8rem;
-		display:block;
 		margin:auto;
+		width:7rem;
+		height:7rem;
+		object-fit: cover;
+		border-radius:100%;
+	}
+	.slogan {
+		font-style:italic;
+	}
+	.btn-profile {
+		outline:none;
+		border:none;
+		padding:0.5rem 3rem;
+		background:var(--color-primary);
+		cursor:pointer;
+	}
+	
+}
+.photos-container {
+	display: flex;
+	gap: 0.5rem;
+	justify-content: center;
+	overflow-x:hidden;
+	width:50%;		
+	height:30%;
+	.photo {
+		img {
+			max-width:7.5rem;
+			max-height:4rem;
+			object-fit: cover;
+			cursor:pointer;
+			vertical-align: bottom;
+		}
 	}
 }
 </style>

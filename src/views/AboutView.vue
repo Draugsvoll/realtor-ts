@@ -3,8 +3,8 @@
 
     <section class="section-about flex-center-center">
       <h1>About us</h1>
-      <p class="index line-height-large">Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae magnam, quo placeat totam qui exercitationem eaque reprehenderit, quae eos sunt animi, natus suscipit! Sunt vero quia magnam nemo harum, non accusantium dolor? Tempora quibusdam, nesciunt sunt quo natus eligendi incidunt? Praesentium eos optio vel corrupti eum, adipisci provident fugit ullam ducimus sint, cumque suscipit voluptas voluptatem non atque? voluptate ipsa eos, repellat, qui neque amet illum, illo doloribus tempore ab doloremque recusandae asperiores fugit nulla beatae! Ut enim nulla eaque nesciunt rerum ullam qui quasi nam rem commodi obcaecati asperiores optio numquam nihil reiciendis ipsum recusandae ad, sequi deleniti esse provident odio illum necessitatibus autem. Voluptas blanditiis alias ullam inventore cumque saepe fugit, repudiandae quo quaerat eveniet beatae error delectus nisi voluptatum sapiente, possimus atque provident nobis ipsa cupiditate, temporibus eaque consequatur! Soluta laboriosam necessitatibus inventore expedita vitae consequatur corporis, assumenda repellat numquam quod aliquid.</p>
-      <!-- <div class="about-text-container flex-center-center">
+      <p class="index line-height-large">Lorem ipsum dolor sit amet consec animi, natus suscipit! Sunt vero quia magnam nemo harum, non accusantium dolor? Tempora quibusdam, nesciunt sunt quo natus eligendi incidunt? Praesentium eos optio vel corrupti eum, adipisci provident fugit ullam ducimus sint, cumque suscipit voluptas voluptatem non atque? voluptate ipsa eos, repellat, qui neque amet illum, illo doloribus tempore ab doloremque recusandae asperiores fugit nulla beatae! Ut enim nulla eaque nesciunt rerum ullam qui quasi nam rem commodi obcaecati asperiores optio numquam nihil reiciendis ipsum recusandae ad, sequi deleniti esse provident odio illum necessitatibus autem. Voluptas blanditiis alias ullam inventore cumque saepe fugit, repudiandae quo quaerat eveniet beatae error delectus nisi voluptatum sapiente, possimus atque provident nobis ipsa cupiditate, temporibus eaque consequatur! Soluta laboriosam necessitatibus inventore expedita vitae consequatur corporis, assumenda repellat numquam quod aliquid.</p>
+      <div class="about-text-container flex-center-center">
           <div class="column">
             <div class="about-text">
               <h3>Our mission</h3>
@@ -19,7 +19,7 @@
             </div>
           
           </div>
-      </div> -->
+      </div>
     </section>
 
     <section class="card card1">
@@ -79,10 +79,12 @@ main {
     }
     
   }
+  .card1{
+    flex-wrap: wrap;
+  }
   .section-about {
     justify-content: space-around;
     padding-top:3rem;
-    padding-bottom:5rem;
     flex-direction: column;
     .index {
       padding:3rem;

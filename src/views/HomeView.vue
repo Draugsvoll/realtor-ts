@@ -127,7 +127,7 @@ export default defineComponent ({
 
 <style lang="scss" scoped>
 main {
-  --form-color:#c85959;
+  --form-color:var(--color-primary);
   --form-color-focus:#d44848;
   
   .section-welcome {
