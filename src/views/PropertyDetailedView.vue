@@ -11,9 +11,9 @@
 			<!-- form -->
 			<div class="input-data">
 				<form >
-					<span>Input</span>
+					<h1>Mortgage calculator</h1>
 					<!-- <span>downpayment:</span><input v-model="mortgageInputs.downpayment" type="decimal"> -->
-					<span>Price $:</span><input class="price-input" v-model="property.price" type="decimal">
+					<span class="calculator-price">Price <input class="price-input" v-model="property.price" type="number"></span>
 					
 					<span>Tax Rate (%) {{ Number(mortgageInputs.tax_rate).toFixed(1) }} </span><input class="range"  v-model="mortgageInputs.tax_rate" type="range" min="0" max="10" step="0.1">
 					<span> Monthly Insurance {{mortgageInputs.hoi}} </span><input class="range"  v-model="mortgageInputs.hoi" type="range" min="0" max="1000">
@@ -123,7 +123,6 @@ main {
 		border: 1px solid grey;
 		padding: 1.8rem;
 		display: flex;
-		width: 40rem;
 		margin: 0px auto;
 		justify-content: center;
 
@@ -138,9 +137,6 @@ main {
 				}
 			}
 			button {
-				width: 6.5rem;
-				margin-left: auto;
-				margin-top: 3rem;
 			}
 		}
 		.output-data {
@@ -163,9 +159,17 @@ main {
 
 	}
 
-	
-	  .price-input {
-		color:black;
-		width:5rem;
-	  }
+	.calculator-price{
+		width:fit-content;
+		margin: 1rem auto;
+		font-size:1.5rem;
+		.price-input {
+			color:var(--font-color);
+			font-size: inherit;
+			border:none;
+			padding:0.3rem 0.5rem;
+			width:9rem;
+			text-align: center;
+		}
+	}
 }</style>

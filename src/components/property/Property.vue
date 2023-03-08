@@ -73,7 +73,7 @@ a {
 	list-style-type: none;
 	overflow:hidden;
 	margin:1.5rem 1rem;
-	background: var(--font-color-dark);
+	background: var(--background-color);
 	.info {
 		padding:0.5rem;
 		.price {

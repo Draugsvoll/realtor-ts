@@ -2,8 +2,17 @@
 	<div class="property-container" v-if="property">
 		<div class="card">
 			<div class="card-top">
-				<div>
-					<img class="radius-small" :src="currentPhoto" alt="">
+				<div class="img-container">
+					<div class="main-img">
+						<img class="radius-small" :src="currentPhoto" alt="">
+					</div>
+					<div>
+						<!-- <div v-if="property" class="photos-container">
+							<div v-for="photo in property.photos" class="photo">
+								<img @click="setImage(photo.href)" class="radius-small" :src="photo.href" alt="">
+							</div>
+						</div> -->
+					</div>
 				</div>
 				<div class="info">
 					<h3>{{property.address.neighborhood_name}}, {{property.address.line}}, {{property.address.state}}</h3>
@@ -11,42 +20,46 @@
 						property.price.toLocaleString()
 						: property.price?.toLocaleString()|| property.community?.price_max.toLocaleString() }}
 					</h1>
-					<p>{{property.description}}</p>
+					<div class="stats">
+						<p>{{ isPropertyBuy(property) ?
+							property.baths 
+							: property.community?.baths_max || property.baths }}
+							bathroom
+						</p>
+						<p >{{ isPropertyBuy(property) ?
+							property.beds 
+							: property.community?.beds_max || property.beds || property.community?.beds_min}} bedroom
+						</p>
+						<p v-if="property.building_size?.size">{{property.building_size.size}} sqfeet</p>
+					</div>
+					<p>{{property.address.city}}</p>
+					<p>{{property.prop_type.replace(/_/g, ' ')}}</p>
+					<p>{{ isPropertyBuy(property) ?
+						property.lead_forms?.local_phone || null
+						: property.community?.contact_number || null }}
+					</p>
+					<p>{{property.prop_status.replace(/_/g, ' ')}}</p>
+				
+
+					<p>Updated at {{property.last_update.split("T")[0].split("-").reverse().join("/")}}</p>
+					<p>Garage: {{property.garage}}</p>
+					<p>List date: {{property.list_date.split("T")[0].split("-").reverse().join("/")}}</p>
 				</div>
 			</div>
-			<div v-if="property" class="photos-container">
-				<div v-for="photo in property.photos" class="photo">
-					<img @click="setImage(photo.href)" class="radius-small" :src="photo.href" alt="">
-				</div>
+		</div>
+	</div>
+	
+	<div class="card-small">
+		<div v-if="property" class="photos-container">
+			<div v-for="photo in property.photos" class="photo">
+				<img @click="setImage(photo.href)" class="radius-small" :src="photo.href" alt="">
 			</div>
-		  </div>
+		</div>
 	</div>
 
 	<div class="card-small">
-			<div class="stats">
-				<p>{{ isPropertyBuy(property) ?
-					property.baths 
-					: property.community?.baths_max || property.baths }}
-					bathroom
-				</p>
-				<p >{{ isPropertyBuy(property) ?
-					property.beds 
-					: property.community?.beds_max || property.beds || property.community?.beds_min}} bedroom
-				</p>
-				<p v-if="property.building_size?.size">{{property.building_size.size}} sqfeet</p>
-			</div>
-			<p>{{property.address.city}}</p>
-			<p>{{property.prop_type.replace(/_/g, ' ')}}</p>
-			<p>{{ isPropertyBuy(property) ?
-				property.lead_forms?.local_phone || null
-				: property.community?.contact_number || null }}
-			</p>
-			<p>{{property.prop_status.replace(/_/g, ' ')}}</p>
-		
-
-			<p>Updated at {{property.last_update.split("T")[0].split("-").reverse().join("/")}}</p>
-			<p>Garage: {{property.garage}}</p>
-			<p>List date: {{property.list_date.split("T")[0].split("-").reverse().join("/")}}</p>
+		<h1>Description</h1>
+		<p>{{property.description}}</p>
 	</div>
 
 	<div class="card-small">
@@ -120,11 +133,13 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-
+h1,h2,h3 {
+	text-align:left;
+}
 .card-small {
-	width:65rem;
+	width:60rem;
 	margin:2rem auto;
-	background:var(--font-color-dark);
+	overflow:hidden;
 }
 .property-container {
 	display:flex;
@@ -132,38 +147,22 @@ export default defineComponent({
 	margin:auto;
 	.card {
 		margin:auto;
-		max-width:65rem;
-		background:var(--font-color-dark);
+		width:60rem;
 		.card-top {
-			min-width:30rem;
-			max-width:70rem;
 			display:flex;
 			flex-wrap: wrap;
 			gap:2rem;
-			height:25rem;
-
 			> div{
-				flex:1;
 				h1,h2,h3 {
 					text-align: left;
 				}
 			}
 			.info {
-				border:solid;
 				height:100%;
 			}
 			img {
-				width:32rem;
+				max-height:100%;
 				vertical-align: bottom;
-				height:100%;
-			}
-			.map-container{
-				min-width:15rem;
-				flex:1;
-				iframe {
-					width:100%;
-					height:65%;
-				}
 			}
 		}
 	}
@@ -173,7 +172,7 @@ export default defineComponent({
 	margin:1rem auto;
 	border:1px solid grey;
 	width:20rem;
-	padding: 3rem 0.8rem;
+	padding: 5rem 0;
 	display: flex;
     flex-direction: column;
     justify-content: center;
@@ -206,12 +205,7 @@ export default defineComponent({
 	
 }
 .photos-container {
-	display: flex;
-	gap: 0.5rem;
-	justify-content: center;
-	overflow-x:hidden;
-	width:50%;		
-	height:30%;
+	display:flex;
 	.photo {
 		img {
 			max-width:7.5rem;
@@ -220,6 +214,21 @@ export default defineComponent({
 			cursor:pointer;
 			vertical-align: bottom;
 		}
+	}
+}
+.map-container{
+	min-width:15rem;
+	flex:1;
+	iframe {
+		width:100%;
+		height:65%;
+	}
+}
+.img-container {
+	width:30rem;
+	overflow:hidden;
+	.main-img {
+		display:flex;
 	}
 }
 </style>
