@@ -74,12 +74,12 @@
           </div>
         </div>
         <div class="form-container flex-center-center">
-          <form class="radius-large">      
+          <form class="radius-medium">      
             <input name="name" type="text" class="feedback-input radius-medium" placeholder="Name" />   
             <input name="email" type="text" class="feedback-input" placeholder="Email" />
             <input name="email" type="tel" class="feedback-input" placeholder="Phone" />
             <textarea name="text" class="feedback-input" placeholder="Questions"></textarea>
-            <input type="submit" class="radius-medium" value="SUBMIT"/>
+            <input type="submit" class="radius-medium" value="Submit"/>
           </form>
         </div>
       </section>
@@ -143,7 +143,7 @@ main {
 
   .section-about {
     justify-content: space-around;
-    padding-top:3rem;
+    padding-top:var(--page-padding-top);
     padding-bottom:5rem;
     flex-direction: column;
     h1{
@@ -240,14 +240,14 @@ main {
   /* FORM */ 
   form {
     background-color: rgba(0, 0, 0, 0.4);
-    padding:3rem 3.3rem;
+    padding:2rem;
     max-width:27rem;
     margin:3rem auto;
     .feedback-input {
       color:white;
       font-family: Helvetica, Arial, sans-serif;
       font-weight:500;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       letter-spacing: 0.04rem;
       line-height: 1.8rem;
       background-color: transparent;
@@ -280,7 +280,7 @@ main {
       padding-top:0.8rem;
       padding-bottom:0.8rem;
       transition: all 0.2s;
-      font-weight:700;
+      font-weight:600;
       &:hover {
         background:var(--form-color-focus);
       }

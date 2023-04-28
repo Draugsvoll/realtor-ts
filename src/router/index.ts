@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import AboutView from "../views/AboutView.vue";
+import FinanceView from "../views/FinanceView.vue";
 import SearchResultsView from "../views/SearchPropertiesView.vue";
 import ViewPropertyDetailed from "../views/PropertyDetailedView.vue";
 
@@ -26,6 +27,11 @@ const router = createRouter({
       path: "/about",
       name: "about",
       component: AboutView,
+    },
+    {
+      path: "/finance",
+      name: "finance",
+      component: FinanceView,
     },
   ],
 });

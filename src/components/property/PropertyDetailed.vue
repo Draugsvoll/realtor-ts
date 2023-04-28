@@ -3,86 +3,80 @@
 		<div class="card">
 			<div class="card-top">
 				<div class="img-container">
-					<div class="main-img">
-						<img class="radius-small" :src="currentPhoto" alt="">
-					</div>
-					<div>
-						<!-- <div v-if="property" class="photos-container">
-							<div v-for="photo in property.photos" class="photo">
-								<img @click="setImage(photo.href)" class="radius-small" :src="photo.href" alt="">
-							</div>
-						</div> -->
-					</div>
+					<img class="radius-small" :src="currentPhoto" alt="">
 				</div>
 				<div class="info">
-					<h3>{{property.address.neighborhood_name}}, {{property.address.line}}, {{property.address.state}}</h3>
-					<h1 class="price"> {{ isPropertyBuy(property) ? '$' +
-						property.price.toLocaleString()
-						: property.price?.toLocaleString()|| property.community?.price_max.toLocaleString() }}
-					</h1>
+					<div>
+						<h3 class="address">{{property.address.neighborhood_name}}, {{property.address.line}}, {{property.address.state}}</h3>
+						<h1 class="price"> {{ isPropertyBuy(property) ? '$' +
+							property.price.toLocaleString()
+							: property.price?.toLocaleString()|| property.community?.price_max.toLocaleString() }}
+						</h1>
+					</div>
 					<div class="stats">
 						<p>{{ isPropertyBuy(property) ?
 							property.baths 
 							: property.community?.baths_max || property.baths }}
-							bathroom
+							Bathroom
 						</p>
 						<p >{{ isPropertyBuy(property) ?
 							property.beds 
-							: property.community?.beds_max || property.beds || property.community?.beds_min}} bedroom
+							: property.community?.beds_max || property.beds || property.community?.beds_min}} Bedroom
 						</p>
-						<p v-if="property.building_size?.size">{{property.building_size.size}} sqfeet</p>
+						<p v-if="property.building_size?.size">{{property.building_size.size.toLocaleString()}} Square feet</p>
+						<p v-if="property.garage">{{property.garage}} Garage</p>
 					</div>
-					<p>{{property.address.city}}</p>
-					<p>{{property.prop_type.replace(/_/g, ' ')}}</p>
-					<p>{{ isPropertyBuy(property) ?
-						property.lead_forms?.local_phone || null
-						: property.community?.contact_number || null }}
-					</p>
-					<p>{{property.prop_status.replace(/_/g, ' ')}}</p>
-				
 
-					<p>Updated at {{property.last_update.split("T")[0].split("-").reverse().join("/")}}</p>
-					<p>Garage: {{property.garage}}</p>
-					<p>List date: {{property.list_date.split("T")[0].split("-").reverse().join("/")}}</p>
+					<div>
+						<p>{{property.address.city}}</p>
+						<p>{{property.prop_type.replace(/_/g, ' ')}}</p>
+						<p>{{ isPropertyBuy(property) ?
+							property.lead_forms?.local_phone || null
+							: property.community?.contact_number || null }}
+						</p>
+						<p>{{property.prop_status.replace(/_/g, ' ')}}</p>
+					</div>
+
+					<div>
+						<p class="info-bottom">Updated at {{property.last_update.split("T")[0].split("-").reverse().join("/")}}</p>
+						<p class="info-bottom">List date: {{property.list_date.split("T")[0].split("-").reverse().join("/")}}</p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	
-	<div class="card-small">
-		<div v-if="property" class="photos-container">
-			<div v-for="photo in property.photos" class="photo">
-				<img @click="setImage(photo.href)" class="radius-small" :src="photo.href" alt="">
-			</div>
+	<div v-if="property" class="photos-container">
+		<div v-for="photo in property.photos" class="photo">
+			<img @click="setImage(photo.href)" class="radius-small" :src="photo.href" alt="">
 		</div>
 	</div>
 
 	<div class="card-small">
-		<h1>Description</h1>
-		<p>{{property.description}}</p>
+		<div>
+			<h1>Description</h1>
+			<p>{{property.description}}</p>
+		</div>
 	</div>
 
 	<div class="card-small">
-		<p  v-for="(features, index) in property.features" :key="index">
-			<p v-if="index<5" v-for="(feature, fIndex) in features.text" :key="fIndex">
-				<p v-if="fIndex<10">{{ feature }}</p>
-			</p>
-		</p>
+		<div class="map-container">
+			<iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" :src="map_url">
+			</iframe>
+		</div>
+		<div v-if="isPropertyBuy(property)" class="agent-container">
+			<p class="agent-name"> {{property.agents[0]?.name}} </p>
+			<img :src="property.agents[0]?.photo?.href ?
+			property.agents[0]?.photo?.href
+			: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvN_Jtd4I62gZJcUNjGCs2xPLzGwJZyqEFnOPi7TX2yOnDrdOT6t_tWH5rx3cpXPA7wK8&usqp=CAU' "
+			alt="">
+			<p class="slogan"> {{property.agents[0]?.slogan}} </p>
+			<a v-if="property.agents[0]?.href" :href="property.agents[0]?.href" target="_blank"><button class="button">View Profile</button></a>
+			<p class="agent-email"> {{property.agents[0]?.email}} </p>
+			<p >{{property.agents[0]?.office_name}} </p>
+		</div>
 	</div>
-	
-	<div v-if="isPropertyBuy(property)" class="agent-container">
-		<p> {{property.agents[0]?.name}} </p>
-		<img :src="property.agents[0]?.photo?.href ?
-		 property.agents[0]?.photo?.href
-		 : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvN_Jtd4I62gZJcUNjGCs2xPLzGwJZyqEFnOPi7TX2yOnDrdOT6t_tWH5rx3cpXPA7wK8&usqp=CAU' "
-		 alt="">
-		<p class="slogan"> {{property.agents[0]?.slogan}} </p>
-		<a v-if="property.agents[0]?.href" :href="property.agents[0]?.href" target="_blank"><button class="btn-profile">View Profile</button></a>
-		<p > {{property.agents[0]?.email}} </p>
-		<p >{{property.agents[0]?.office_name}} </p>
-	</div>
-	  
-</template>
+	</template>
 
 <script lang="ts">
 import type { PropertyDetailed } from '@/types/property/detailed/PropertyDetailed.type';
@@ -92,6 +86,7 @@ import { defineComponent, onMounted, ref, type PropType } from 'vue'
 
 export default defineComponent({
   name: 'PropertyDetailed',
+ 
   props: {
     property: {
       type: Object as PropType<PropertyDetailed>,
@@ -127,7 +122,7 @@ export default defineComponent({
 	onMounted(() => {
 		setMapUrl()
 	})
-    return {property, isPropertyBuy, setImage, currentPhoto, isPropertyRent, setMapUrl, map_url}
+    return {property, isPropertyBuy, setImage, currentPhoto, isPropertyRent, setMapUrl, map_url,}
 	}
 })
 </script>
@@ -137,45 +132,100 @@ h1,h2,h3 {
 	text-align:left;
 }
 .card-small {
-	width:60rem;
-	margin:2rem auto;
-	overflow:hidden;
+	padding:var(--padding-small);
+	max-width:var(--page-width-medium);
+	margin:1rem auto;
+	display:flex;
+	flex-wrap: wrap;
+	justify-content:space-between;
 }
 .property-container {
+	max-width:var(--page-width-medium);
 	display:flex;
-	flex-wrap:wrap;
 	margin:auto;
+	padding:var(--padding-small);
 	.card {
+		border: 1px solid #0000001c;
+		border-radius:var(--border-radius-medium);
 		margin:auto;
 		width:60rem;
+		
 		.card-top {
 			display:flex;
-			flex-wrap: wrap;
-			gap:2rem;
+			flex-direction: row;
+			@media screen and (max-width: 830px) {
+				justify-content: center;
+			}
 			> div{
 				h1,h2,h3 {
 					text-align: left;
 				}
 			}
 			.info {
-				height:100%;
+				text-transform: capitalize;
+				font-weight: 500;
+				height:inherit;
+				padding:var(--padding-small);
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				.address {
+					font-size: 1.40rem;
+					display: -webkit-box;
+					-webkit-box-orient: vertical;
+					-webkit-line-clamp: 2;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					max-width:28rem;
+				}
+				.info-bottom {
+					font-weight:400;
+					font-style: italic;
+					font-size: 0.9rem;
+				}
+				p {
+					letter-spacing: var(--letter-spacing-medium);
+					font-size:1rem;
+				}
 			}
-			img {
-				max-height:100%;
-				vertical-align: bottom;
+			.img-container {
+				width: 28rem;
+				height: 20rem;
+				border-right: 1px solid #0000001c;
+				img {
+					height: inherit;
+					margin: auto;
+					display: block;
+					vertical-align: bottom;
+					max-width: 100%;
+				}
+				@media screen and (max-width: 485px) {
+					margin:auto;
+					width:fit-content;
+				}
 			}
 		}
 	}
 	
 }
 .agent-container{
-	margin:1rem auto;
-	border:1px solid grey;
-	width:20rem;
-	padding: 5rem 0;
+	margin-right:0;
 	display: flex;
     flex-direction: column;
     justify-content: center;
+	max-width:10.5rem;
+	@media screen and (max-width: 930px) {
+		margin:2rem auto;
+	}
+	.agent-name {
+		font-weight: 500;
+		font-size: 1.15rem;
+		margin-bottom:0.4rem;
+		padding-top:0;
+	}
+	.agent-email {
+		font-weight: 500;
+	}
 	> * {
 		padding: 0.2rem;
 		text-align: center;
@@ -184,6 +234,7 @@ h1,h2,h3 {
 	a {
 		width:fit-content;
 		margin:auto;
+		text-decoration:none;
 	}
 	img {
 		margin:auto;
@@ -191,6 +242,7 @@ h1,h2,h3 {
 		height:7rem;
 		object-fit: cover;
 		border-radius:100%;
+		vertical-align: middle;
 	}
 	.slogan {
 		font-style:italic;
@@ -198,18 +250,23 @@ h1,h2,h3 {
 	.btn-profile {
 		outline:none;
 		border:none;
-		padding:0.5rem 3rem;
-		background:var(--color-primary);
 		cursor:pointer;
+		color:pink;
 	}
-	
 }
+
 .photos-container {
+	padding:var(--padding-small);
+	max-width:var(--page-width-medium);
+	margin:0.5rem auto;
+	margin-top:0;
 	display:flex;
+	gap:0.2rem;
+	overflow:hidden;
 	.photo {
 		img {
-			max-width:7.5rem;
-			max-height:4rem;
+			max-width:9rem;
+			max-height:5rem;
 			object-fit: cover;
 			cursor:pointer;
 			vertical-align: bottom;
@@ -217,18 +274,11 @@ h1,h2,h3 {
 	}
 }
 .map-container{
-	min-width:15rem;
-	flex:1;
+	width: 46.5rem;
 	iframe {
 		width:100%;
-		height:65%;
-	}
-}
-.img-container {
-	width:30rem;
-	overflow:hidden;
-	.main-img {
-		display:flex;
+		height:17rem;
+		border-radius: var(--border-radius-medium);
 	}
 }
 </style>

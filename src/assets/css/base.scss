@@ -1,16 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap');
 
 :root {
-  --font-color: rgb(58, 58, 58);
-  --background-color:#ffffff;
-  --background-color--dark:#f4f6f8;
-
+  --color-font-dark: rgb(58, 58, 58);
+  --color-white:#ffffff;
+  --background-color--light:#f4f6f8;
   --color-primary:#ef5858;
 
-  background:var(--background-color--dark);
-  color:var(--font-color);
+
+  --range-input-width: 25rem;
+
+  --page-width-medium: 60rem;
+  --page-width-large: 70rem;
+  --page-padding-top:6rem;
+
+  --font-size-small: 0.95rem;
+  --font-size-medium: 1.2rem;
+
+  --letter-spacing-small:0.004rem;
+  --letter-spacing-medium:0.03rem;
+
+  --border-radius-small:2px;
+  --border-radius-medium:4px;
+  --border-radius-large:7px;
+
+  --padding-small:0.8rem;
+  --padding-medium:1.7rem;
+  --padding-large:2.2rem;
+
+  background:var(--background-color--light);
+  color:var(--color-font-dark);
+
+  letter-spacing:var(--letter-spacing-small);
   
   font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Roboto', sans-serif;
   
   @media screen and (min-width: 1700px) {
     font-size:18px;

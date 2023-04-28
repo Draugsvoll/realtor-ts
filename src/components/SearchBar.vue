@@ -24,11 +24,10 @@
 					<input v-model="userInput.selected_sqft_min" type="number" min="1" step="1">
 				</div>
 				
-				<div class="filter">
+				<!-- <div class="filter">
 					<p>sqfoot max</p>
 					<input v-model="userInput.selected_sqft_max" type="number" min="1" step="1">
-					
-				</div>
+				</div> -->
 	
 				<div class="filter">
 					<p>price min</p>
@@ -258,8 +257,8 @@ const states: state[] = [
 	position:relative;
 	display:flex;
 	flex-direction: column;
-	max-width:50rem;
 	margin:auto;
+	width:45rem;
 	.btn-row {
 		button {
 			cursor:pointer;
@@ -280,6 +279,8 @@ const states: state[] = [
 		padding-left:1.3rem;
 		width:100%;
 		background:	var(--background-color);
+		background:transparent;
+		display:flex;
 
 		.main-search-inputbar {
 			font-family: sans-serif;
@@ -319,15 +320,17 @@ const states: state[] = [
 		}
 	}
 	.filters-container {
-		input, select {
-			background-color: rgba(255,255,255,0.95);
-		  }
+		color:white;
 		background:var(--background-color);
+		background:transparent;
 		display:flex;
 		flex-direction: column;
 		gap:0.5rem;
 		padding:3rem 1.2rem;
 		margin-top:0rem;
+		input, select {
+			background-color: rgba(255,255,255,0.95);
+		  }
 		div {
 			display:flex;
 		}
