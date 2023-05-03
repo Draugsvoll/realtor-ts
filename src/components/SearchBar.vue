@@ -1,14 +1,20 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-	<div class="container">
+	<div class="container" ref="containerRef">
 		<div class="btn-row">
 			<button @click="toggleBuyOrRent('buy')" :class="{ 'highlighted': buyOrRent === 'buy' }">Buy</button>
 			<button @click="toggleBuyOrRent('rent')" :class="{ 'highlighted': buyOrRent === 'rent' }">Rent</button>
 		</div>
-		<div class="searchBar">
-			<input class="main-search-inputbar radius-small" v-model="query" type="text" name="locations" placeholder="City, adress..." autofocus @keyup.enter="search()" ref="input">
-			<button class="btn-search radius-small" @click="search()">Search</button>
-			<span class="state-label">State: </span>
+		<div class="searchBar-container">
+			<div class="actual-search-bar">
+				<input class="main-search-inputbar radius-small" v-model="query" type="text" name="locations" placeholder="City, Address..." autofocus @keyup.enter="search()" ref="input">
+				<button class="btn-search radius-small" @click="search()">
+					<div class="icon-container">
+						<font-awesome-icon class="icon" :icon="['fass', 'magnifying-glass']" />
+					</div>
+				</button>
+			</div>
+			<!-- <span class="state-label">State: </span> -->
 			<select v-model="userInput.selected_state" class="select-state" >
 				<option 
 					v-for="state in states" 
@@ -20,40 +26,6 @@
 		<div class="filters-container">
 			<div>
 				<div class="filter">
-					<p>sqfoot min</p>
-					<input v-model="userInput.selected_sqft_min" type="number" min="1" step="1">
-				</div>
-				
-				<!-- <div class="filter">
-					<p>sqfoot max</p>
-					<input v-model="userInput.selected_sqft_max" type="number" min="1" step="1">
-				</div> -->
-	
-				<div class="filter">
-					<p>price min</p>
-					<input v-model="userInput.selected_price_min" type="number" min="1" step="1">
-					
-				</div>
-				<br>
-				<div class="filter">
-					<p>price max</p>
-					<input v-model="userInput.selected_price_max" type="number" min="1" step="1" placeholder="">
-					
-				</div>
-			</div>
-			<div>
-				<div class="filter">
-					<p>baths min</p>
-					<select v-model="userInput.selected_baths_min">
-						<option 
-							v-for="bath in baths_min_options"
-							:value="bath"
-							>{{bath}}
-						</option>
-					</select>
-					
-				</div>
-				<div class="filter">
 					<p>beds min</p>
 					<select v-model="userInput.selected_beds_min">
 						<option 
@@ -64,6 +36,37 @@
 					</select>
 				</div>
 				<div class="filter">
+					<p>baths min</p>
+					<select v-model="userInput.selected_baths_min">
+						<option 
+						v-for="bath in baths_min_options"
+						:value="bath"
+						>{{bath}}
+					</option>
+					</select>
+				</div>
+				<div class="filter">
+					<p>sqfeet min</p>
+					<input v-model="userInput.selected_sqft_min" type="number" min="1" step="1">
+				</div>
+				
+				<div class="filter">
+					<p>sqfeet max</p>
+					<input v-model="userInput.selected_sqft_max" type="number" min="1" step="1">
+				</div>
+	
+				<div class="filter">
+					<p>price min</p>
+					<input v-model="userInput.selected_price_min" type="number" min="1" step="1">
+				</div>
+	
+				<div class="filter">
+					<p>price max</p>
+					<input v-model="userInput.selected_price_max" type="number" min="1" step="1" placeholder="">
+				</div>
+			</div>
+			<div>
+				<!-- <div class="filter">
 					<p>max age (years)</p>
 					<select v-model="userInput.selected_age_max">
 						<option 
@@ -72,8 +75,7 @@
 							>{{age}}
 						</option>
 					</select>
-					
-				</div>
+				</div> -->
 				
 			</div>
 		</div>
@@ -92,6 +94,7 @@ const router = useRouter()
 const route = useRoute()
 const query = ref(<string>'')
 const store = useStore()
+const containerRef = ref(<HTMLElement | null>null)
 
 // user wants to buy or rent
 const buyOrRent = ref(<BuyOrRent>'buy')
@@ -244,94 +247,135 @@ const states: state[] = [
 
 	onMounted(() => {
 		if (route.path !== '/') {
-			try { persistUserInput() }
+			try { persistUserInput() } // fetching params from searchEvent/URL
 			catch {}	// skip trying to persist filters if something went wrong
+			const container = containerRef.value
+			if (container) {
+				container.classList.add('style-not-transparent')
+			}
 		}
 	})
 </script>
 
 <style lang="scss" scoped>
+
 .container {
-	--main-input-height:2.3rem;
-	--background-color: rgba(0,0,0,0.55);
+	--main-input-height:2.7rem;
+	--background-color: rgba(0,0,0,0.42);
+	--background-color-hover: rgba(0,0,0,0.55);
 	position:relative;
 	display:flex;
 	flex-direction: column;
-	margin:auto;
-	width:45rem;
+	margin-left:auto;
+	margin-right:auto;
+	width:fit-content;
 	.btn-row {
 		button {
 			cursor:pointer;
+			display: inline-block;
+			margin:0;
+			margin-right:0.1rem;
+			border-radius:0px;
+			border-top-right-radius: var(--border-radius-small);
+			border-top-left-radius: var(--border-radius-small);
 			border:none;
 			outline:none;
-			padding:0.7rem;
-			padding-left:2rem;
-			padding-right:2rem;
+			padding:0.6rem 1.8rem;
+			font-size: var(--font-size-xsmall);
 			background:var(--background-color);
-			border-bottom: 2px solid transparent;
+			border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+			color:rgba(255, 255, 255, 0.777);
+			@media screen and (max-width: 630px) {
+				min-width:5rem;
+				width:7.5rem;
+			}
 			&.highlighted {
 				border-bottom:2px solid var(--color-primary);
+				color:var(--color-white);
+				background:var(--background-color-hover);
+			}
+			&:hover{
+				color:rgb(255, 255, 255);
+				background:var(--background-color-hover);
 			}
 		}
 	}
-	.searchBar {
-		padding-top:1.3rem;
-		padding-left:1.3rem;
-		width:100%;
-		background:	var(--background-color);
-		background:transparent;
+	.searchBar-container {
+		position: relative;
+		margin-top:0.1rem;
 		display:flex;
+		gap:0.3rem;
+		.actual-search-bar {
+			position: relative;
+		}
 
 		.main-search-inputbar {
 			font-family: sans-serif;
 			height:var(--main-input-height);
-			width:20rem;
-			font-size:0.9rem;
+			width:26rem;
+			font-size:var(--font-size-small);
 			outline:none;
-			input {
-				background: rgba(255,255,255,0.95);
+			@media screen and (max-width: 630px) {
+				width:20rem;
+			}
+			@media screen and (max-width: 530px) {
+				width:15rem;
 			}
 		}
 		.select-state {
 			height:var(--main-input-height);
 			width:7.5rem;
-			margin-right:1rem;
-			font-size:0.77rem;
-			padding-left:0.5rem;
+			font-size:var(--font-size-xsmall);
+			padding-left:0.1rem;
 		}
 		.select-state > select {
 			border:2px solid var(--color-primary);
-			font-size: 0.8rem;
+			font-size: var(--font-size-xsmall);
 			width:7rem;
-			
 		}
-		button {
-			padding-left:0.5rem;
-			padding-right:0.5rem;
-			margin-right:0.8rem;
+		.btn-search {
+			display: flex;
+			justify-content: center;
+			align-content: center;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			right:0.09rem;
+			margin:0;
 			background:var(--color-primary);
 			outline:none;
 			border:none;
-			height:var(--main-input-height);
+			height:91%;
 			cursor: pointer;
+			min-width:1.5rem;
+			width:2rem !important;
+			max-width:2rem !important;
+			&:hover {
+				background:var(--color-primary-hover);
+			}
+			.icon-container {
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+			}
 		}
 		.state-label {
-			font-size: 0.8rem;;
+			font-size: var(--font-size-xsmall);
 		}
 	}
 	.filters-container {
+		text-transform: capitalize;
 		color:white;
 		background:var(--background-color);
-		background:transparent;
 		display:flex;
 		flex-direction: column;
-		gap:0.5rem;
-		padding:3rem 1.2rem;
+		padding-top:1rem;
 		margin-top:0rem;
-		input, select {
-			background-color: rgba(255,255,255,0.95);
-		  }
+		@media screen and (max-width: 630px) {
+			display:none;
+		}
 		div {
+			justify-content: space-between;
 			display:flex;
 		}
 		
@@ -339,16 +383,47 @@ const states: state[] = [
 			display:flex;
 			flex-direction: column;
 			p {
-				font-size: 0.87rem;
-
+				font-size: var(--font-size-xxsmall);
+				font-weight: 400;
+				letter-spacing: var(--letter-spacing-medium);
+				margin-bottom: 0.1rem;
 			}
 			input, select {
-				margin-right:1rem;
-				height:1.6rem;
-				width:6rem;
+				height:1.7rem;
+				width:5.2rem;
 				text-align: center;
 			}
+			select {
+				width:4rem;
+			}
 		}
+	}
+}
+.style-not-transparent  {
+	input, select {
+		border:1px solid rgba(128, 128, 128, 0.52) !important;
+		&:hover {
+			border:1px solid var(--color-primary) !important;
+		}
+	}
+	.btn-row {
+		button {
+			background: var(--background-color-hover) !important;
+			border-bottom: 3px solid transparent !important;
+			background: rgb(102, 102, 106) !important;
+			&:hover {
+				border-bottom:3px solid var(--color-primary) !important;
+				background: rgb(85, 87, 93) !important;
+			}
+			&.highlighted {
+				background: rgb(85, 87, 93) !important;
+				border-bottom:3px solid var(--color-primary) !important;
+			}
+		}
+	}
+	.filters-container {
+		color:var(--color-font-dark) !important;
+		background:transparent !important;
 	}
 }
 </style>

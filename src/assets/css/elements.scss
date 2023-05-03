@@ -3,14 +3,19 @@ h1,h2,h3,h4,h5,h6{
 	font-weight:400;
 }
 h1{
-	font-size:2.1rem;
-	margin-bottom:0.4rem;
+	font-size:2.5rem;
+	margin-bottom:0.75rem;
+	letter-spacing: var(--letter-spacing-medium);
+}
+h2 {
+	font-size: var(--font-size-large);
+	margin-bottom:0.75rem;
 }
 h3 {
 }
 
 p {
-	font-size: var(--font-size-small);
+	font-size:var(--font-size-small);
 }
 button {
 	letter-spacing: var(--letter-spacing-medium);
@@ -24,6 +29,6 @@ button {
 	display:block;
 	color:white;
 	font-weight: 500;
-	font-size: 0.9rem;
+	font-size: var(--font-size-small);
 	min-width:9rem;
 }

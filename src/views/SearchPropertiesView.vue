@@ -1,9 +1,10 @@
 <template>
 	<main>
+		<h1 class="page-h1">Search Real Estate</h1>
 		<SearchBar/>
 		<div class="sort-btn-container">
-			<button @click="sortPriceHigh()">Price high</button>
-			<button @click="sortPriceLow()">Price Low</button>
+			<button @click="sortPriceHigh()">Price - High</button>
+			<button @click="sortPriceLow()">Price - Low</button>
 			<button @click="sortAlphabetical()">A-Z</button>
 			<button @click="sortAlphabeticalReverse()">Z-A</button>
 		</div>
@@ -42,7 +43,7 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 		orderedProperties.value = [...orderedProperties.value].sort((a: Property, b: Property) => {
 			let priceA = 0
 			let priceB = 0
-			if (isPropertyBuy(a) && isPropertyRent(b)) {
+			if (isPropertyBuy(a) && isPropertyBuy(b)) {
 				priceA = a[price]
 				priceB = b[price]
 			}
@@ -170,7 +171,13 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 
 <style scoped lang="scss">
 	main {
-		padding-top:5rem;
+		padding-top:var(--page-padding-top);
+		@media screen and (max-width: 500px) {
+			padding-top:var(--page-padding-top-mobile);
+		}
+		.page-h1 {
+			margin-bottom:3.5rem;
+		}
 		.errMsg {
 			color:red;
 		}
@@ -179,18 +186,37 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 		}
 		.sort-btn-container {
 			margin:auto;
+			margin-top:4rem;
+			margin-bottom:1rem;
+			display: flex;
+			gap:0.5rem;
 			width:fit-content;
 			button {
+				border-radius: var(--border-radius-small);
 				outline:none;
 				border:none;
 				background:var(--color-primary);
-				padding:1rem;
+				padding:0.7rem;
+				min-width:8rem;
+				font-size: var(--font-size-xxsmall);
+				font-weight: 500;
+				&:hover {
+					background:var(--color-primary-hover);
+				}
+				@media screen and (max-width: 630px) {
+					min-width:6.5rem;
+					margin-bottom:2rem;
+				  }
+				  @media screen and (max-width: 530px) {
+					min-width:5rem;
+				  }
 			}
 		}
 		ul {
 			display:inline-flex;
 			flex-wrap: wrap;
 			justify-content:center;
+			gap:2rem;
 			li {
 				display:inline-flex;
 			}

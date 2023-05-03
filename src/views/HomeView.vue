@@ -1,69 +1,87 @@
-
 <template>
   <main>
     
     <section class="section-welcome fullscreen-box bg-fullscreen flex-center-center">
+      <h1 class="welcome-txt">Buy real estate in the US</h1>
       <div class="overlay" />
       <SearchBar class="search-bar" />
     </section>
 
-    <section class="section-services">
-      <h1>Services we offer</h1>
-      <div class="services">
-        <div class="service">
-          <div class="overlay"></div>
-          <img class="radius-small" src="../assets/images/img3.jpg" alt="" srcset="">
-          <h3 class="head">Buy property</h3>
-          <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
-        </div>
-        <div class="service">
-          <div class="overlay"></div>
-          <img class="radius-small" src="../assets/images/img5.jpg" alt="" srcset="">
-          <h3 class="head">Rent a home</h3>
-          <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
-        </div>
-      </div>
-      <div class="services">
-        <div class="service">
-          <div class="overlay"></div>
-          <img class="radius-small" src="../assets/images/img3.jpg" alt="" srcset="">
-          <h3 class="head">Financial Advice</h3>
-          <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
-        </div>
-        <div class="service">
-          <div class="overlay"></div>
-          <img class="radius-small" src="../assets/images/img3.jpg" alt="" srcset="">
-          <h3 class="head">Refinancing</h3>
-          <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
-        </div>
-      </div>
-    </section>
-
-    <section class="section-about flex-center-center">
+    <!-- <section class="section-about flex-center-center">
       <h1>About us</h1>
       <div class="about-text-container flex-center-center">
           <div class="column">
             <div class="about-text">
-              <h3>Our mission</h3>
+              <h2>Our Mission</h2>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias distinctio, non hic ab nisi nemo nobis mollitia veritatis. Sapiente natus aperiam commodi expedita ex explicabo eius sunt maxime a perspiciatis. </p>
             </div>
             <div class="about-text">
-              <h3>Our mission</h3>
+              <h2>Our Expertise</h2>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias distinctio, non hic ab nisi nemo nobis mollitia veritatis. Sapiente natus aperiam commodi expedita ex explicabo eius sunt maxime a perspiciatis. </p>
             </div>
           </div>
           <div class="column">
             <div class="about-text">
-              <h3 >Our mission</h3>
+              <h2>Performance</h2>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias distinctio, non hic ab nisi nemo nobis mollitia veritatis. Sapiente natus aperiam commodi expedita ex explicabo eius sunt maxime a perspiciatis. </p>
             </div>
             <div class="about-text">
-              <h3>Our mission</h3>
+              <h2>Industry Leading</h2>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias distinctio, non hic ab nisi nemo nobis mollitia veritatis. Sapiente natus aperiam commodi expedita ex explicabo eius sunt maxime a perspiciatis. </p>
             </div>
           </div>
       </div>
+    </section> -->
+
+    <section class="section-services">
+      <h1>Services</h1>
+      <div class="services">
+        <a href="/finance">
+          <div class="service">
+            <div class="overlay"></div>
+            <img class="radius-small" src="../assets/images/img5.jpg" alt="" srcset="">
+            <h3 class="head">Financing</h3>
+            <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
+          </div>
+        </a>
+        <div class="service">
+          <div class="overlay"></div>
+          <img class="radius-small" src="../assets/images/img3.jpg" alt="" srcset="">
+          <h3 class="head">Lorem Ipsum</h3>
+          <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
+        </div>
+        <div class="service">
+          <div class="overlay"></div>
+          <img class="radius-small" src="../assets/images/img3.jpg" alt="" srcset="">
+          <h3 class="head">Lorem Ipsum</h3>
+          <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
+        </div>
+      </div>
+
+      <div class="services">
+        <div class="service">
+          <div class="overlay"></div>
+          <img class="radius-small" src="../assets/images/img3.jpg" alt="" srcset="">
+          <h3 class="head">Lorem Ipsum</h3>
+          <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
+        </div>
+        <div class="service">
+          <div class="overlay"></div>
+          <img class="radius-small" src="../assets/images/img3.jpg" alt="" srcset="">
+          <h3 class="head">Lorem Ipsum</h3>
+          <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
+        </div>
+        <div class="service">
+          <div class="overlay"></div>
+          <img class="radius-small" src="../assets/images/img3.jpg" alt="" srcset="">
+          <h3 class="head">Lorem Ipsum</h3>
+          <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
+        </div>
+        
+      </div>
     </section>
+
+   
 
       <section id="contact" class="section-contact bg-fullscreen">
         <div class="overlay"></div>
@@ -127,13 +145,22 @@ export default defineComponent ({
 
 <style lang="scss" scoped>
 main {
-  --form-color:var(--color-primary);
-  --form-color-focus:#d44848;
-  
   .section-welcome {
-    background-image: url('@/assets/images/bg.jpg');
+    .welcome-txt {
+      color:white;
+      position: relative;
+      z-index: 3;
+      width:fit-content;
+      margin-bottom:5rem;
+      font-size: 2.8rem;
+    }
+    color:var(--color-white);
+    display: flex;
+    flex-direction: column;
+    background-image: url('@/assets/images/bg2.jpg');
     .overlay {
-      background:rgba(0, 0, 0, 0.3);
+      background:rgba(0, 0, 0, 0.18);
+      z-index:2;
     }
     .search-bar{
       position:relative;
@@ -143,11 +170,11 @@ main {
 
   .section-about {
     justify-content: space-around;
-    padding-top:var(--page-padding-top);
-    padding-bottom:5rem;
+    padding-bottom:0rem;
     flex-direction: column;
     h1{
-      padding-top:6vh;
+      padding-top:3rem;
+      margin-bottom:1rem;
     }
     .about-text-container {
       flex-wrap: wrap;
@@ -155,57 +182,65 @@ main {
       
       .column{
         display:block;
-        max-width:max(40vw, 500px);
-        min-width:22rem;
+        width:max(40vw, 500px);
+        width:32rem;
       }
       .about-text{
-        padding:10vh 5vw;
-        h3 {
+        padding:3rem;
+        h2,h3 {
           text-align:left;
         }
         p {
-          padding-top:0.5rem;
         }
       }
     }
   }
 
   .section-services {
+    background:var(--color-background-light);
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding:3rem;
+    min-height:100vh;
+    h1 {
+      margin-bottom:2rem;
+    }
     .services {
       display:flex;
       flex-wrap: wrap;
-      margin:auto;
       width:fit-content;
+      margin-left:auto;
+      margin-right:auto;
       justify-content: center;
       .service {
+        letter-spacing: var(--letter-spacing-medium);
+        color:var(--color-white);
         position: relative;
         /* flex: 1 0 100%; */    /* to fill the entire width */
-        margin: 0.3rem;
+        margin: 0.3rem 0.4rem;
         overflow: hidden;
-        width:clamp(300px, 20vw, 480px);
-        height:clamp(320px, 22vw, 520px);
+        width:20rem;
+        height:15rem;
         .overlay {
-          background:rgba(0,0,0,0.43);
+          background:rgba(0,0,0,0.30);
           transition: all 0.5s;
           &:hover {
-            background:rgba(0,0,0,0.30);
+            background:rgba(0,0,0,0.18);
           }
         }
         .head {
           position: absolute;
-          bottom:8%;
+          bottom:0.5rem;
+          font-weight: 500;
+          font-size:var(--font-size-lmedium);
           width: 100%;
           z-index:3;
-          /* font-family: 'Roboto'; */
         }
         img {
           width: 100%; /* to make the image fill its container */
           height: 100%; /* to make the image fill its container */
-            object-fit: cover;
+          object-fit: cover;
           }
         }
       }
@@ -219,18 +254,22 @@ main {
       min-height:100vh;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       .overlay {
-        background: rgba(0,0,0,0.45);
+        background: rgba(0,0,0,0.4);
       }
       .information-container, .form-container {
+        letter-spacing: var(--letter-spacing-medium);
+        line-height: var(--line-height-medium);
+        color:var(--color-white);
         z-index:2;
         max-width:40rem;
         margin:auto;
         .information {
           display:flex;
           flex-direction: column;
-          gap:3vh;
+          gap:1.5rem;
           h1,h2,h3,h4 {
               text-align:left;
+              font-weight: 500;
           }
         }
       }
@@ -239,19 +278,19 @@ main {
 
   /* FORM */ 
   form {
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.42);
     padding:2rem;
-    max-width:27rem;
+    max-width:25rem;
     margin:3rem auto;
     .feedback-input {
       color:white;
       font-family: Helvetica, Arial, sans-serif;
       font-weight:500;
-      font-size: 0.9rem;
+      font-size: var(--font-size-xsmall);
       letter-spacing: 0.04rem;
       line-height: 1.8rem;
       background-color: transparent;
-      border:2px solid var(--form-color);
+      border:2px solid var(--color-primary);
       transition: all 0.2s;
       padding: 0.5rem;
       margin-bottom: 1rem;
@@ -259,30 +298,44 @@ main {
       box-sizing: border-box;
       outline:0;
       &:focus{
-        border:2px solid var(--form-color-focus);
+        border:2px solid var(--color-primary-hover);
       }
+      &:hover{
+        background-color: rgba(0, 0, 0, 0.17);
+        border:2px solid var(--color-primary-hover);
+      }
+      &::placeholder{
+        color:rgb(171, 171, 171);
+      } 
     }
     
     textarea {
       height: 10rem;;
       line-height: 150%;
       resize:vertical;
+      &:focus{
+        border:2px solid var(--color-primary-hover);
+      }
+      &:hover{
+        background-color: rgba(0, 0, 0, 0.17);
+        border:2px solid var(--color-primary-hover);
+      }
     }
     
     [type="submit"] {
       font-family: 'Montserrat', Arial, Helvetica, sans-serif;
       width: 100%;
-      background:var(--form-color);
+      background:var(--color-primary);
       border:0;
       cursor:pointer;
       color:white;
-      font-size:0.9rem;
+      font-size:var(--font-size-small);
       padding-top:0.8rem;
       padding-bottom:0.8rem;
       transition: all 0.2s;
       font-weight:600;
       &:hover {
-        background:var(--form-color-focus);
+        background:var(--color-primary-hover);
       }
     }
   }

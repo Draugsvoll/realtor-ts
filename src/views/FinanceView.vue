@@ -16,6 +16,9 @@ import MortgageCalculator from '@/components/MortgageCalculator.vue'
 <style lang="scss" scoped>
 main > div{
 	padding-top:var(--page-padding-top);
+	@media screen and (max-width: 500px) {
+		padding-top:var(--page-padding-top-mobile);
+	}
 }
 
 </style>

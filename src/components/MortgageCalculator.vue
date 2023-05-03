@@ -69,7 +69,7 @@ export default defineComponent({
 	const dataReady = ref(false)
 	const isLoadingData = ref(false)
 	const viewportWidth = ref(window.innerWidth);
-	const chartWidth = viewportWidth.value > 520 ? 500 : 250
+	const chartWidth = viewportWidth.value > 520 ? 500 : 310
 		
 	const mortgageInputs = ref<MortgageParams>({
 		hoi: '100', // monhly home insurances
@@ -177,15 +177,20 @@ export default defineComponent({
 	margin: 0px auto;
 	justify-content: space-between;
 	align-items: center;
+	h2 {
+		letter-spacing: var(--letter-spacing-medium);
+	}
 	.input-data {
-		margin:auto;
+		margin:1rem auto;
 		width:25rem;
 		.labels {
 			display:flex;
 			justify-content: space-between;
-			font-size: 1.05rem;
+			.label {
+				font-size: var(--font-size-smedium);
+			}
 			.label-value {
-				font-size: 1.2rem;
+				font-size: var(--font-size-medium);
 			}
 		}
 		form {

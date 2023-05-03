@@ -6,26 +6,36 @@
 				<img class="radius-small" :src="isPropertyRent(property) ? property.photos[0].href : property.thumbnail" alt="">
 			  </div>
 			  <div class="info">
-				<p class="price"> {{ isPropertyBuy(property) ? '$' +
-					property.price.toLocaleString()
-					: property.price || property.community?.price_max.toLocaleString() }}
-				</p>
-				<p>{{property.address.neighborhood_name}}, {{property.address.line}}</p>
-				<div class="stats">
-					<p>{{ isPropertyBuy(property) ?
-						property.baths 
-						: property.community?.baths_max || property.baths || property.community.baths }}
-						bathroom
+				<div>
+					<p class="price"> 
+						$
+						{{ isPropertyBuy(property) ? property.price.toLocaleString()
+						: property.price || property.community?.price_max.toLocaleString() }}
 					</p>
-					<p >{{ isPropertyBuy(property) ?
-						property.beds 
-						: property.community?.beds_max || property.beds || property.community?.beds_min}} bedroom
-					</p>
-				  <p v-if="property.building_size?.size">{{property.building_size.size}} sqfeet</p>
+					<p class="address">{{property.address.line}}, {{property.address.neighborhood_name}}</p>
 				</div>
-				<p>{{property.address.city}}</p>
-				<p>{{property.prop_type.replace(/_/g, ' ')}}</p>
-			  </div>
+				<div class="stats">
+					<p class="stat">
+						<font-awesome-icon :icon="['fasl', 'shower']" />
+						{{ isPropertyBuy(property) ? property.baths 
+						: property.community?.baths_max || property.baths || property.community.baths }}
+						baths
+					</p>
+					<p class="stat">
+						<font-awesome-icon :icon="['fas', 'bed']" />
+						{{ isPropertyBuy(property) ? property.beds 
+						: property.community?.beds_max || property.beds || property.community?.beds_min}} beds
+					</p>
+					<p class="stat" v-if="property.building_size?.size">
+						<font-awesome-icon :icon="['fasr', 'building']" />
+						{{property.building_size.size.toLocaleString()}} Square Feet
+					</p>
+				</div>
+				<div>
+					<p class="">{{property.prop_type.replace(/_/g, ' ')}}</p>
+					<p class="subtle">Updated: {{property.last_update.split("T")[0]}}</p>
+				</div>
+			</div>
 		</div>
 
 	</router-link>
@@ -69,19 +79,37 @@ a {
 .property-container {
 	cursor: pointer;
 	width: 23rem;
-	height:23rem;
+	height:26rem;
 	list-style-type: none;
 	overflow:hidden;
-	margin:1.5rem 1rem;
 	background: var(--color-white);
+	border:1px solid rgb(216, 216, 216);
+	display: flex;
+	flex-direction: column;
 	.info {
-		padding:0.5rem;
+		flex-grow:1;
+		text-transform: capitalize;
+		padding:0.7rem 0.8rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 		.price {
-			font-size:1.5rem;
+			font-size:var(--font-size-large);
+		}
+		.address {
+			font-size:var(--font-size-medium);
+			line-height: 1;
 		}
 		.stats {
 			display:flex;
-			gap:3rem;
+			gap:1.5rem;
+			.stat {
+				font-size: var(--font-size-small);	
+				font-weight:500;
+			}
+		}
+		.subtle {
+			font-style: oblique;
 		}
 	}
 

@@ -14,31 +14,48 @@
 						</h1>
 					</div>
 					<div class="stats">
-						<p>{{ isPropertyBuy(property) ?
-							property.baths 
-							: property.community?.baths_max || property.baths }}
-							Bathroom
+						<p class="stat">
+							<div class="icon-container">
+								<span>
+									<font-awesome-icon :icon="['fasl', 'shower']" />
+								</span>
+								{{ isPropertyBuy(property) ? property.baths 
+								: property.community?.baths_max || property.baths }}
+								Bathroom
+							</div>
 						</p>
-						<p >{{ isPropertyBuy(property) ?
-							property.beds 
-							: property.community?.beds_max || property.beds || property.community?.beds_min}} Bedroom
+						<p class="stat">
+							<div class="icon-container">
+								<span>
+									<font-awesome-icon :icon="['fas', 'bed']" />
+								</span>
+								{{ isPropertyBuy(property) ? property.beds 
+								: property.community?.beds_max || property.beds || property.community?.beds_min}} Bedroom
+							</div>
 						</p>
-						<p v-if="property.building_size?.size">{{property.building_size.size.toLocaleString()}} Square feet</p>
-						<p v-if="property.garage">{{property.garage}} Garage</p>
+						<p class="stat" v-if="property.building_size?.size">
+							<div class="icon-container">
+								<span>
+									<font-awesome-icon class="icon" :icon="['fasr', 'building']" />
+								</span>
+								{{property.building_size.size.toLocaleString()}} Square feet
+							</div>
+						</p>
 					</div>
-
+					
 					<div>
-						<p>{{property.address.city}}</p>
-						<p>{{property.prop_type.replace(/_/g, ' ')}}</p>
-						<p>{{ isPropertyBuy(property) ?
+						<p class="stat" v-if="property.garage">Garage: {{property.garage}}</p>
+						<p class="stat">{{property.address.city}}</p>
+						<p class="stat">{{property.prop_type.replace(/_/g, ' ')}}</p>
+						<p class="stat">{{ isPropertyBuy(property) ?
 							property.lead_forms?.local_phone || null
 							: property.community?.contact_number || null }}
 						</p>
-						<p>{{property.prop_status.replace(/_/g, ' ')}}</p>
+						<!-- <p class="stat">{{property.prop_status.replace(/_/g, ' ')}}</p> -->
 					</div>
 
 					<div>
-						<p class="info-bottom">Updated at {{property.last_update.split("T")[0].split("-").reverse().join("/")}}</p>
+						<p class="info-bottom">Updated: {{property.last_update.split("T")[0].split("-").reverse().join("/")}}</p>
 						<p class="info-bottom">List date: {{property.list_date.split("T")[0].split("-").reverse().join("/")}}</p>
 					</div>
 				</div>
@@ -46,10 +63,13 @@
 		</div>
 	</div>
 	
-	<div v-if="property" class="photos-container">
-		<div v-for="photo in property.photos" class="photo">
-			<img @click="setImage(photo.href)" class="radius-small" :src="photo.href" alt="">
+	<div class="card-small zero-margin">
+		<div v-if="property" class="photos-container">
+			<div v-for="photo in property.photos" class="photo">
+				<img @click="setImage(photo.href)" class="radius-small" :src="photo.href" alt="">
+			</div>
 		</div>
+
 	</div>
 
 	<div class="card-small">
@@ -65,7 +85,7 @@
 			</iframe>
 		</div>
 		<div v-if="isPropertyBuy(property)" class="agent-container">
-			<p class="agent-name"> {{property.agents[0]?.name}} </p>
+			<p class="agent-name"> {{property.agents[0]?.name.toLowerCase()}} </p>
 			<img :src="property.agents[0]?.photo?.href ?
 			property.agents[0]?.photo?.href
 			: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvN_Jtd4I62gZJcUNjGCs2xPLzGwJZyqEFnOPi7TX2yOnDrdOT6t_tWH5rx3cpXPA7wK8&usqp=CAU' "
@@ -86,7 +106,6 @@ import { defineComponent, onMounted, ref, type PropType } from 'vue'
 
 export default defineComponent({
   name: 'PropertyDetailed',
- 
   props: {
     property: {
       type: Object as PropType<PropertyDetailed>,
@@ -131,6 +150,12 @@ export default defineComponent({
 h1,h2,h3 {
 	text-align:left;
 }
+.icon-container {
+	> * {
+		display: inline-block;
+		min-width:1.6rem;
+	}
+}
 .card-small {
 	padding:var(--padding-small);
 	max-width:var(--page-width-medium);
@@ -138,6 +163,7 @@ h1,h2,h3 {
 	display:flex;
 	flex-wrap: wrap;
 	justify-content:space-between;
+	font-size:var(--font-size-small);
 }
 .property-container {
 	max-width:var(--page-width-medium);
@@ -162,15 +188,22 @@ h1,h2,h3 {
 				}
 			}
 			.info {
+				line-height:var(--line-height-medium);
 				text-transform: capitalize;
-				font-weight: 500;
+				font-weight: 400;
 				height:inherit;
 				padding:var(--padding-small);
 				display: flex;
 				flex-direction: column;
 				justify-content: space-between;
+				.price {
+					margin-bottom:0.3rem;
+				}
+				.stat {
+					font-size: var(--font-size-smedium);
+				}
 				.address {
-					font-size: 1.40rem;
+					font-size: var(--font-size-large);
 					display: -webkit-box;
 					-webkit-box-orient: vertical;
 					-webkit-line-clamp: 2;
@@ -181,16 +214,14 @@ h1,h2,h3 {
 				.info-bottom {
 					font-weight:400;
 					font-style: italic;
-					font-size: 0.9rem;
 				}
 				p {
 					letter-spacing: var(--letter-spacing-medium);
-					font-size:1rem;
 				}
 			}
 			.img-container {
 				width: 28rem;
-				height: 20rem;
+				height: 21rem;
 				border-right: 1px solid #0000001c;
 				img {
 					height: inherit;
@@ -213,13 +244,17 @@ h1,h2,h3 {
 	display: flex;
     flex-direction: column;
     justify-content: center;
-	max-width:10.5rem;
+	flex-wrap: wrap;
+	width:fit-content;
+	max-width:12rem;
+	height:fit-content;
 	@media screen and (max-width: 930px) {
 		margin:2rem auto;
 	}
 	.agent-name {
 		font-weight: 500;
-		font-size: 1.15rem;
+		font-size: var(--font-size-medium);
+		text-transform:capitalize;
 		margin-bottom:0.4rem;
 		padding-top:0;
 	}
@@ -227,7 +262,7 @@ h1,h2,h3 {
 		font-weight: 500;
 	}
 	> * {
-		padding: 0.2rem;
+		padding: 0.3rem 0.2rem;
 		text-align: center;
 		display:block;
 	}
@@ -246,23 +281,39 @@ h1,h2,h3 {
 	}
 	.slogan {
 		font-style:italic;
+		word-wrap:break-word;
 	}
 	.btn-profile {
 		outline:none;
 		border:none;
 		cursor:pointer;
-		color:pink;
 	}
 }
 
 .photos-container {
-	padding:var(--padding-small);
+	padding-bottom:0.3rem;
+	padding-top:0;
 	max-width:var(--page-width-medium);
 	margin:0.5rem auto;
 	margin-top:0;
 	display:flex;
 	gap:0.2rem;
-	overflow:hidden;
+	overflow-x:scroll;
+	&::-webkit-scrollbar {
+		background:rgb(240, 240, 240);
+		border-radius:6px;
+		height:0.5rem;
+	  }
+	 &::-webkit-scrollbar-thumb {
+		background:rgba(0,0,0,0.25);
+		border-radius:6px;
+	  }
+	  &::-webkit-scrollbar-thumb:hover {
+		background:rgba(0,0,0,0.35);
+	  }
+	  &::-webkit-scrollbar-track-piece {
+		border-radius:6px;
+	  }
 	.photo {
 		img {
 			max-width:9rem;
@@ -274,11 +325,14 @@ h1,h2,h3 {
 	}
 }
 .map-container{
-	width: 46.5rem;
+	width: 45rem;
 	iframe {
 		width:100%;
-		height:17rem;
+		height:100%;
 		border-radius: var(--border-radius-medium);
 	}
+}
+.zero-margin {
+	margin:0 auto;
 }
 </style>

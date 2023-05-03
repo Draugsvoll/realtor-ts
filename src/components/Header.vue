@@ -1,14 +1,14 @@
 <template>
 	<header>
-		<div><router-link  to="/">Realtor</router-link></div>
+		<div class="side-link"><router-link  to="/">Realtor</router-link></div>
 		<div>
 			<ul>
 				<li><router-link to="/about">About</router-link></li>
-				<li @click="goToSearch()">Search</li>
+				<li @click="goToSearch()"><a></a>Search</li>
 				<li @click="scroll()"><router-link to="/?view=contact">Contact</router-link></li>
 			</ul>
 		</div>
-		<div>item 3</div>
+		<div class="side-link"><router-link  to="/finance">Financing</router-link></div>
 	</header>
 </template>
 
@@ -34,32 +34,60 @@ import {useStore} from '@/store/store'
 </script>
 
 <style scoped lang="scss">
-a {
+* {
+	color:var(--color-white);
 	text-decoration: none;
-	color:var(--color-font-dark);
 }
 header {
+	@media screen and (max-width: 660px) {
+		justify-content:center;
+		ul {
+			flex:1;
+		}
+		.side-link {
+			display:none;
+		}
+	}
+	@media screen and (max-width: 500px) {
+		ul {
+			flex-direction:column;
+			li {
+				padding-top:0.5rem;
+				padding-bottom:0.5rem;
+			}
+		}
+	}
+
+	font-size: var(--font-size-small);
+	font-weight: 500;
 	position: fixed;
+	letter-spacing: var(--letter-spacing-medium);
 	width:100%;
 	z-index: 3;
 	background:rgba(0,0,0,0.4);
 	display:flex;
+	flex-wrap: wrap;
 	justify-content:space-between;
-	padding:0.1rem;
 	backdrop-filter: blur(2px);
+	padding:0.25rem 2rem,;
 	div {
-		padding:1rem;
-		width:100%;
 		text-align: center;
+		display:flex;
+		flex-direction: column;
+		flex-wrap:wrap;
+		padding:1rem;
 		ul {
 			display:flex;
-			justify-content: space-evenly;
+			flex-wrap:wrap;
 			li{
+				justify-content:center;
 				display: flex;
+				width:8rem;
 				flex-grow:1;
-				align-items: center;
-				justify-content: center;
 				cursor:pointer;
+				a{
+					text-align:center;
+				}
 			}
 		}
 	}
