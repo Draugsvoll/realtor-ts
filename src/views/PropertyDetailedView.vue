@@ -44,6 +44,7 @@
 <style scoped lang="scss">
 main {
 	background: var(--color-white);
+	padding:0.2rem;
 	padding-top:5rem;
 }
 </style>

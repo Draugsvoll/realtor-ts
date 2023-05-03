@@ -6,9 +6,10 @@
       <div class="index line-height-medium">
         <p>
           Lorem ipsum dolor sit amet consec animi, natusum dolor? Te eligendi incidunt? Praesentium eos optio vel corrupti eum, adipisci provident fugit ullam ducimus sint, cumque suscipit voluptas voluptatem non atque? voluptate ipsa eos, repellat, qui neque amet illum, illo doloribus tempore ab doloremque recusandae asperiores fugit nulla beatae! Ut enim nulla eaque 
+           cumque suscipit voluptas voluptatem non atque? voluptate ipsa eos, repellat, qui neque amet illum, illo doloribus tempore ab doloremque recusandae asperiores fugit nulla beatae! Ut enim nulla eaque 
         </p>
       </div>
-      <div class="columns-container">
+      <!-- <div class="columns-container">
         <div class="column">
             <h2>Our mission</h2>
             <p class="line-height-medium">
@@ -21,7 +22,7 @@
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias distinctio, non hic ab nisi nemo nobis mollitia veritatis. Sapiente natus aperiam commodi expedita ex explicabo eius sunt maxime a perspiciatis. 
           </p>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <section class="card card1">
@@ -59,7 +60,12 @@
 main {
   padding-left:1rem;
   padding-right:1rem;
+  letter-spacing: var(--letter-spacing-smedium);
+  h1 {
+    letter-spacing: var(--letter-spacing-large);
+  }
   p {
+    line-height:var(--line-height-large);
     font-size:var(--font-size-small);
   }
   .intro {
@@ -67,7 +73,7 @@ main {
     flex-direction:column;
     margin:auto;
     margin-bottom:5rem;
-    max-width:var(--page-width-medium);
+    max-width:var(--page-width-large);
     padding-top:var(--page-padding-top);
     @media screen and (max-width:500px) {
       padding-top:var(--page-padding-top-mobile);
@@ -86,7 +92,8 @@ main {
       flex-wrap:wrap;
       justify-content:space-between;
       margin:auto;
-      margin-top:4rem;
+      margin-top:5.5rem;
+      margin-bottom:1rem;
       gap:2rem;
       .column {
         flex:1;
@@ -98,7 +105,7 @@ main {
     }
   }
   .card {
-    max-width:var(--page-width-medium);
+    max-width:var(--page-width-large);
     flex-wrap:wrap-reverse;
     margin:auto;
     margin-bottom:5rem;

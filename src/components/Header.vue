@@ -39,25 +39,6 @@ import {useStore} from '@/store/store'
 	text-decoration: none;
 }
 header {
-	@media screen and (max-width: 660px) {
-		justify-content:center;
-		ul {
-			flex:1;
-		}
-		.side-link {
-			display:none;
-		}
-	}
-	@media screen and (max-width: 500px) {
-		ul {
-			flex-direction:column;
-			li {
-				padding-top:0.5rem;
-				padding-bottom:0.5rem;
-			}
-		}
-	}
-
 	font-size: var(--font-size-small);
 	font-weight: 500;
 	position: fixed;
@@ -69,7 +50,8 @@ header {
 	flex-wrap: wrap;
 	justify-content:space-between;
 	backdrop-filter: blur(2px);
-	padding:0.25rem 2rem,;
+	padding:0.2rem 2rem,;
+	
 	div {
 		text-align: center;
 		display:flex;
@@ -87,6 +69,31 @@ header {
 				cursor:pointer;
 				a{
 					text-align:center;
+				}
+			}
+		}
+	}
+	@media screen and (max-width: 660px) {
+		justify-content:center;
+		.side-link {
+			display:none;
+		}
+	}
+	@media screen and (max-width: 500px) {
+		flex-wrap: none;
+		* {
+			flex-wrap: none !important;
+		}
+		div {
+			flex-wrap: none;
+			ul {
+				justify-content: center;
+				flex-wrap: none;
+				li {
+					flex-wrap: none;
+					width:fit-content !important;
+					padding-left:2.5vw;
+					padding-right:2.5vw;
 				}
 			}
 		}

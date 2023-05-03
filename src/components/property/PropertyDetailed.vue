@@ -180,6 +180,7 @@ h1,h2,h3 {
 			display:flex;
 			flex-direction: row;
 			@media screen and (max-width: 830px) {
+				flex-wrap: wrap;
 				justify-content: center;
 			}
 			> div{
@@ -253,7 +254,7 @@ h1,h2,h3 {
 	}
 	.agent-name {
 		font-weight: 500;
-		font-size: var(--font-size-medium);
+		font-size: var(--font-size-smedium);
 		text-transform:capitalize;
 		margin-bottom:0.4rem;
 		padding-top:0;

@@ -1,5 +1,9 @@
 <template>
 	<main>
+		<div id="loader" class="loader" v-if="isLoading">
+			<div class="spinner" id="spinner"></div>
+			<!-- <p class="loading-text">Loading AI..</p> -->
+		</div>
 		<h1 class="page-h1">Search Real Estate</h1>
 		<SearchBar/>
 		<div class="sort-btn-container">
@@ -31,6 +35,7 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 	
 	const route = useRoute()
 	const store = useStore()
+	const isLoading = ref(false)
 
 	const properties = ref(<Property[]|undefined>undefined)
 	const orderedProperties = ref(<Property[]|undefined>undefined)
@@ -119,6 +124,7 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 		console.log('for sale array: ', respFiltered)
 		properties.value = respFiltered
 		orderedProperties.value = respFiltered
+		isLoading.value = false
 	}
 	async function fetchForRentalData (parameters: QueryParams) {
 		let params = parameters
@@ -127,6 +133,7 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 		console.log('for rent array: ', respFiltered)
 		properties.value = respFiltered
 		orderedProperties.value = respFiltered
+		isLoading.value = false
 	}
 	function handleErrMsg (paramsObject: QueryParams) {
 		if (paramsObject.price_max) {
@@ -137,6 +144,7 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 	}
 
 	function search () {
+		isLoading.value = true
 		properties.value = undefined
 		orderedProperties.value = undefined
 		const paramsEncoded = store.getParamsEncoded
@@ -152,7 +160,10 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 			// Execute search from URL (e.g we open a link, didnt search ourselves)
 			let encoded: any = route.query.object
 			let decoded: any = decodeURIComponent(encoded)
-			if (decoded === 'undefined') {return}
+			if (decoded === 'undefined') {
+			isLoading.value = false
+				return
+			}
 			else {paramsObject = JSON.parse(decoded)}
 		}
 		if (paramsObject && paramsObject.buyOrRent === 'buy') {
@@ -221,6 +232,48 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 				display:inline-flex;
 			}
 		}
+		.loader {
+			visibility: visible;
+			display:flex;
+			position:absolute;
+			flex-direction:column;
+			height:100%;
+			width:100%;
+			background:rgba(255, 255, 255, 0.3);
+			z-index:100;
+		  }
+		  .spinner {
+			 visibility: visible;
+			 position:absolute;
+			 top: 40%;
+			 left:50%;
+			 margin-left:-38px;
+			 height:80px;
+			 width:80px;
+			 -webkit-animation: rotation 0.5s infinite linear;
+			 -moz-animation: rotation 0.5s infinite linear;
+			 -o-animation: rotation 0.5s infinite linear;
+			 animation: rotation 0.5s infinite linear;
+			 border:8px solid rgba(179, 179, 179, 0.3);
+			 border-top:8px solid var(--color-primary);
+			 border-radius:100%;
+		  }
+		  @-webkit-keyframes rotation {
+			from {-webkit-transform: rotate(0deg);}
+			to {-webkit-transform: rotate(359deg);}
+		 }
+		 @-moz-keyframes rotation {
+			from {-moz-transform: rotate(0deg);}
+			to {-moz-transform: rotate(359deg);}
+		 }
+		 @-o-keyframes rotation {
+			from {-o-transform: rotate(0deg);}
+			to {-o-transform: rotate(359deg);}
+		 }
+		 @keyframes rotation {
+			from {transform: rotate(0deg);}
+			to {transform: rotate(359deg);}
+		 }
 	}
 
 </style>

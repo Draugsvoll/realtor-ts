@@ -3,7 +3,8 @@
 :root {
   --color-font-dark: rgb(48, 48, 48);
   --color-white:#ffffff;
-  --color-background-light:#f6f6f6;
+  --color-background-light:#f7f7f7;
+  --color-background-light-2:#f4f4f4;
   --color-primary:#ef5858;
   --color-primary-hover:#e45050;
 
@@ -24,10 +25,12 @@
 
   --letter-spacing-small:0.004rem;
   --letter-spacing-medium:0.03rem;
-  --letter-spacing-large:0.1rem;
+  --letter-spacing-smedium:0.05rem;
+  --letter-spacing-large:0.09rem;
 
   --line-height-small:1.1;
   --line-height-medium:1.2;
+  --line-height-large:1.55;
 
   --border-radius-small:2px;
   --border-radius-medium:4px;
@@ -35,21 +38,21 @@
 
   --padding-small:0.8rem;
   --padding-medium:1.7rem;
-  --padding-large:2.2rem;
+  --padding-large:1.9rem;
 
   background:var(--color-background-light);
   color:var(--color-font-dark);
   letter-spacing:var(--letter-spacing-small);
   font-family: 'Roboto', sans-serif;
-  
-  @media screen and (min-width: 1700px) {
-    font-size:18px;
-  }
-   @media screen and (max-width: 500px) {
-    font-size:15px;
-  }
+
   @media screen and (max-width: 360px) {
     font-size:14px;
+  }
+  @media screen and (max-width: 1700px) {
+    font-size:15px;
+  }
+  @media screen and (min-width: 1700px) {
+    font-size:18px;
   }
 
   button,input,select{

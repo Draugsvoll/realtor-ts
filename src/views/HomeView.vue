@@ -46,13 +46,13 @@
         </a>
         <div class="service">
           <div class="overlay"></div>
-          <img class="radius-small" src="../assets/images/img3.jpg" alt="" srcset="">
+          <img class="radius-small" src="../assets/images/bg5.jpg" alt="" srcset="">
           <h3 class="head">Lorem Ipsum</h3>
           <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
         </div>
         <div class="service">
           <div class="overlay"></div>
-          <img class="radius-small" src="../assets/images/img3.jpg" alt="" srcset="">
+          <img class="radius-small" src="../assets/images/img5.jpg" alt="" srcset="">
           <h3 class="head">Lorem Ipsum</h3>
           <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
         </div>
@@ -61,19 +61,19 @@
       <div class="services">
         <div class="service">
           <div class="overlay"></div>
-          <img class="radius-small" src="../assets/images/img3.jpg" alt="" srcset="">
+          <img class="radius-small" src="../assets/images/bg5.jpg" alt="" srcset="">
           <h3 class="head">Lorem Ipsum</h3>
           <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
         </div>
         <div class="service">
           <div class="overlay"></div>
-          <img class="radius-small" src="../assets/images/img3.jpg" alt="" srcset="">
+          <img class="radius-small" src="../assets/images/img5.jpg" alt="" srcset="">
           <h3 class="head">Lorem Ipsum</h3>
           <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
         </div>
         <div class="service">
           <div class="overlay"></div>
-          <img class="radius-small" src="../assets/images/img3.jpg" alt="" srcset="">
+          <img class="radius-small" src="../assets/images/bg5.jpg" alt="" srcset="">
           <h3 class="head">Lorem Ipsum</h3>
           <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
         </div>
@@ -153,13 +153,16 @@ main {
       width:fit-content;
       margin-bottom:5rem;
       font-size: 2.8rem;
+      @media screen and (max-width: 600px) {
+        font-size: 2.2rem;
+      }
     }
     color:var(--color-white);
     display: flex;
     flex-direction: column;
     background-image: url('@/assets/images/bg2.jpg');
     .overlay {
-      background:rgba(0, 0, 0, 0.18);
+      background:rgba(0, 0, 0, 0.12);
       z-index:2;
     }
     .search-bar{
@@ -197,14 +200,16 @@ main {
   }
 
   .section-services {
-    background:var(--color-background-light);
+    background:var(--color-background-light-2);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding:3rem;
-    min-height:100vh;
+    padding:2.5rem;
+    padding-top:5rem;
+    padding-bottom:6rem;
     h1 {
       margin-bottom:2rem;
+      letter-spacing: var(--letter-spacing-large);
     }
     .services {
       display:flex;
@@ -217,16 +222,18 @@ main {
         letter-spacing: var(--letter-spacing-medium);
         color:var(--color-white);
         position: relative;
-        /* flex: 1 0 100%; */    /* to fill the entire width */
         margin: 0.3rem 0.4rem;
         overflow: hidden;
         width:20rem;
         height:15rem;
+        @media screen and (max-width: 400px) {
+          width:15rem;
+        }
         .overlay {
-          background:rgba(0,0,0,0.30);
+          background:rgba(0,0,0,0.22);
           transition: all 0.5s;
           &:hover {
-            background:rgba(0,0,0,0.18);
+            background:rgba(0,0,0,0.12);
           }
         }
         .head {
@@ -254,7 +261,7 @@ main {
       min-height:100vh;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       .overlay {
-        background: rgba(0,0,0,0.4);
+        background: rgba(0,0,0,0.35);
       }
       .information-container, .form-container {
         letter-spacing: var(--letter-spacing-medium);
@@ -267,6 +274,11 @@ main {
           display:flex;
           flex-direction: column;
           gap:1.5rem;
+          p {
+            line-height:var(--line-height-medium);
+            font-size: var(--font-size-small);
+            letter-spacing: var(--letter-spacing-smedium);
+          }
           h1,h2,h3,h4 {
               text-align:left;
               font-weight: 500;

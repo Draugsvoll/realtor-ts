@@ -266,9 +266,11 @@ const states: state[] = [
 	position:relative;
 	display:flex;
 	flex-direction: column;
-	margin-left:auto;
-	margin-right:auto;
 	width:fit-content;
+	@media screen and (min-width: 415px) {
+		margin-left:auto;
+		margin-right:auto;
+	}
 	.btn-row {
 		button {
 			cursor:pointer;
@@ -285,8 +287,12 @@ const states: state[] = [
 			background:var(--background-color);
 			border-bottom: 2px solid rgba(255, 255, 255, 0.05);
 			color:rgba(255, 255, 255, 0.777);
+			min-width:5rem;
+			width:8.5rem;
+			@media screen and (max-width: 415px) {
+				width:6.9rem !important;
+			}
 			@media screen and (max-width: 630px) {
-				min-width:5rem;
 				width:7.5rem;
 			}
 			&.highlighted {
@@ -319,7 +325,10 @@ const states: state[] = [
 				width:20rem;
 			}
 			@media screen and (max-width: 530px) {
-				width:15rem;
+				width:16rem;
+			}
+			@media screen and (max-width: 415px) {
+				width:14rem;
 			}
 		}
 		.select-state {
@@ -400,6 +409,12 @@ const states: state[] = [
 	}
 }
 .style-not-transparent  {
+	@media screen and (max-width: 415px) {
+		margin:auto;
+		button {
+			width:6.9rem !important;
+		}
+	}
 	input, select {
 		border:1px solid rgba(128, 128, 128, 0.52) !important;
 		&:hover {
