@@ -8,9 +8,11 @@
 				<div class="info">
 					<div>
 						<h3 class="address">{{property.address.neighborhood_name}}, {{property.address.line}}, {{property.address.state}}</h3>
-						<h1 class="price"> {{ isPropertyBuy(property) ? '$' +
+						<h1 class="price"> 
+							$ {{ isPropertyBuy(property) ?
 							property.price.toLocaleString()
 							: property.price?.toLocaleString()|| property.community?.price_max.toLocaleString() }}
+							<span v-if="isPropertyRent(property)" class="label-month">/Month</span>
 						</h1>
 					</div>
 					<div class="stats">
@@ -162,8 +164,9 @@ h1,h2,h3 {
 	margin:1rem auto;
 	display:flex;
 	flex-wrap: wrap;
+	gap:1.3rem;
 	justify-content:space-between;
-	font-size:var(--font-size-small);
+	font-size:var(--font-size-smedium);
 }
 .property-container {
 	max-width:var(--page-width-medium);
@@ -199,12 +202,16 @@ h1,h2,h3 {
 				justify-content: space-between;
 				.price {
 					margin-bottom:0.3rem;
+					.label-month {
+						font-size: var(--font-size-lmedium);
+					}
 				}
 				.stat {
 					font-size: var(--font-size-smedium);
 				}
 				.address {
-					font-size: var(--font-size-large);
+					font-size: var(--font-size-lmedium);
+					font-weight: 300;
 					display: -webkit-box;
 					-webkit-box-orient: vertical;
 					-webkit-line-clamp: 2;
@@ -261,6 +268,8 @@ h1,h2,h3 {
 	}
 	.agent-email {
 		font-weight: 500;
+		word-wrap:break-word;
+		max-width:inherit;
 	}
 	> * {
 		padding: 0.3rem 0.2rem;
@@ -296,12 +305,13 @@ h1,h2,h3 {
 	padding-top:0;
 	max-width:var(--page-width-medium);
 	margin:0.5rem auto;
+	margin-left:0;
 	margin-top:0;
 	display:flex;
 	gap:0.2rem;
 	overflow-x:scroll;
 	&::-webkit-scrollbar {
-		background:rgb(240, 240, 240);
+		background:rgb(234, 234, 234);
 		border-radius:6px;
 		height:0.5rem;
 	  }
@@ -315,6 +325,9 @@ h1,h2,h3 {
 	  &::-webkit-scrollbar-track-piece {
 		border-radius:6px;
 	  }
+	  // mozilla etc..
+	  scrollbar-color: rgba(0,0,0,0.25) rgb(240, 240, 240);
+	  scrollbar-width: thin;
 	.photo {
 		img {
 			max-width:9rem;
@@ -326,14 +339,18 @@ h1,h2,h3 {
 	}
 }
 .map-container{
-	width: 45rem;
+	display: flex;
+	flex-direction: column;
+	flex-grow:1;
 	iframe {
 		width:100%;
 		height:100%;
+		min-height:12rem;
 		border-radius: var(--border-radius-medium);
 	}
 }
 .zero-margin {
 	margin:0 auto;
+	padding-bottom:0;
 }
 </style>

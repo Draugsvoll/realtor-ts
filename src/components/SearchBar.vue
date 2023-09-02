@@ -1,6 +1,6 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-	<div class="container" ref="containerRef">
+	<div class="container fade-in" ref="containerRef">
 		<div class="btn-row">
 			<button @click="toggleBuyOrRent('buy')" :class="{ 'highlighted': buyOrRent === 'buy' }">Buy</button>
 			<button @click="toggleBuyOrRent('rent')" :class="{ 'highlighted': buyOrRent === 'rent' }">Rent</button>
@@ -260,13 +260,15 @@ const states: state[] = [
 <style lang="scss" scoped>
 
 .container {
-	--main-input-height:2.7rem;
+	--main-input-height:2.8rem;
 	--background-color: rgba(0,0,0,0.42);
 	--background-color-hover: rgba(0,0,0,0.55);
+
 	position:relative;
 	display:flex;
 	flex-direction: column;
 	width:fit-content;
+
 	@media screen and (min-width: 415px) {
 		margin-left:auto;
 		margin-right:auto;
@@ -282,7 +284,7 @@ const states: state[] = [
 			border-top-left-radius: var(--border-radius-small);
 			border:none;
 			outline:none;
-			padding:0.6rem 1.8rem;
+			padding:0.67rem 1.8rem;
 			font-size: var(--font-size-xsmall);
 			background:var(--background-color);
 			border-bottom: 2px solid rgba(255, 255, 255, 0.05);
@@ -318,7 +320,7 @@ const states: state[] = [
 		.main-search-inputbar {
 			font-family: sans-serif;
 			height:var(--main-input-height);
-			width:26rem;
+			width:25.2rem;
 			font-size:var(--font-size-small);
 			outline:none;
 			@media screen and (max-width: 630px) {
@@ -333,9 +335,9 @@ const states: state[] = [
 		}
 		.select-state {
 			height:var(--main-input-height);
-			width:7.5rem;
+			width:8.3rem;
 			font-size:var(--font-size-xsmall);
-			padding-left:0.1rem;
+			padding-left:0.45rem;
 		}
 		.select-state > select {
 			border:2px solid var(--color-primary);
@@ -349,7 +351,7 @@ const states: state[] = [
 			position: absolute;
 			top: 50%;
 			transform: translateY(-50%);
-			right:0.09rem;
+			right:0.11rem;
 			margin:0;
 			background:var(--color-primary);
 			outline:none;
@@ -375,7 +377,7 @@ const states: state[] = [
 	.filters-container {
 		text-transform: capitalize;
 		color:white;
-		background:var(--background-color);
+		background:transparent;
 		display:flex;
 		flex-direction: column;
 		padding-top:1rem;

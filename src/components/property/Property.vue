@@ -8,9 +8,9 @@
 			  <div class="info">
 				<div>
 					<p class="price"> 
-						$
-						{{ isPropertyBuy(property) ? property.price.toLocaleString()
-						: property.price || property.community?.price_max.toLocaleString() }}
+						$ {{ isPropertyBuy(property) ? property.price.toLocaleString()
+						: (property.price || property.community?.price_max).toLocaleString() }}
+						<span v-if="isPropertyRent(property)" class="label-month">/Month</span>
 					</p>
 					<p class="address">{{property.address.line}}, {{property.address.neighborhood_name}}</p>
 				</div>
@@ -79,13 +79,22 @@ a {
 .property-container {
 	cursor: pointer;
 	width: 23rem;
-	height:26rem;
+	height:26.5rem;
 	list-style-type: none;
 	overflow:hidden;
 	background: var(--color-white);
-	border:1px solid rgb(216, 216, 216);
+	border:1px solid rgba(227, 227, 227, 0.685);
 	display: flex;
 	flex-direction: column;
+	transition:0.2s;
+	box-shadow: rgba(0, 0, 0, 0.02) 0px 0px 8px;
+	&:hover {
+		box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px;
+		transform: translateY(-3px);
+	}
+	@media screen and (max-width: 390px) {
+		width:20rem;
+	}
 	.info {
 		flex-grow:1;
 		text-transform: capitalize;
@@ -95,17 +104,23 @@ a {
 		justify-content: space-between;
 		.price {
 			font-size:var(--font-size-large);
+			margin-bottom:0.2rem;
+			font-weight: 300;
+			.label-month {
+				font-size: var(--font-size-medium);
+			}
 		}
 		.address {
 			font-size:var(--font-size-medium);
 			line-height: 1;
+			font-weight: 300;
 		}
 		.stats {
 			display:flex;
 			gap:1.5rem;
 			.stat {
 				font-size: var(--font-size-small);	
-				font-weight:500;
+				font-weight:400;
 			}
 		}
 		.subtle {

@@ -2,9 +2,10 @@
   <main>
     
     <section class="section-welcome fullscreen-box bg-fullscreen flex-center-center">
-      <h1 class="welcome-txt">Buy real estate in the US</h1>
+      <h1 v-if="startAnimation" class="welcome-txt fade-in">Buy real estate in the US</h1>
       <div class="overlay" />
-      <SearchBar class="search-bar" />
+      <SearchBar v-if="startAnimation" class="search-bar" />
+      <img src="@/assets/images/bg2.jpg" alt="" @load="imageLoaded">
     </section>
 
     <!-- <section class="section-about flex-center-center">
@@ -36,14 +37,17 @@
     <section class="section-services">
       <h1>Services</h1>
       <div class="services">
-        <a href="/finance">
+        <router-link  to="/finance">
           <div class="service">
             <div class="overlay"></div>
             <img class="radius-small" src="../assets/images/img5.jpg" alt="" srcset="">
             <h3 class="head">Financing</h3>
             <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
           </div>
-        </a>
+          
+        </router-link>
+        <!-- <a href="https://ove-realtor.netlify.app/finance">
+        </a> -->
         <div class="service">
           <div class="overlay"></div>
           <img class="radius-small" src="../assets/images/bg5.jpg" alt="" srcset="">
@@ -52,7 +56,7 @@
         </div>
         <div class="service">
           <div class="overlay"></div>
-          <img class="radius-small" src="../assets/images/img5.jpg" alt="" srcset="">
+          <img class="radius-small" src="../assets/images/img2.jpg" alt="" srcset="">
           <h3 class="head">Lorem Ipsum</h3>
           <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
         </div>
@@ -61,7 +65,7 @@
       <div class="services">
         <div class="service">
           <div class="overlay"></div>
-          <img class="radius-small" src="../assets/images/bg5.jpg" alt="" srcset="">
+          <img class="radius-small" src="../assets/images/img3.jpg" alt="" srcset="">
           <h3 class="head">Lorem Ipsum</h3>
           <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing</p> -->
         </div>
@@ -87,7 +91,7 @@
         <div class="overlay"></div>
         <div class="information-container flex-center-center">
           <div class="information ">
-            <h1>Talk to our real estate experts to find the perfect investment for you</h1>
+            <h1 class="big-txt">Find the perfect investment for you</h1>
             <p>Lorem ipsum dolor sit, amet consectetur adipernatur porro iste repellat! Veniam obcaecati tenetur perspiciatis magni debitis corporis, nemo dolorum repellat aspernatur sit id voluptatibus eius doloribus, accusamus officiis ducimus neque delectus qui doloremque voluptatum. Delectus aliquam culpa, voluptates quas reprehenderit optio.</p>
           </div>
         </div>
@@ -106,7 +110,7 @@
   </template>
   
 <script lang="ts">
-import { defineComponent, onMounted, watch } from "vue";
+import { defineComponent, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import SearchBar from "../components/SearchBar.vue";
 
@@ -116,6 +120,11 @@ export default defineComponent ({
   },
   setup(){
     const route = useRoute()
+    const startAnimation = ref(false)
+
+    function imageLoaded () {
+      startAnimation.value = true
+    }
 
     watch(()=> route.query.view, (newValue) =>{
       if (newValue === 'contact') {
@@ -136,7 +145,7 @@ export default defineComponent ({
       }
     })
 
-    return {route}
+    return {route, imageLoaded, startAnimation}
   }
   
 })
@@ -146,23 +155,30 @@ export default defineComponent ({
 <style lang="scss" scoped>
 main {
   .section-welcome {
+    color:var(--color-white);
+    display: flex;
+    flex-direction: column;
+    img {
+      object-fit: cover;
+      position: absolute;      
+      width:100%;
+      height:100%;
+    }
     .welcome-txt {
       color:white;
       position: relative;
       z-index: 3;
       width:fit-content;
       margin-bottom:5rem;
-      font-size: 2.8rem;
+      font-size: 2.2rem;
+      font-weight: 400;
+      text-shadow: 2px 2px 3px #00000013;
       @media screen and (max-width: 600px) {
         font-size: 2.2rem;
       }
     }
-    color:var(--color-white);
-    display: flex;
-    flex-direction: column;
-    background-image: url('@/assets/images/bg2.jpg');
     .overlay {
-      background:rgba(0, 0, 0, 0.12);
+      background:rgba(0, 0, 0, 0.32);
       z-index:2;
     }
     .search-bar{
@@ -206,7 +222,7 @@ main {
     justify-content: center;
     padding:2.5rem;
     padding-top:5rem;
-    padding-bottom:6rem;
+    padding-bottom:9rem;
     h1 {
       margin-bottom:2rem;
       letter-spacing: var(--letter-spacing-large);
@@ -219,28 +235,29 @@ main {
       margin-right:auto;
       justify-content: center;
       .service {
-        letter-spacing: var(--letter-spacing-medium);
+        border-radius: var(--border-radius-medium);
         color:var(--color-white);
         position: relative;
-        margin: 0.3rem 0.4rem;
+        margin: 0.45rem 0.55rem;
         overflow: hidden;
-        width:20rem;
-        height:15rem;
-        @media screen and (max-width: 400px) {
+        width:26rem;
+        height:17rem;
+        @media screen and (max-width: 460px) {
           width:15rem;
         }
         .overlay {
-          background:rgba(0,0,0,0.22);
+          background:rgba(0,0,0,0.30);
           transition: all 0.5s;
           &:hover {
-            background:rgba(0,0,0,0.12);
+            background:rgba(0,0,0,0.22);
           }
         }
         .head {
           position: absolute;
-          bottom:0.5rem;
+          letter-spacing: var(--letter-spacing-large);
+          bottom:1.2rem;
           font-weight: 500;
-          font-size:var(--font-size-lmedium);
+          font-size:1.4rem;
           width: 100%;
           z-index:3;
         }
@@ -261,7 +278,7 @@ main {
       min-height:100vh;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       .overlay {
-        background: rgba(0,0,0,0.35);
+        background: rgba(0,0,0,0.42);
       }
       .information-container, .form-container {
         letter-spacing: var(--letter-spacing-medium);
@@ -274,10 +291,13 @@ main {
           display:flex;
           flex-direction: column;
           gap:1.5rem;
+          .big-txt{
+            font-size:2.8rem;
+          }
           p {
             line-height:var(--line-height-medium);
-            font-size: var(--font-size-small);
             letter-spacing: var(--letter-spacing-smedium);
+            text-shadow: 2px 2px 3px #00000010;
           }
           h1,h2,h3,h4 {
               text-align:left;
@@ -299,7 +319,7 @@ main {
       font-family: Helvetica, Arial, sans-serif;
       font-weight:500;
       font-size: var(--font-size-xsmall);
-      letter-spacing: 0.04rem;
+      letter-spacing: var(--letter-spacing-smedium);
       line-height: 1.8rem;
       background-color: transparent;
       border:2px solid var(--color-primary);

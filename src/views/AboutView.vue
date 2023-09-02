@@ -58,9 +58,11 @@
 
 <style lang="scss" scoped>
 main {
+  border-bottom:1px solid rgba(0, 0, 0, 0.05);
   padding-left:1rem;
   padding-right:1rem;
   letter-spacing: var(--letter-spacing-smedium);
+  background: var(--color-background-light);
   h1 {
     letter-spacing: var(--letter-spacing-large);
   }

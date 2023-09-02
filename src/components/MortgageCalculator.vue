@@ -6,10 +6,10 @@
 				<div class="labels"><div class="label">Price</div><div class="label label-value">${{ Number(mortgageInputs.price).toLocaleString() }}</div></div>
 				<input class="range"  v-model="mortgageInputs.price" type="range" min="1" :max="mortgagePriceMax" step="1">
 
-				<div class="labels"><div class="label">Property Tax (yearly)</div><div class="label label-value">{{ Number(mortgageInputs.tax_rate).toFixed(1) }}%</div></div>
+				<div class="labels"><div class="label">Property tax (yearly)</div><div class="label label-value">{{ Number(mortgageInputs.tax_rate).toFixed(1) }}%</div></div>
 				<input class="range"  v-model="mortgageInputs.tax_rate" type="range" min="0" max="10" step="0.1">
 				
-				<div class="labels"><div class="label">Monthly Insurance</div><div class="label label-value">${{Number(mortgageInputs.hoi).toLocaleString()}}</div></div>
+				<div class="labels"><div class="label">Monthly insurance</div><div class="label label-value">${{Number(mortgageInputs.hoi).toLocaleString()}}</div></div>
 				<input class="range"  v-model="mortgageInputs.hoi" type="range" min="0" max="1000">
 				
 				<div class="labels"><div class="label"> Duration (years)</div><div class="label label-value">{{ mortgageInputs.term }}</div></div>
@@ -27,7 +27,7 @@
 					<!-- <p class="loading-text">Loading AI..</p> -->
 				</div>
 				<div class="span chartTitle">
-					<h2>${{ mortgageOutput.monthly_payment.toLocaleString() }} Monthly Payment</h2>
+					<h2>${{ mortgageOutput.monthly_payment.toLocaleString() }} <span class="test">Monthly Payment</span> </h2>
 					</div> 
 				<GChart 
 					type="PieChart"
@@ -43,6 +43,7 @@
 				<div class="span">${{ mortgageOutput.total_payment.toLocaleString() }} Total Cost</div> 
 			</div> -->
 		</div>
+		<h3 class="error" v-if="hasApiError == true">API error</h3>
 	</div>
 </template>
 
@@ -70,6 +71,7 @@ export default defineComponent({
 	const isLoadingData = ref(false)
 	const viewportWidth = ref(window.innerWidth);
 	const chartWidth = viewportWidth.value > 520 ? 500 : 310
+	const hasApiError = ref(false)
 		
 	const mortgageInputs = ref<MortgageParams>({
 		hoi: '100', // monhly home insurances
@@ -115,10 +117,10 @@ export default defineComponent({
 		'width':chartWidth,
 		'height':250,
 		chartArea: {
-          left: '5%',
+          left: '0%',
           top: '0%',
           width: '100%',
-          height: '90%'
+          height: '80%'
         },
 		titleTextStyle: {
 			fontSize:18,	
@@ -138,9 +140,14 @@ export default defineComponent({
 	}
 
 	async function calculateMortgage() {
+		hasApiError.value = false
 		dataReady.value = true
 		isLoadingData.value = true
 		mortgageOutput.value = await calculateMortgageApi(mortgageInputs.value)
+		if (!mortgageOutput.value) {
+			hasApiError.value = true
+		}
+		
 		// must update ChartData - not reactive
 		chartData[1][1] = mortgageOutput.value.monthly_property_taxes
 		chartData[2][1] = mortgageOutput.value.principal_and_interest
@@ -152,7 +159,7 @@ export default defineComponent({
 		calculateMortgage()
 	})
 	
-    return {mortgageOutput, mortgagePriceMax, chartData, chartOptions, calculateMortgage, mortgageInputs, dataReady, isLoadingData}
+    return {mortgageOutput, mortgagePriceMax, chartData, chartOptions, calculateMortgage, mortgageInputs, dataReady, isLoadingData, hasApiError}
 }
 
 }
@@ -161,17 +168,20 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.test {
+	font-size: var(--font-size-lmedium);
+}
 .chartTitle {
 	margin:auto;
+	margin-bottom:2.5rem;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-bottom:1.5rem;
 	flex-wrap: wrap;
 }
 .mortgage-container {
 	max-width:var(--page-width-medium);
-	padding: 0.5rem;
+	padding: 0.8rem;
 	display: flex;
 	flex-wrap: wrap;
 	margin: 0px auto;
@@ -187,10 +197,10 @@ export default defineComponent({
 			display:flex;
 			justify-content: space-between;
 			.label {
-				font-size: var(--font-size-smedium);
+				font-size: var(--font-size-medium);
 			}
 			.label-value {
-				font-size: var(--font-size-medium);
+				font-size: var(--font-size-lmedium);
 			}
 		}
 		form {
@@ -198,9 +208,9 @@ export default defineComponent({
 			flex-direction: column;
 			margin: auto;
 			width:100%;
-			input {
-				margin-top:0.5rem;
-				margin-bottom: 1.2rem;
+			input[type="range"]  {
+				margin-top:0.4rem;
+				margin-bottom: 1.5rem;
 				margin-left: 0rem;
 			}
 		}
@@ -271,5 +281,8 @@ export default defineComponent({
 	}
 
 
+}
+.error {
+	color:red;
 }
 </style>

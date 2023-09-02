@@ -6,13 +6,14 @@
 		</div>
 		<h1 class="page-h1">Search Real Estate</h1>
 		<SearchBar/>
-		<div class="sort-btn-container">
+		<div class="sort-btn-container fade-in">
 			<button @click="sortPriceHigh()">Price - High</button>
 			<button @click="sortPriceLow()">Price - Low</button>
 			<button @click="sortAlphabetical()">A-Z</button>
 			<button @click="sortAlphabeticalReverse()">Z-A</button>
 		</div>
 		<p class="errMsg">{{errMsg}}</p>
+		<h3 v-if="zeroResults" class="zeroResults">No results</h3>
         <transition-group tag="ul" name="list">
             <li v-for="property in orderedProperties" :key="property.property_id" >
                 <PropertyComp :property="property"></PropertyComp>
@@ -36,6 +37,7 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 	const route = useRoute()
 	const store = useStore()
 	const isLoading = ref(false)
+	const zeroResults = ref(false)
 
 	const properties = ref(<Property[]|undefined>undefined)
 	const orderedProperties = ref(<Property[]|undefined>undefined)
@@ -112,6 +114,11 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 	})
 
 	function filterEmptyPhotos(properties: Property[]) {
+		zeroResults.value = false
+		if (!properties) {
+			zeroResults.value = true
+			return
+		} 
 		return properties.filter((property) => {
 			return property.photo_count > 1
 		})
@@ -122,6 +129,7 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 		let resp:Property[] = await getForSale(params);
 		const respFiltered = filterEmptyPhotos(resp)
 		console.log('for sale array: ', respFiltered)
+		if (!respFiltered) {errMsg.value = 'API error - 204 No content'}
 		properties.value = respFiltered
 		orderedProperties.value = respFiltered
 		isLoading.value = false
@@ -131,13 +139,14 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 		let resp:Property[] = await getForRental(params);
 		const respFiltered = filterEmptyPhotos(resp)
 		console.log('for rent array: ', respFiltered)
+		if (!respFiltered) {errMsg.value = '204 No content'}
 		properties.value = respFiltered
 		orderedProperties.value = respFiltered
 		isLoading.value = false
 	}
 	function handleErrMsg (paramsObject: QueryParams) {
 		if (paramsObject.price_max) {
-				errMsg.value = 'MAX_PRICE is sometimes inaccurate for rental_properties'
+				errMsg.value = 'MAX_PRICE filter is sometimes inaccurate for rental_properties'
 			} else {
 				errMsg.value = undefined
 			}
@@ -182,23 +191,32 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 
 <style scoped lang="scss">
 	main {
-		padding-top:var(--page-padding-top);
+		border-bottom:1px solid rgba(0, 0, 0, 0.05);
+		min-height:80vh;
+		padding: var(--page-padding-top) 1.7vw;
+		max-width: 120rem;
+		margin:auto;
+		background: var(--color-background-light);
 		@media screen and (max-width: 500px) {
 			padding-top:var(--page-padding-top-mobile);
 		}
 		.page-h1 {
-			margin-bottom:3.5rem;
+			margin-bottom:5rem;
 		}
 		.errMsg {
 			color:red;
+			text-align: center;
+		}
+		.zeroResults {
+			text-align: center;
 		}
 		.list-move {
 			transition: all 1s;
 		}
 		.sort-btn-container {
 			margin:auto;
-			margin-top:4rem;
-			margin-bottom:1rem;
+			margin-top:2.5rem;
+			margin-bottom:3.5rem;
 			display: flex;
 			gap:0.5rem;
 			width:fit-content;
@@ -219,7 +237,10 @@ import type { PropertyRent } from '@/types/property/PropertyRent.type';
 					margin-bottom:2rem;
 				  }
 				  @media screen and (max-width: 530px) {
-					min-width:5rem;
+					min-width:5.6rem;
+				  }
+				  @media screen and (max-width: 415px) {
+					min-width:4.6rem;
 				  }
 			}
 		}

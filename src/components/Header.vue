@@ -3,9 +3,9 @@
 		<div class="side-link"><router-link  to="/">Realtor</router-link></div>
 		<div>
 			<ul>
-				<li><router-link to="/about">About</router-link></li>
-				<li @click="goToSearch()"><a></a>Search</li>
-				<li @click="scroll()"><router-link to="/?view=contact">Contact</router-link></li>
+				<li><router-link class="link" to="/about">About</router-link></li>
+				<li class="link" @click="goToSearch()">Search</li>
+				<li @click="scroll()"><router-link class="link" to="/?view=contact">Contact</router-link></li>
 			</ul>
 		</div>
 		<div class="side-link"><router-link  to="/finance">Financing</router-link></div>
@@ -40,9 +40,9 @@ import {useStore} from '@/store/store'
 }
 header {
 	font-size: var(--font-size-small);
-	font-weight: 500;
+	font-weight: 400;
 	position: fixed;
-	letter-spacing: var(--letter-spacing-medium);
+	letter-spacing: var(--letter-spacing-smedium);
 	width:100%;
 	z-index: 3;
 	background:rgba(0,0,0,0.4);
@@ -64,7 +64,7 @@ header {
 			li{
 				justify-content:center;
 				display: flex;
-				width:8rem;
+				width:10rem;
 				flex-grow:1;
 				cursor:pointer;
 				a{
@@ -73,30 +73,30 @@ header {
 			}
 		}
 	}
-	@media screen and (max-width: 660px) {
+	@media screen and (max-width: 730px) {
 		justify-content:center;
-		.side-link {
+		.side-link{
 			display:none;
 		}
 	}
-	@media screen and (max-width: 500px) {
-		flex-wrap: none;
-		* {
-			flex-wrap: none !important;
-		}
+	@media screen and (max-width: 560px) {
 		div {
-			flex-wrap: none;
 			ul {
-				justify-content: center;
-				flex-wrap: none;
 				li {
-					flex-wrap: none;
-					width:fit-content !important;
-					padding-left:2.5vw;
-					padding-right:2.5vw;
+					width:7rem;
 				}
 			}
 		}
 	}
+	@media screen and (max-width: 430px) {
+		div {
+			ul {
+				li {
+					width:5rem;
+				}
+			}
+		}
+	}
+	
 }
 </style>
